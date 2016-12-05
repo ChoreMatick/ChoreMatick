@@ -83,4 +83,5 @@
     <property name="disableRequestSignatureCheck" value="false"/>
     <property name="supportedApplicationIds" value=""/>
     <property name="timestampTolerance" value="150"/>
-  </properties></project>
+  </properties>
+</project>
