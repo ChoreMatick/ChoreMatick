@@ -25,7 +25,7 @@
           <version>0.7.7.201606060606</version>
           <configuration>
             <format>xml</format>
-            <outputDirectory>chorematick/jacoco</outputDirectory>
+            <outputDirectory>${project.reporting.outputDirectory}/${project.version}/jacoco/jacoco.xml</outputDirectory>
           </configuration>
           <executions>
             <execution>
@@ -66,7 +66,7 @@
           <version>4.3.0</version>
           <configuration>
     <jacocoReports>
-      <param>chorematick/jacoco</param>
+      <param>${project.reporting.outputDirectory}/${project.version}/jacoco/jacoco.xml</param>
     </jacocoReports>
   </configuration>
         </plugin>
