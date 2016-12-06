@@ -1,0 +1,7 @@
+ChorematickIntent what is my chore
+ChorematickIntent tell me my chore
+ChorematickIntent what is todays chore
+ChorematickIntent give me a chore
+ChorematickIntent what should i do
+ChorematickIntent what do i have to do
+ChorematickIntent i hate you
