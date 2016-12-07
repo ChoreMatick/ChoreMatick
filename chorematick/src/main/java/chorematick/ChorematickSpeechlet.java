@@ -61,7 +61,7 @@ public class ChorematickSpeechlet implements Speechlet {
         } else if ("AMAZON.HelpIntent".equals(intentName)) {
             return getHelpResponse();
         } else {
-            throw new SpeechletException("Invalid Intent");
+            return errorResponse();
         }
     }
 
@@ -139,5 +139,12 @@ public class ChorematickSpeechlet implements Speechlet {
         reprompt.setOutputSpeech(speech);
 
         return SpeechletResponse.newAskResponse(speech, reprompt, card);
+    }
+
+    private SpeechletResponse errorResponse() {
+        String speechText = "error error error";
+        PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+        speech.setText(speechText);
+        return SpeechletResponse.newTellResponse(speech);
     }
 }
