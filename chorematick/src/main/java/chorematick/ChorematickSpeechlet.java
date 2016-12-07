@@ -9,18 +9,11 @@
  */
 package chorematick;
 
+import com.amazon.speech.speechlet.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.amazon.speech.slu.Intent;
-import com.amazon.speech.speechlet.IntentRequest;
-import com.amazon.speech.speechlet.LaunchRequest;
-import com.amazon.speech.speechlet.Session;
-import com.amazon.speech.speechlet.SessionEndedRequest;
-import com.amazon.speech.speechlet.SessionStartedRequest;
-import com.amazon.speech.speechlet.Speechlet;
-import com.amazon.speech.speechlet.SpeechletException;
-import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
@@ -123,21 +116,9 @@ public class ChorematickSpeechlet implements Speechlet {
      * @return SpeechletResponse spoken and visual response for the given intent
      */
     private SpeechletResponse getHelpResponse() {
-        String speechText = "You can ask me for a chore, by saying, what is my chore?";
-
-        // Create the Simple card content.
-        SimpleCard card = new SimpleCard();
-        card.setTitle("Chorematick");
-        card.setContent(speechText);
-
-        // Create the plain text output.
         PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-        speech.setText(speechText);
-
-        // Create reprompt
+        speech.setText("You can ask me for a chore, by saying, what is my chore?");
         Reprompt reprompt = new Reprompt();
-        reprompt.setOutputSpeech(speech);
-
-        return SpeechletResponse.newAskResponse(speech, reprompt, card);
+        return SpeechletResponse.newAskResponse(speech, reprompt);
     }
 }
