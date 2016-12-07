@@ -22,10 +22,17 @@ public class ChorematickSpeechletTest {
   @Test
   public void errorResponseTest() {
 
-      String speechText = "error error error";
-      PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-      speech.setText(speechText);
-      assertEquals("error error error", speech.getText());
+    IntentRequest mockedIntentRequest = mock(IntentRequest.class);
+    Session mockedSession = mock(Session.class);
+    Intent mockedIntent = mock(Intent.class);
+
+    when(mockedIntentRequest.getIntent()).thenReturn(mockedIntent);
+    when(mockedIntent.getName()).thenReturn("jibberish");
+
+    ChorematickSpeechlet speechlet = new ChorematickSpeechlet();
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+
+    assertEquals("error error error", ((PlainTextOutputSpeech) response.getOutputSpeech()).getText());
   }
 
   @Test
@@ -43,7 +50,6 @@ public class ChorematickSpeechletTest {
     assertThat(response.getCard(), nullValue());
     assertThat(response.getReprompt().getOutputSpeech(), nullValue());
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("You can ask me for a chore, by saying, what is my chore?"));
-
 
   }
 }
