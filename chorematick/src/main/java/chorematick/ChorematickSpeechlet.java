@@ -9,30 +9,19 @@ or in the "license" file accompanying this file. This file is distributed on an 
 */
 package chorematick;
 
+import com.amazon.speech.speechlet.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.amazon.speech.slu.Intent;
-import com.amazon.speech.speechlet.IntentRequest;
-import com.amazon.speech.speechlet.LaunchRequest;
-import com.amazon.speech.speechlet.Session;
-import com.amazon.speech.speechlet.SessionEndedRequest;
-import com.amazon.speech.speechlet.SessionStartedRequest;
-import com.amazon.speech.speechlet.Speechlet;
-import com.amazon.speech.speechlet.SpeechletException;
-import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 
-/**
-* This sample shows how to create a simple speechlet for handling speechlet requests.
-*/
 public class ChorematickSpeechlet implements Speechlet {
 
   public void onSessionStarted(final SessionStartedRequest request, final Session session) {
   }
-      // any initialization logic goes here
 
   @Override
   public SpeechletResponse onLaunch(final LaunchRequest request, final Session session) {
@@ -50,83 +39,50 @@ public class ChorematickSpeechlet implements Speechlet {
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
       return getHelpResponse();
     } else {
-      return errorResponse();
+      return getErrorResponse();
     }
   }
 
   public void onSessionEnded(final SessionEndedRequest request, final Session session) {
   }
-    // any cleanup logic goes here
 
-  /**
-  * Creates and returns a {@code SpeechletResponse} with a welcome message.
-  *
-  * @return SpeechletResponse spoken and visual response for the given intent
-  */
   private SpeechletResponse getWelcomeResponse() {
     String speechText = "Hello child, your chore for today is. Sweep the chimney. thats right. Sweep the chimney";
 
-    // Create the Simple card content.
     SimpleCard card = new SimpleCard();
     card.setTitle("Chorematick");
     card.setContent(speechText);
 
-    // Create the plain text output.
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
 
-    // Create reprompt
     Reprompt reprompt = new Reprompt();
     reprompt.setOutputSpeech(speech);
 
     return SpeechletResponse.newAskResponse(speech, reprompt, card);
   }
 
-  /**
-  * Creates a {@code SpeechletResponse} for the hello intent.
-  *
-  * @return SpeechletResponse spoken and visual response for the given intent
-  */
   private SpeechletResponse getHelloResponse() {
     String speechText = "Hello world";
 
-    // Create the Simple card content.
     SimpleCard card = new SimpleCard();
     card.setTitle("Chorematick");
     card.setContent(speechText);
 
-    // Create the plain text output.
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
 
     return SpeechletResponse.newTellResponse(speech, card);
   }
 
-  /**
-  * Creates a {@code SpeechletResponse} for the help intent.
-  *
-  * @return SpeechletResponse spoken and visual response for the given intent
-  */
   private SpeechletResponse getHelpResponse() {
-    String speechText = "You can ask me for a chore, by saying, what is my chore?";
-
-    // Create the Simple card content.
-    SimpleCard card = new SimpleCard();
-    card.setTitle("Chorematick");
-    card.setContent(speechText);
-
-    // Create the plain text output.
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText(speechText);
-
-    // Create reprompt
+    speech.setText("You can ask me for a chore, by saying, what is my chore?");
     Reprompt reprompt = new Reprompt();
-    reprompt.setOutputSpeech(speech);
-
-    return SpeechletResponse.newAskResponse(speech, reprompt, card);
+    return SpeechletResponse.newAskResponse(speech, reprompt);
   }
 
-  private SpeechletResponse errorResponse() {
+  private SpeechletResponse getErrorResponse() {
     String speechText = "error error error";
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
