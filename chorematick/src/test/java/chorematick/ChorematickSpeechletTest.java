@@ -32,7 +32,7 @@ public class ChorematickSpeechletTest {
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
 
     assertThat(response.getCard(), nullValue());
-    assertThat(response.getReprompt(), nullValue());
+    assertThat(response.getReprompt().getOutputSpeech(), nullValue());
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("You can ask me for a chore, by saying, what is my chore?"));
 
 
