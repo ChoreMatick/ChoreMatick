@@ -1,12 +1,12 @@
 /**
-    Copyright 2014-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Copyright 2014-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
+Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
 
-        http://aws.amazon.com/apache2.0/
+http://aws.amazon.com/apache2.0/
 
-    or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
- */
+or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+*/
 package chorematick;
 
 import com.amazon.speech.speechlet.*;
@@ -18,107 +18,74 @@ import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 
-/**
- * This sample shows how to create a simple speechlet for handling speechlet requests.
- */
 public class ChorematickSpeechlet implements Speechlet {
-    private static final Logger log = LoggerFactory.getLogger(ChorematickSpeechlet.class);
 
-    @Override
-    public void onSessionStarted(final SessionStartedRequest request, final Session session)
-            throws SpeechletException {
-        log.info("onSessionStarted requestId={}, sessionId={}", request.getRequestId(),
-                session.getSessionId());
-        // any initialization logic goes here
+  public void onSessionStarted(final SessionStartedRequest request, final Session session) {
+  }
+
+  @Override
+  public SpeechletResponse onLaunch(final LaunchRequest request, final Session session) {
+    return getWelcomeResponse();
+}
+
+  @Override
+  public SpeechletResponse onIntent(final IntentRequest request, final Session session) {
+
+    Intent intent = request.getIntent();
+    String intentName = (intent != null) ? intent.getName() : null;
+
+    if ("ChorematickIntent".equals(intentName)) {
+      return getHelloResponse();
+    } else if ("AMAZON.HelpIntent".equals(intentName)) {
+      return getHelpResponse();
+    } else {
+      return getErrorResponse();
     }
+  }
 
-    @Override
-    public SpeechletResponse onLaunch(final LaunchRequest request, final Session session)
-            throws SpeechletException {
-        log.info("onLaunch requestId={}, sessionId={}", request.getRequestId(),
-                session.getSessionId());
-        return getWelcomeResponse();
-    }
+  public void onSessionEnded(final SessionEndedRequest request, final Session session) {
+  }
 
-    @Override
-    public SpeechletResponse onIntent(final IntentRequest request, final Session session)
-            throws SpeechletException {
-        log.info("onIntent requestId={}, sessionId={}", request.getRequestId(),
-                session.getSessionId());
+  private SpeechletResponse getWelcomeResponse() {
+    String speechText = "Hello child, your chore for today is. Sweep the chimney. thats right. Sweep the chimney";
 
-        Intent intent = request.getIntent();
-        String intentName = (intent != null) ? intent.getName() : null;
+    SimpleCard card = new SimpleCard();
+    card.setTitle("Chorematick");
+    card.setContent(speechText);
 
-        if ("ChorematickIntent".equals(intentName)) {
-            return getHelloResponse();
-        } else if ("AMAZON.HelpIntent".equals(intentName)) {
-            return getHelpResponse();
-        } else {
-            throw new SpeechletException("Invalid Intent");
-        }
-    }
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(speechText);
 
-    @Override
-    public void onSessionEnded(final SessionEndedRequest request, final Session session)
-            throws SpeechletException {
-        log.info("onSessionEnded requestId={}, sessionId={}", request.getRequestId(),
-                session.getSessionId());
-        // any cleanup logic goes here
-    }
+    Reprompt reprompt = new Reprompt();
+    reprompt.setOutputSpeech(speech);
 
-    /**
-     * Creates and returns a {@code SpeechletResponse} with a welcome message.
-     *
-     * @return SpeechletResponse spoken and visual response for the given intent
-     */
-    private SpeechletResponse getWelcomeResponse() {
-        String speechText = "Hello child, your chore for today is. Sweep the chimney. thats right. Sweep the chimney";
+    return SpeechletResponse.newAskResponse(speech, reprompt, card);
+  }
 
-        // Create the Simple card content.
-        SimpleCard card = new SimpleCard();
-        card.setTitle("Chorematick");
-        card.setContent(speechText);
+  private SpeechletResponse getHelloResponse() {
+    String speechText = "Hello world";
 
-        // Create the plain text output.
-        PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-        speech.setText(speechText);
+    SimpleCard card = new SimpleCard();
+    card.setTitle("Chorematick");
+    card.setContent(speechText);
 
-        // Create reprompt
-        Reprompt reprompt = new Reprompt();
-        reprompt.setOutputSpeech(speech);
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(speechText);
 
-        return SpeechletResponse.newAskResponse(speech, reprompt, card);
-    }
+    return SpeechletResponse.newTellResponse(speech, card);
+  }
 
-    /**
-     * Creates a {@code SpeechletResponse} for the hello intent.
-     *
-     * @return SpeechletResponse spoken and visual response for the given intent
-     */
-    private SpeechletResponse getHelloResponse() {
-        String speechText = "Hello world";
+  private SpeechletResponse getHelpResponse() {
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText("You can ask me for a chore, by saying, what is my chore?");
+    Reprompt reprompt = new Reprompt();
+    return SpeechletResponse.newAskResponse(speech, reprompt);
+  }
 
-        // Create the Simple card content.
-        SimpleCard card = new SimpleCard();
-        card.setTitle("Chorematick");
-        card.setContent(speechText);
-
-        // Create the plain text output.
-        PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-        speech.setText(speechText);
-
-        return SpeechletResponse.newTellResponse(speech, card);
-    }
-
-    /**
-     * Creates a {@code SpeechletResponse} for the help intent.
-     *
-     * @return SpeechletResponse spoken and visual response for the given intent
-     */
-    private SpeechletResponse getHelpResponse() {
-        PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-        speech.setText("You can ask me for a chore, by saying, what is my chore?");
-        Reprompt reprompt = new Reprompt();
-        return SpeechletResponse.newAskResponse(speech, reprompt);
-    }
+  private SpeechletResponse getErrorResponse() {
+    String speechText = "error error error";
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(speechText);
+    return SpeechletResponse.newTellResponse(speech);
+  }
 }
