@@ -112,7 +112,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
   private SpeechletResponse getEasterEggResponse() {
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText("You bad, bad child");
+    speech.setText("Go stand in the corner and think about what you've done.");
     return SpeechletResponse.newTellResponse(speech);
   }
 
