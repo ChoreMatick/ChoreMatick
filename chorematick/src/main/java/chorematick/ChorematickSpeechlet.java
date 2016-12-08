@@ -44,7 +44,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
 
     if ("ChorematickIntent".equals(intentName)) {
-      return getHelloResponse();
+      return getWelcomeResponse();
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
       return getHelpResponse();
     } else {
@@ -71,24 +71,11 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newAskResponse(speech, reprompt, card);
   }
 
-  private SpeechletResponse getHelloResponse() {
-    String speechText = "Hello world";
-
-    SimpleCard card = new SimpleCard();
-    card.setTitle("Chorematick");
-    card.setContent(speechText);
-
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText(speechText);
-
-    return SpeechletResponse.newTellResponse(speech, card);
-  }
 
   private SpeechletResponse getHelpResponse() {
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText("You can ask me for a chore, by saying, what is my chore?");
-    Reprompt reprompt = new Reprompt();
-    return SpeechletResponse.newAskResponse(speech, reprompt);
+    return SpeechletResponse.newTellResponse(speech);
   }
 
   private SpeechletResponse getErrorResponse() {
