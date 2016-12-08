@@ -3,6 +3,9 @@ package chorematick;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import org.mockito.Mock;
+import org.junit.Before;
+import org.mockito.MockitoAnnotations;
 import static org.hamcrest.CoreMatchers.*;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.IntentRequest;
@@ -17,14 +20,14 @@ import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 
-public class ChorematickSpeechletTest {
+public class ChorematickSpeechletTest extends BaseTestCase {
+
+  @Mock private IntentRequest mockedIntentRequest;
+  @Mock private Session mockedSession;
+  @Mock Intent mockedIntent;
 
   @Test
   public void errorResponseTest() {
-
-    IntentRequest mockedIntentRequest = mock(IntentRequest.class);
-    Session mockedSession = mock(Session.class);
-    Intent mockedIntent = mock(Intent.class);
 
     when(mockedIntentRequest.getIntent()).thenReturn(mockedIntent);
     when(mockedIntent.getName()).thenReturn("jibberish");
@@ -37,9 +40,6 @@ public class ChorematickSpeechletTest {
 
   @Test
   public void testHelpResponse() throws SpeechletException {
-    IntentRequest mockedIntentRequest = mock(IntentRequest.class);
-    Session mockedSession = mock(Session.class);
-    Intent mockedIntent = mock(Intent.class);
 
     when(mockedIntentRequest.getIntent()).thenReturn(mockedIntent);
     when(mockedIntent.getName()).thenReturn("AMAZON.HelpIntent");
