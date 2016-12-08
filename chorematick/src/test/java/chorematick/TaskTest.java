@@ -20,11 +20,11 @@ public class TaskTest extends BaseTestCase {
 
   @Test
   public void getDateTest() {
-    assertEqual(day, task.getDate());
+    assertEquals(day, task.getDate());
   }
 
   @Test
   public void getAction() {
-    assertEqual("Sweep the chimney", task.getAction());
+    assertEquals("Sweep the chimney", task.getAction());
   }
 }
