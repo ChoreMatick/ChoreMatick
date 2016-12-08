@@ -10,15 +10,19 @@ or in the "license" file accompanying this file. This file is distributed on an 
 package chorematick;
 
 import com.amazon.speech.speechlet.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 
+import java.util.logging.Logger;
+
+
 public class ChorematickSpeechlet implements Speechlet {
+
+  private final static Logger log = Logger.getLogger(ChorematickSpeechlet.class.getName());
+
 
   public void onSessionStarted(final SessionStartedRequest request, final Session session) {
   }
@@ -33,6 +37,11 @@ public class ChorematickSpeechlet implements Speechlet {
 
     Intent intent = request.getIntent();
     String intentName = (intent != null) ? intent.getName() : null;
+
+
+    System.out.println(intentName);
+    log.info(intentName);
+
 
     if ("ChorematickIntent".equals(intentName)) {
       return getHelloResponse();
