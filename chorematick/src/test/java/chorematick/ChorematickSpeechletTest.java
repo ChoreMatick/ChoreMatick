@@ -56,11 +56,11 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   public void testDoneResponse() {
 
     when(mockedIntentRequest.getIntent()).thenReturn(mockedIntent);
-    when(mockedIntent.getName()).thenReturn("Task completed");
+    when(mockedIntent.getName()).thenReturn("GetDoneIntent");
 
     ChorematickSpeechlet speechlet = new ChorematickSpeechlet();
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
 
-    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have informed your relevant adult."));
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have informed your appropriate adult."));
   }
 }

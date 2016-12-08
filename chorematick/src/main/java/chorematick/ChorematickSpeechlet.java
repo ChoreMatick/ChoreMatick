@@ -45,6 +45,8 @@ public class ChorematickSpeechlet implements Speechlet {
 
     if ("ChorematickIntent".equals(intentName)) {
       return getWelcomeResponse();
+    } else if ("GetDoneIntent".equals(intentName)){
+      return getDoneResponse();
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
       return getHelpResponse();
     } else {
@@ -56,7 +58,7 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getWelcomeResponse() {
-    String speechText = "Hello child, Would you like to hear your chore for today, or tell me you have completed your chore for today";
+    String speechText = "Hello child, Would you like to hear your chore for today, or tell me you have completed your chore";
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
@@ -68,11 +70,11 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getDoneResponse() {
-    String speechText = "Very well, I have informed your relevant adult.";
+    String speechText = "Very well, I have informed your appropriate adult.";
 
     SimpleCard card = new SimpleCard();
-    card.setTitle("Chorematick");
-    card.setContent(speechText);
+    card.setTitle("Chore Verification");
+    card.setContent("Your child claims to have completed their chore, please check and verify");
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
