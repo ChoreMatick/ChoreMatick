@@ -10,7 +10,8 @@ import static org.hamcrest.CoreMatchers.*;
 
 public class BaseTestCase {
 
-  @Before public void initMocks() {
+  @Before
+  public void initMocks() {
     MockitoAnnotations.initMocks(this);
   }
 }

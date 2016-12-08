@@ -1,3 +1,58 @@
+GetChoreIntent give me a chore
+GetChoreIntent give me a chore please
+GetChoreIntent give me my chore
+GetChoreIntent give me my chore please
+GetChoreIntent give me my today's chore
+GetChoreIntent give me my today's chore please
+GetChoreIntent give me the chore
+GetChoreIntent give me the chore please
+GetChoreIntent give me the today's chore
+GetChoreIntent give me the today's chore please
+GetChoreIntent tell me a chore
+GetChoreIntent tell me a chore please
+GetChoreIntent tell me my chore
+GetChoreIntent tell me my chore please
+GetChoreIntent tell me my today's chore
+GetChoreIntent tell me my today's chore please
+GetChoreIntent tell me the chore
+GetChoreIntent tell me the chore please
+GetChoreIntent tell me the today's chore
+GetChoreIntent tell me the today's chore please
+GetChoreIntent what do I do
+GetChoreIntent what do I do please
+GetChoreIntent what do I do today
+GetChoreIntent what do I do today please
+GetChoreIntent what do I have to do
+GetChoreIntent what do I have to do please
+GetChoreIntent what do I have to do today
+GetChoreIntent what do I have to do today please
+GetChoreIntent what is my chore
+GetChoreIntent what is my chore please
+GetChoreIntent what is my today's chore
+GetChoreIntent what is my today's chore please
+GetChoreIntent what is the chore
+GetChoreIntent what is the chore please
+GetChoreIntent what is the today's chore
+GetChoreIntent what is the today's chore please
+GetChoreIntent what should I do
+GetChoreIntent what should I do please
+GetChoreIntent what should I do today
+GetChoreIntent what should I do today please
+GetChoreIntent what should I have to do
+GetChoreIntent what should I have to do please
+GetChoreIntent what should I have to do today
+GetChoreIntent what should I have to do today please
+GetChoreIntent what's my chore
+GetChoreIntent what's my chore please
+GetChoreIntent what's my today's chore
+GetChoreIntent what's my today's chore please
+GetChoreIntent what's the chore
+GetChoreIntent what's the chore please
+GetChoreIntent what's the today's chore
+GetChoreIntent what's the today's chore please
+
+ChorematickIntent i hate you
+
 GetDoneIntent I am done.
 GetDoneIntent I am finished.
 GetDoneIntent I have completed my chore for the day.
@@ -30,11 +85,6 @@ GetDoneIntent I have completed the punishment.
 GetDoneIntent I have completed the task for the day.
 GetDoneIntent I have completed the task for today.
 GetDoneIntent I have completed the task.
-GetDoneIntent I have completed today chore.
-GetDoneIntent I have completed today job.
-GetDoneIntent I have completed today problem.
-GetDoneIntent I have completed today punishment.
-GetDoneIntent I have completed today task.
 GetDoneIntent I have completed today's chore.
 GetDoneIntent I have completed today's job.
 GetDoneIntent I have completed today's problem.
@@ -70,11 +120,6 @@ GetDoneIntent I have done the punishment.
 GetDoneIntent I have done the task for the day.
 GetDoneIntent I have done the task for today.
 GetDoneIntent I have done the task.
-GetDoneIntent I have done today chore.
-GetDoneIntent I have done today job.
-GetDoneIntent I have done today problem.
-GetDoneIntent I have done today punishment.
-GetDoneIntent I have done today task.
 GetDoneIntent I have done today's chore.
 GetDoneIntent I have done today's job.
 GetDoneIntent I have done today's problem.
@@ -110,11 +155,6 @@ GetDoneIntent I have finished the punishment.
 GetDoneIntent I have finished the task for the day.
 GetDoneIntent I have finished the task for today.
 GetDoneIntent I have finished the task.
-GetDoneIntent I have finished today chore.
-GetDoneIntent I have finished today job.
-GetDoneIntent I have finished today problem.
-GetDoneIntent I have finished today punishment.
-GetDoneIntent I have finished today task.
 GetDoneIntent I have finished today's chore.
 GetDoneIntent I have finished today's job.
 GetDoneIntent I have finished today's problem.
@@ -152,11 +192,6 @@ GetDoneIntent I've completed the punishment.
 GetDoneIntent I've completed the task for the day.
 GetDoneIntent I've completed the task for today.
 GetDoneIntent I've completed the task.
-GetDoneIntent I've completed today chore.
-GetDoneIntent I've completed today job.
-GetDoneIntent I've completed today problem.
-GetDoneIntent I've completed today punishment.
-GetDoneIntent I've completed today task.
 GetDoneIntent I've completed today's chore.
 GetDoneIntent I've completed today's job.
 GetDoneIntent I've completed today's problem.
@@ -192,11 +227,6 @@ GetDoneIntent I've done the punishment.
 GetDoneIntent I've done the task for the day.
 GetDoneIntent I've done the task for today.
 GetDoneIntent I've done the task.
-GetDoneIntent I've done today chore.
-GetDoneIntent I've done today job.
-GetDoneIntent I've done today problem.
-GetDoneIntent I've done today punishment.
-GetDoneIntent I've done today task.
 GetDoneIntent I've done today's chore.
 GetDoneIntent I've done today's job.
 GetDoneIntent I've done today's problem.
@@ -232,11 +262,6 @@ GetDoneIntent I've finished the punishment.
 GetDoneIntent I've finished the task for the day.
 GetDoneIntent I've finished the task for today.
 GetDoneIntent I've finished the task.
-GetDoneIntent I've finished today chore.
-GetDoneIntent I've finished today job.
-GetDoneIntent I've finished today problem.
-GetDoneIntent I've finished today punishment.
-GetDoneIntent I've finished today task.
 GetDoneIntent I've finished today's chore.
 GetDoneIntent I've finished today's job.
 GetDoneIntent I've finished today's problem.

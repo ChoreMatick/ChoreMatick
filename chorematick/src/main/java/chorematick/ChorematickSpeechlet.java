@@ -38,15 +38,12 @@ public class ChorematickSpeechlet implements Speechlet {
     Intent intent = request.getIntent();
     String intentName = (intent != null) ? intent.getName() : null;
 
-
-    System.out.println(intentName);
-    log.info(intentName);
-
-
-    if ("ChorematickIntent".equals(intentName)) {
-      return getWelcomeResponse();
+    if ("GetChoreIntent".equals(intentName)) {
+      return getChoreResponse();
     } else if ("GetDoneIntent".equals(intentName)){
       return getDoneResponse();
+    } else if ("ChorematickIntent".equals(intentName)) {
+        return getEasterEggResponse();
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
       return getHelpResponse();
     } else {
@@ -69,6 +66,17 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newAskResponse(speech, reprompt);
   }
 
+  private SpeechletResponse getChoreResponse() {
+    String speechText = "Your chore for today is. Sweep the chimney. That's right. Sweep the chimney.";
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(speechText);
+
+    SimpleCard card = new SimpleCard();
+    card.setTitle("Chore requested");
+    card.setContent("Your child just asked for today's chore");
+    return SpeechletResponse.newTellResponse(speech, card);
+  }
+
   private SpeechletResponse getDoneResponse() {
     String speechText = "Very well, I have informed your appropriate adult.";
 
@@ -83,9 +91,16 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getHelpResponse() {
+
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText("You can ask me for a chore, by saying, what is my chore?");
-    return SpeechletResponse.newTellResponse(speech);
+
+    Reprompt reprompt = new Reprompt();
+    PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
+    repromptSpeech.setText("Would you like your chore?");
+    reprompt.setOutputSpeech(repromptSpeech);
+
+    return SpeechletResponse.newAskResponse(speech, reprompt);
   }
 
   private SpeechletResponse getErrorResponse() {
@@ -94,4 +109,11 @@ public class ChorematickSpeechlet implements Speechlet {
     speech.setText(speechText);
     return SpeechletResponse.newTellResponse(speech);
   }
+
+  private SpeechletResponse getEasterEggResponse() {
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText("You bad, bad child");
+    return SpeechletResponse.newTellResponse(speech);
+  }
+
 }

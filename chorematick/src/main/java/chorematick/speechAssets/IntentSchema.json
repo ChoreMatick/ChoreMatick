@@ -1,13 +1,16 @@
-  {
-    "intents": [
-      {
-        "intent": "ChorematickIntent"
-      },
-      {
-        "intent": "GetDoneIntent"
-      },
-      {
-        "intent": "AMAZON.HelpIntent"
-      }
-    ]
-  }
+{
+  "intents": [
+    {
+      "intent": "ChorematickIntent"
+    },
+    {
+      "intent": "GetChoreIntent"
+    },
+    {
+      "intent": "GetDoneIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}
