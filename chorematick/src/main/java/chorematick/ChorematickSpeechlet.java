@@ -67,6 +67,18 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newAskResponse(speech, reprompt);
   }
 
+  private SpeechletResponse getDoneResponse() {
+    String speechText = "Very well, I have informed your relevant adult.";
+
+    SimpleCard card = new SimpleCard();
+    card.setTitle("Chorematick");
+    card.setContent(speechText);
+
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(speechText);
+
+    return SpeechletResponse.newTellResponse(speech, card);
+  }
 
   private SpeechletResponse getHelpResponse() {
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
