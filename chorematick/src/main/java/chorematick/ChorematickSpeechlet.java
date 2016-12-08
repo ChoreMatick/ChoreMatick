@@ -56,11 +56,7 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getWelcomeResponse() {
-    String speechText = "Hello child, your chore for today is. Sweep the chimney. thats right. Sweep the chimney";
-
-    SimpleCard card = new SimpleCard();
-    card.setTitle("Chorematick");
-    card.setContent(speechText);
+    String speechText = "Hello child, Would you like to hear your chore for today, or tell me you have completed your chore for today";
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
@@ -68,7 +64,7 @@ public class ChorematickSpeechlet implements Speechlet {
     Reprompt reprompt = new Reprompt();
     reprompt.setOutputSpeech(speech);
 
-    return SpeechletResponse.newAskResponse(speech, reprompt, card);
+    return SpeechletResponse.newAskResponse(speech, reprompt);
   }
 
   private SpeechletResponse getHelloResponse() {
