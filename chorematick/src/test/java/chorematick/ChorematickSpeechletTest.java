@@ -51,4 +51,16 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("You can ask me for a chore, by saying, what is my chore?"));
 
   }
+
+  @Test
+  public void testDoneResponse() {
+
+    when(mockedIntentRequest.getIntent()).thenReturn(mockedIntent);
+    when(mockedIntent.getName()).thenReturn("GetDoneIntent");
+
+    ChorematickSpeechlet speechlet = new ChorematickSpeechlet();
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have informed your appropriate adult."));
+  }
 }

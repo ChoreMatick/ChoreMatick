@@ -4,6 +4,9 @@
         "intent": "ChorematickIntent"
       },
       {
+        "intent": "GetDoneIntent"
+      },
+      {
         "intent": "AMAZON.HelpIntent"
       }
     ]

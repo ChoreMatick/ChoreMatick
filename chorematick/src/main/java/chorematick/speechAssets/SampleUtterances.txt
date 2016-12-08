@@ -1,7 +1,244 @@
-ChorematickIntent what is my chore
-ChorematickIntent tell me my chore
-ChorematickIntent what is todays chore
-ChorematickIntent give me a chore
-ChorematickIntent what should i do
-ChorematickIntent what do i have to do
-ChorematickIntent i hate you
+GetDoneIntent I am done.
+GetDoneIntent I am finished.
+GetDoneIntent I have completed my chore for the day.
+GetDoneIntent I have completed my chore for today.
+GetDoneIntent I have completed my chore.
+GetDoneIntent I have completed my job for the day.
+GetDoneIntent I have completed my job for today.
+GetDoneIntent I have completed my job.
+GetDoneIntent I have completed my problem for the day.
+GetDoneIntent I have completed my problem for today.
+GetDoneIntent I have completed my problem.
+GetDoneIntent I have completed my punishment for the day.
+GetDoneIntent I have completed my punishment for today.
+GetDoneIntent I have completed my punishment.
+GetDoneIntent I have completed my task for the day.
+GetDoneIntent I have completed my task for today.
+GetDoneIntent I have completed my task.
+GetDoneIntent I have completed the chore for the day.
+GetDoneIntent I have completed the chore for today.
+GetDoneIntent I have completed the chore.
+GetDoneIntent I have completed the job for the day.
+GetDoneIntent I have completed the job for today.
+GetDoneIntent I have completed the job.
+GetDoneIntent I have completed the problem for the day.
+GetDoneIntent I have completed the problem for today.
+GetDoneIntent I have completed the problem.
+GetDoneIntent I have completed the punishment for the day.
+GetDoneIntent I have completed the punishment for today.
+GetDoneIntent I have completed the punishment.
+GetDoneIntent I have completed the task for the day.
+GetDoneIntent I have completed the task for today.
+GetDoneIntent I have completed the task.
+GetDoneIntent I have completed today chore.
+GetDoneIntent I have completed today job.
+GetDoneIntent I have completed today problem.
+GetDoneIntent I have completed today punishment.
+GetDoneIntent I have completed today task.
+GetDoneIntent I have completed today's chore.
+GetDoneIntent I have completed today's job.
+GetDoneIntent I have completed today's problem.
+GetDoneIntent I have completed today's punishment.
+GetDoneIntent I have completed today's task.
+GetDoneIntent I have done my chore for the day.
+GetDoneIntent I have done my chore for today.
+GetDoneIntent I have done my chore.
+GetDoneIntent I have done my job for the day.
+GetDoneIntent I have done my job for today.
+GetDoneIntent I have done my job.
+GetDoneIntent I have done my problem for the day.
+GetDoneIntent I have done my problem for today.
+GetDoneIntent I have done my problem.
+GetDoneIntent I have done my punishment for the day.
+GetDoneIntent I have done my punishment for today.
+GetDoneIntent I have done my punishment.
+GetDoneIntent I have done my task for the day.
+GetDoneIntent I have done my task for today.
+GetDoneIntent I have done my task.
+GetDoneIntent I have done the chore for the day.
+GetDoneIntent I have done the chore for today.
+GetDoneIntent I have done the chore.
+GetDoneIntent I have done the job for the day.
+GetDoneIntent I have done the job for today.
+GetDoneIntent I have done the job.
+GetDoneIntent I have done the problem for the day.
+GetDoneIntent I have done the problem for today.
+GetDoneIntent I have done the problem.
+GetDoneIntent I have done the punishment for the day.
+GetDoneIntent I have done the punishment for today.
+GetDoneIntent I have done the punishment.
+GetDoneIntent I have done the task for the day.
+GetDoneIntent I have done the task for today.
+GetDoneIntent I have done the task.
+GetDoneIntent I have done today chore.
+GetDoneIntent I have done today job.
+GetDoneIntent I have done today problem.
+GetDoneIntent I have done today punishment.
+GetDoneIntent I have done today task.
+GetDoneIntent I have done today's chore.
+GetDoneIntent I have done today's job.
+GetDoneIntent I have done today's problem.
+GetDoneIntent I have done today's punishment.
+GetDoneIntent I have done today's task.
+GetDoneIntent I have finished my chore for the day.
+GetDoneIntent I have finished my chore for today.
+GetDoneIntent I have finished my chore.
+GetDoneIntent I have finished my job for the day.
+GetDoneIntent I have finished my job for today.
+GetDoneIntent I have finished my job.
+GetDoneIntent I have finished my problem for the day.
+GetDoneIntent I have finished my problem for today.
+GetDoneIntent I have finished my problem.
+GetDoneIntent I have finished my punishment for the day.
+GetDoneIntent I have finished my punishment for today.
+GetDoneIntent I have finished my punishment.
+GetDoneIntent I have finished my task for the day.
+GetDoneIntent I have finished my task for today.
+GetDoneIntent I have finished my task.
+GetDoneIntent I have finished the chore for the day.
+GetDoneIntent I have finished the chore for today.
+GetDoneIntent I have finished the chore.
+GetDoneIntent I have finished the job for the day.
+GetDoneIntent I have finished the job for today.
+GetDoneIntent I have finished the job.
+GetDoneIntent I have finished the problem for the day.
+GetDoneIntent I have finished the problem for today.
+GetDoneIntent I have finished the problem.
+GetDoneIntent I have finished the punishment for the day.
+GetDoneIntent I have finished the punishment for today.
+GetDoneIntent I have finished the punishment.
+GetDoneIntent I have finished the task for the day.
+GetDoneIntent I have finished the task for today.
+GetDoneIntent I have finished the task.
+GetDoneIntent I have finished today chore.
+GetDoneIntent I have finished today job.
+GetDoneIntent I have finished today problem.
+GetDoneIntent I have finished today punishment.
+GetDoneIntent I have finished today task.
+GetDoneIntent I have finished today's chore.
+GetDoneIntent I have finished today's job.
+GetDoneIntent I have finished today's problem.
+GetDoneIntent I have finished today's punishment.
+GetDoneIntent I have finished today's task.
+GetDoneIntent I'm done.
+GetDoneIntent I'm finished.
+GetDoneIntent I've completed my chore for the day.
+GetDoneIntent I've completed my chore for today.
+GetDoneIntent I've completed my chore.
+GetDoneIntent I've completed my job for the day.
+GetDoneIntent I've completed my job for today.
+GetDoneIntent I've completed my job.
+GetDoneIntent I've completed my problem for the day.
+GetDoneIntent I've completed my problem for today.
+GetDoneIntent I've completed my problem.
+GetDoneIntent I've completed my punishment for the day.
+GetDoneIntent I've completed my punishment for today.
+GetDoneIntent I've completed my punishment.
+GetDoneIntent I've completed my task for the day.
+GetDoneIntent I've completed my task for today.
+GetDoneIntent I've completed my task.
+GetDoneIntent I've completed the chore for the day.
+GetDoneIntent I've completed the chore for today.
+GetDoneIntent I've completed the chore.
+GetDoneIntent I've completed the job for the day.
+GetDoneIntent I've completed the job for today.
+GetDoneIntent I've completed the job.
+GetDoneIntent I've completed the problem for the day.
+GetDoneIntent I've completed the problem for today.
+GetDoneIntent I've completed the problem.
+GetDoneIntent I've completed the punishment for the day.
+GetDoneIntent I've completed the punishment for today.
+GetDoneIntent I've completed the punishment.
+GetDoneIntent I've completed the task for the day.
+GetDoneIntent I've completed the task for today.
+GetDoneIntent I've completed the task.
+GetDoneIntent I've completed today chore.
+GetDoneIntent I've completed today job.
+GetDoneIntent I've completed today problem.
+GetDoneIntent I've completed today punishment.
+GetDoneIntent I've completed today task.
+GetDoneIntent I've completed today's chore.
+GetDoneIntent I've completed today's job.
+GetDoneIntent I've completed today's problem.
+GetDoneIntent I've completed today's punishment.
+GetDoneIntent I've completed today's task.
+GetDoneIntent I've done my chore for the day.
+GetDoneIntent I've done my chore for today.
+GetDoneIntent I've done my chore.
+GetDoneIntent I've done my job for the day.
+GetDoneIntent I've done my job for today.
+GetDoneIntent I've done my job.
+GetDoneIntent I've done my problem for the day.
+GetDoneIntent I've done my problem for today.
+GetDoneIntent I've done my problem.
+GetDoneIntent I've done my punishment for the day.
+GetDoneIntent I've done my punishment for today.
+GetDoneIntent I've done my punishment.
+GetDoneIntent I've done my task for the day.
+GetDoneIntent I've done my task for today.
+GetDoneIntent I've done my task.
+GetDoneIntent I've done the chore for the day.
+GetDoneIntent I've done the chore for today.
+GetDoneIntent I've done the chore.
+GetDoneIntent I've done the job for the day.
+GetDoneIntent I've done the job for today.
+GetDoneIntent I've done the job.
+GetDoneIntent I've done the problem for the day.
+GetDoneIntent I've done the problem for today.
+GetDoneIntent I've done the problem.
+GetDoneIntent I've done the punishment for the day.
+GetDoneIntent I've done the punishment for today.
+GetDoneIntent I've done the punishment.
+GetDoneIntent I've done the task for the day.
+GetDoneIntent I've done the task for today.
+GetDoneIntent I've done the task.
+GetDoneIntent I've done today chore.
+GetDoneIntent I've done today job.
+GetDoneIntent I've done today problem.
+GetDoneIntent I've done today punishment.
+GetDoneIntent I've done today task.
+GetDoneIntent I've done today's chore.
+GetDoneIntent I've done today's job.
+GetDoneIntent I've done today's problem.
+GetDoneIntent I've done today's punishment.
+GetDoneIntent I've done today's task.
+GetDoneIntent I've finished my chore for the day.
+GetDoneIntent I've finished my chore for today.
+GetDoneIntent I've finished my chore.
+GetDoneIntent I've finished my job for the day.
+GetDoneIntent I've finished my job for today.
+GetDoneIntent I've finished my job.
+GetDoneIntent I've finished my problem for the day.
+GetDoneIntent I've finished my problem for today.
+GetDoneIntent I've finished my problem.
+GetDoneIntent I've finished my punishment for the day.
+GetDoneIntent I've finished my punishment for today.
+GetDoneIntent I've finished my punishment.
+GetDoneIntent I've finished my task for the day.
+GetDoneIntent I've finished my task for today.
+GetDoneIntent I've finished my task.
+GetDoneIntent I've finished the chore for the day.
+GetDoneIntent I've finished the chore for today.
+GetDoneIntent I've finished the chore.
+GetDoneIntent I've finished the job for the day.
+GetDoneIntent I've finished the job for today.
+GetDoneIntent I've finished the job.
+GetDoneIntent I've finished the problem for the day.
+GetDoneIntent I've finished the problem for today.
+GetDoneIntent I've finished the problem.
+GetDoneIntent I've finished the punishment for the day.
+GetDoneIntent I've finished the punishment for today.
+GetDoneIntent I've finished the punishment.
+GetDoneIntent I've finished the task for the day.
+GetDoneIntent I've finished the task for today.
+GetDoneIntent I've finished the task.
+GetDoneIntent I've finished today chore.
+GetDoneIntent I've finished today job.
+GetDoneIntent I've finished today problem.
+GetDoneIntent I've finished today punishment.
+GetDoneIntent I've finished today task.
+GetDoneIntent I've finished today's chore.
+GetDoneIntent I've finished today's job.
+GetDoneIntent I've finished today's problem.
+GetDoneIntent I've finished today's punishment.
+GetDoneIntent I've finished today's task.
