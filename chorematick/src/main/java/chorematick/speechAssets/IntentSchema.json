@@ -1,10 +1,13 @@
-  {
-    "intents": [
-      {
-        "intent": "ChorematickIntent"
-      },
-      {
-        "intent": "AMAZON.HelpIntent"
-      }
-    ]
-  }
+{
+  "intents": [
+    {
+      "intent": "ChorematickIntent"
+    },
+    {
+      "intent": "GetChoreIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}
