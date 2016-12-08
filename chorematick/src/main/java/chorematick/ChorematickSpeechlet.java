@@ -69,9 +69,16 @@ public class ChorematickSpeechlet implements Speechlet {
 
 
   private SpeechletResponse getHelpResponse() {
+
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText("You can ask me for a chore, by saying, what is my chore?");
-    return SpeechletResponse.newTellResponse(speech);
+
+    Reprompt reprompt = new Reprompt();
+    PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
+    repromptSpeech.setText("Would you like your chore?");
+    reprompt.setOutputSpeech(repromptSpeech);
+
+    return SpeechletResponse.newAskResponse(speech, reprompt);
   }
 
   private SpeechletResponse getErrorResponse() {
