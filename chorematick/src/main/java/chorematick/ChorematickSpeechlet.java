@@ -12,9 +12,11 @@ package chorematick;
 import com.amazon.speech.speechlet.*;
 
 import com.amazon.speech.slu.Intent;
+import com.amazon.speech.slu.Slot;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+
 
 import java.util.logging.Logger;
 
@@ -47,6 +49,8 @@ public class ChorematickSpeechlet implements Speechlet {
       return getWelcomeResponse();
     } else if ("GetDoneIntent".equals(intentName)){
       return getDoneResponse();
+    } else if ("DateIntent".equals(intentName)){
+      return getDateResponse(intent);
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
       return getHelpResponse();
     } else {
@@ -92,6 +96,14 @@ public class ChorematickSpeechlet implements Speechlet {
     String speechText = "error error error";
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
+    return SpeechletResponse.newTellResponse(speech);
+  }
+  private SpeechletResponse getDateResponse(Intent intent) {
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    // Slot choreDaySlot = intent.getSlot();
+    speech.setText("Tell me the date");
+    // return SpeechletResponse.newTellResponse(speech);
+    System.out.println(intent);
     return SpeechletResponse.newTellResponse(speech);
   }
 }

@@ -242,3 +242,5 @@ GetDoneIntent I've finished today's job.
 GetDoneIntent I've finished today's problem.
 GetDoneIntent I've finished today's punishment.
 GetDoneIntent I've finished today's task.
+
+DateIntent my chore for {choreDate}

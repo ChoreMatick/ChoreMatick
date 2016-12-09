@@ -7,6 +7,15 @@
         "intent": "GetDoneIntent"
       },
       {
+        "intent": "DateIntent",
+        "slots": [
+          {
+            "name": "choreDate",
+            "type": "AMAZON.DATE"
+          }
+        ]
+      },
+      {
         "intent": "AMAZON.HelpIntent"
       }
     ]
