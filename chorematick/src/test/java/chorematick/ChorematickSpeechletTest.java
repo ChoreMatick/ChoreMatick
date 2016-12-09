@@ -63,4 +63,16 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have informed your appropriate adult."));
   }
+
+  // @Test
+  // public void testDateResponse() {
+  //   when(mockedIntentRequest.getIntent()).thenReturn(mockedIntent);
+  //   when(mockedIntent.getName()).thenReturn("DateIntent");
+  //
+  //   ChorematickSpeechlet speechlet = new ChorematickSpeechlet();
+  //   SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+  //
+  //   assertEquals("tell me the date", ((PlainTextOutputSpeech) response.getOutputSpeech()).getText());
+  //
+  // }
 }

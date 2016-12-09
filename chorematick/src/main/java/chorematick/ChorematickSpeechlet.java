@@ -19,6 +19,7 @@ import com.amazon.speech.ui.SimpleCard;
 
 
 import java.util.logging.Logger;
+import java.util.Calendar;
 
 
 public class ChorematickSpeechlet implements Speechlet {
@@ -40,15 +41,12 @@ public class ChorematickSpeechlet implements Speechlet {
     Intent intent = request.getIntent();
     String intentName = (intent != null) ? intent.getName() : null;
 
-
-    System.out.println(intentName);
-    log.info(intentName);
-
-
     if ("ChorematickIntent".equals(intentName)) {
       return getWelcomeResponse();
     } else if ("GetDoneIntent".equals(intentName)){
       return getDoneResponse();
+    } else if ("GetChoreIntent".equals(intentName)){
+      return getChoreResponse();
     } else if ("DateIntent".equals(intentName)){
       return getDateResponse(intent);
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
@@ -71,6 +69,17 @@ public class ChorematickSpeechlet implements Speechlet {
     reprompt.setOutputSpeech(speech);
 
     return SpeechletResponse.newAskResponse(speech, reprompt);
+  }
+
+  private SpeechletResponse getChoreResponse() {
+    String speechText = "Your chore for today is. Sweep the chimney. That's right. Sweep the chimney.";
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(speechText);
+
+    SimpleCard card = new SimpleCard();
+    card.setTitle("Chore requested");
+    card.setContent("Your child just asked for today's chore");
+    return SpeechletResponse.newTellResponse(speech, card);
   }
 
   private SpeechletResponse getDoneResponse() {
@@ -98,12 +107,20 @@ public class ChorematickSpeechlet implements Speechlet {
     speech.setText(speechText);
     return SpeechletResponse.newTellResponse(speech);
   }
-  private SpeechletResponse getDateResponse(Intent intent) {
+
+  public SpeechletResponse getDateResponse(Intent intent) {
+
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    // Slot choreDaySlot = intent.getSlot();
-    speech.setText("Tell me the date");
-    // return SpeechletResponse.newTellResponse(speech);
-    System.out.println(intent);
-    return SpeechletResponse.newTellResponse(speech);
+
+    Slot daySlot = intent.getSlot("choreDate");
+    String day = daySlot.getValue();
+
+    log.info(day);
+    speech.setText(day);
+
+    SimpleCard card = new SimpleCard();
+    card.setTitle(day);
+    card.setContent(day);
+    return SpeechletResponse.newTellResponse(speech, card);
   }
 }
