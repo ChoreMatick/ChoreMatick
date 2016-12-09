@@ -13,7 +13,7 @@ import java.time.*;
 public class TaskListTest extends BaseTestCase {
 
   private TaskList taskList;
-  private LocalDate day = LocalDate.parse("2016-10-10");
+  private String day = "2016-10-10";
 
   @Mock private Task mockedTask;
 
@@ -43,7 +43,7 @@ public class TaskListTest extends BaseTestCase {
 
   @Test (expected = RuntimeException.class)
   public void getDaysTaskExceptionTest() {
-    taskList.getDaysTask(LocalDate.parse("2016-12-10"));
+    taskList.getDaysTask("2016-12-10");
   }
 
 }
