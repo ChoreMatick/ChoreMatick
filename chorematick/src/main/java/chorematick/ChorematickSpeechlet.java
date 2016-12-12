@@ -17,12 +17,14 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 
 import java.util.logging.Logger;
 import java.util.Calendar;
 import java.time.*;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -114,32 +116,22 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newTellResponse(speech, card);
   }
 
-  private SpeechletResponse getChoreList() {
-    // String speechText = "When this works you will hear a list of chores";
+  public SpeechletResponse getChoreList() {
 
-    Table table = this.dynamoDB.getTable("Tasks");
-    // String speechText = "";
+  //   HashMap<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+  // eav.put(":v1", new AttributeValue().withS("2015"));
+  //
+  DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
 
-    ArrayList<String> choreList = new ArrayList<>();
+  List<Task> chores =  mapper.scan(Task.class, scanExpression);
 
-    try {
-        ItemCollection<ScanOutcome> items = table.scan();
-        Iterator<Item> iter = items.iterator();
-        while (iter.hasNext()){
-          Item item = iter.next();
-          choreList.add(item.getChore());
+  String result = "";
 
-      }
-    } catch (Exception e) {
-        System.err.println("Unable to scan table:");
-        System.err.println(e.getMessage());
+  for(Task task : chores) {
+        result = result + ", " + task.getChore();
     }
 
-    String result = String.join("," , choreList);
-
-
-
-    log.info(result);
+  log.info(result);
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(result);

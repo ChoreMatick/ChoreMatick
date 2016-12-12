@@ -90,4 +90,9 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Go stand in the corner and think about what you've done."));
   }
 
+  // @Test
+  // public void testChorelist() {
+  //   speechlet.getChoreList();
+  // }
+
 }
