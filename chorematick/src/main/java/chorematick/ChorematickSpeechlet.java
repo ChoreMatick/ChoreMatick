@@ -1,39 +1,38 @@
-/**
-Copyright 2014-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
-
-http://aws.amazon.com/apache2.0/
-
-or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-*/
 package chorematick;
 
 import com.amazon.speech.speechlet.*;
-
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.slu.Slot;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 
-
 import java.util.logging.Logger;
 import java.util.Calendar;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.regions.Regions;
+import java.time.*;
+
 
 
 public class ChorematickSpeechlet implements Speechlet {
 
   private final static Logger log = Logger.getLogger(ChorematickSpeechlet.class.getName());
 
+  private  AmazonDynamoDBClient client;
+
+  private DynamoDBMapper mapper;
 
   public void onSessionStarted(final SessionStartedRequest request, final Session session) {
+    this.client = new AmazonDynamoDBClient();
+    this.mapper = new DynamoDBMapper(client);
   }
 
   @Override
   public SpeechletResponse onLaunch(final LaunchRequest request, final Session session) {
     return getWelcomeResponse();
-}
+  }
 
   @Override
   public SpeechletResponse onIntent(final IntentRequest request, final Session session) {
@@ -41,14 +40,13 @@ public class ChorematickSpeechlet implements Speechlet {
     Intent intent = request.getIntent();
     String intentName = (intent != null) ? intent.getName() : null;
 
-    if ("ChorematickIntent".equals(intentName)) {
-      return getWelcomeResponse();
+
+    if ("GetChoreIntent".equals(intentName)) {
+      return getChoreResponse();
     } else if ("GetDoneIntent".equals(intentName)){
       return getDoneResponse();
-    } else if ("GetChoreIntent".equals(intentName)){
-      return getChoreResponse();
-    } else if ("DateIntent".equals(intentName)){
-      return getDateResponse(intent);
+    } else if ("ChorematickIntent".equals(intentName)) {
+      return getEasterEggResponse();
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
       return getHelpResponse();
     } else {
@@ -72,6 +70,12 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getChoreResponse() {
+
+    Task task = new Task();
+    task.setChore("Sweep the chimney");
+    task.setDate("2016-10-10");
+    this.mapper.save(task);
+
     String speechText = "Your chore for today is. Sweep the chimney. That's right. Sweep the chimney.";
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
@@ -96,9 +100,16 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getHelpResponse() {
+
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText("You can ask me for a chore, by saying, what is my chore?");
-    return SpeechletResponse.newTellResponse(speech);
+
+    Reprompt reprompt = new Reprompt();
+    PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
+    repromptSpeech.setText("Would you like your chore?");
+    reprompt.setOutputSpeech(repromptSpeech);
+
+    return SpeechletResponse.newAskResponse(speech, reprompt);
   }
 
   private SpeechletResponse getErrorResponse() {
@@ -118,4 +129,11 @@ public class ChorematickSpeechlet implements Speechlet {
 
     return SpeechletResponse.newTellResponse(speech);
   }
+
+  private SpeechletResponse getEasterEggResponse() {
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText("Go stand in the corner and think about what you've done.");
+    return SpeechletResponse.newTellResponse(speech);
+  }
+
 }
