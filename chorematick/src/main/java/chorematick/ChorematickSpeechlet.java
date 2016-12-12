@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import java.util.Calendar;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.regions.Regions;
 import java.time.*;
 
 
@@ -24,9 +23,12 @@ public class ChorematickSpeechlet implements Speechlet {
 
   private DynamoDBMapper mapper;
 
+  public ChorematickSpeechlet(DynamoDBMapper mapper) {
+    super();
+    this.mapper = mapper;
+  }
+
   public void onSessionStarted(final SessionStartedRequest request, final Session session) {
-    this.client = new AmazonDynamoDBClient();
-    this.mapper = new DynamoDBMapper(client);
   }
 
   @Override
@@ -45,6 +47,8 @@ public class ChorematickSpeechlet implements Speechlet {
       return getChoreResponse();
     } else if ("GetDoneIntent".equals(intentName)){
       return getDoneResponse();
+    } else if ("AddChoreIntent".equals(intentName)) {
+      return getAddChoreResponse(intent);
     } else if ("ChorematickIntent".equals(intentName)) {
       return getEasterEggResponse();
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
@@ -97,6 +101,23 @@ public class ChorematickSpeechlet implements Speechlet {
     speech.setText(speechText);
 
     return SpeechletResponse.newTellResponse(speech, card);
+  }
+
+  private SpeechletResponse getAddChoreResponse(Intent intent){
+
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+
+    String day = intent.getSlot("choreDate").getValue();
+    String chore = intent.getSlot("chore").getValue();
+
+    Task task = new Task();
+    task.setDate(day);
+    task.setChore(chore);
+    this.mapper.save(task);
+
+    speech.setText("Very well, I have added a " + chore + " chore for " + day);
+
+    return SpeechletResponse.newTellResponse(speech);
   }
 
   private SpeechletResponse getHelpResponse() {
