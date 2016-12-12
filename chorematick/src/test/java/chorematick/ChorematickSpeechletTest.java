@@ -20,6 +20,8 @@ import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import com.amazonaws.partitions.PartitionsLoader;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import static org.mockito.Matchers.any;
 
 public class ChorematickSpeechletTest extends BaseTestCase {
 
@@ -29,11 +31,13 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Mock private Session mockedSession;
   @Mock Intent mockedIntent;
   @Mock private SessionStartedRequest mockedSessionStartedRequest;
+  @Mock private DynamoDBMapper mockedMapper;
+  @Mock private Task mockedTask;
 
   @Before
   public void setup() {
     when(mockedIntentRequest.getIntent()).thenReturn(mockedIntent);
-    speechlet = new ChorematickSpeechlet();
+    speechlet = new ChorematickSpeechlet(mockedMapper);
     speechlet.onSessionStarted(mockedSessionStartedRequest, mockedSession);
   }
 
@@ -59,17 +63,18 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
   }
 
-  // @Test
-  // public void testgetChoreResponse() {
-  //   when(mockedIntent.getName()).thenReturn("GetChoreIntent");
-  //
-  //   SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
-  //   SimpleCard card = (SimpleCard) response.getCard();
-  //
-  //   assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Your chore for today is. Sweep the chimney. That's right. Sweep the chimney."));
-  //   assertThat(card.getTitle(), equalTo("Chore requested"));
-  //   assertThat(card.getContent(), equalTo("Your child just asked for today's chore"));
-  // }
+  @Test
+  public void testgetChoreResponse() {
+    when(mockedIntent.getName()).thenReturn("GetChoreIntent");
+
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+    SimpleCard card = (SimpleCard) response.getCard();
+
+    verify(mockedMapper).save(any(Task.class));
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Your chore for today is. Sweep the chimney. That's right. Sweep the chimney."));
+    assertThat(card.getTitle(), equalTo("Chore requested"));
+    assertThat(card.getContent(), equalTo("Your child just asked for today's chore"));
+  }
 
   @Test
   public void testDoneResponse() {

@@ -24,9 +24,12 @@ public class ChorematickSpeechlet implements Speechlet {
 
   private DynamoDBMapper mapper;
 
+  public ChorematickSpeechlet(DynamoDBMapper mapper) {
+    super();
+    this.mapper = mapper;
+  }
+
   public void onSessionStarted(final SessionStartedRequest request, final Session session) {
-    this.client = new AmazonDynamoDBClient();
-    this.mapper = new DynamoDBMapper(client);
   }
 
   @Override
