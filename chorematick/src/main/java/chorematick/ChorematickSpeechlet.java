@@ -32,10 +32,12 @@ public class ChorematickSpeechlet implements Speechlet {
   private  AmazonDynamoDBClient client;
 
   private DynamoDBMapper mapper;
+  private DynamoDB dynamoDB;
 
   public void onSessionStarted(final SessionStartedRequest request, final Session session) {
     this.client = new AmazonDynamoDBClient();
     this.mapper = new DynamoDBMapper(client);
+    this.dynamoDB = new DynamoDB(client);
   }
 
   @Override
@@ -113,14 +115,14 @@ public class ChorematickSpeechlet implements Speechlet {
   private SpeechletResponse getChoreList() {
     String speechText = "";
 
-    Table table = dynamoDB.getTable("Tasks");
+    Table table = this.dynamoDB.getTable("Tasks");
 
     try {
-        ItemCollection<ScanOutcome> items = table.scan;
+        ItemCollection<ScanOutcome> items = table.scan();
         Iterator<Item> iter = items.iterator();
         while (iter.hasNext()){
           Item item = iter.next();
-          Sytem.out.println(item.toString());
+          System.out.println(item.toString());
       }
     } catch (Exception e) {
         System.err.println("Unable to scan table:");
