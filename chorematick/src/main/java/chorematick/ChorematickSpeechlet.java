@@ -6,13 +6,22 @@ import com.amazon.speech.slu.Slot;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
+import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 
 import java.util.logging.Logger;
 import java.util.Calendar;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.regions.Regions;
 import java.time.*;
+import java.util.Iterator;
 
 
 
@@ -49,6 +58,8 @@ public class ChorematickSpeechlet implements Speechlet {
       return getEasterEggResponse();
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
       return getHelpResponse();
+    } else if ("getChoreListIntent".equals(intentName)) {
+      return getChoreList();
     } else {
       return getErrorResponse();
     }
@@ -97,6 +108,30 @@ public class ChorematickSpeechlet implements Speechlet {
     speech.setText(speechText);
 
     return SpeechletResponse.newTellResponse(speech, card);
+  }
+
+  private SpeechletResponse getChoreList() {
+    String speechText = "";
+
+    Table table = dynamoDB.getTable("Tasks");
+
+    try {
+        ItemCollection<ScanOutcome> items = table.scan;
+        Iterator<Item> iter = items.iterator();
+        while (iter.hasNext()){
+          Item item = iter.next();
+          Sytem.out.println(item.toString());
+      }
+    } catch (Exception e) {
+        System.err.println("Unable to scan table:");
+        System.err.println(e.getMessage());
+    }
+
+
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(speechText);
+
+    return SpeechletResponse.newTellResponse(speech);
   }
 
   private SpeechletResponse getHelpResponse() {

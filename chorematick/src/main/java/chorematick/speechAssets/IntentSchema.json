@@ -11,6 +11,9 @@
         "intent": "GetChoreIntent"
       },
       {
+        "intent": "GetChoreListIntent"
+      },
+      {
         "intent": "DateIntent",
         "slots": [
           {
@@ -24,4 +27,3 @@
       }
     ]
   }
-
