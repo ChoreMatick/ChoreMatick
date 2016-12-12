@@ -11,11 +11,13 @@ import java.time.*;
 public class TaskTest extends BaseTestCase {
 
   private Task task;
-  private LocalDate day = LocalDate.parse("2016-10-10");
+  private String day = "2016-10-10";
 
   @Before
   public void setup() {
-    task = new Task("Sweep the chimney", day);
+    task = new Task();
+    task.setDate(day);
+    task.setChore("Sweep the chimney");
   }
 
   @Test
@@ -24,7 +26,7 @@ public class TaskTest extends BaseTestCase {
   }
 
   @Test
-  public void getAction() {
-    assertEquals("Sweep the chimney", task.getAction());
+  public void getChoreTest() {
+    assertEquals("Sweep the chimney", task.getChore());
   }
 }

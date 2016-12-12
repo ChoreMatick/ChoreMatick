@@ -1,22 +1,31 @@
 package chorematick;
 
 import java.time.*;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
+@DynamoDBTable(tableName = "Tasks")
 public class Task {
 
-  private String action;
-  private LocalDate date;
+  private String chore;
+  private String day;
 
-  Task(String chore, LocalDate day){
-    action = chore;
-    date = day;
+  @DynamoDBHashKey(attributeName="Due")
+  public String getDate(){
+    return day;
+  }
+  public void setDate(String day) {
+    this.day = day;
   }
 
-  public LocalDate getDate(){
-    return date;
+  @DynamoDBRangeKey(attributeName="Chore")
+  public String getChore(){
+    return chore;
   }
 
-  public String getAction(){
-    return action;
+  public void setChore(String chore) {
+    this.chore = chore;
   }
 }

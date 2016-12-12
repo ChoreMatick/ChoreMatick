@@ -15,7 +15,7 @@ public class TaskList {
     tasks.add(task);
   }
 
-  public Task getDaysTask(LocalDate day) {
+  public Task getDaysTask(String day) {
     for(Task t : tasks){
       if (t.getDate() == day){
         return t;
