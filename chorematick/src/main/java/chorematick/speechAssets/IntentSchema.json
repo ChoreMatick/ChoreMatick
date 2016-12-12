@@ -5,6 +5,19 @@
         "intent": "ChorematickIntent"
       },
       {
+        "intent": "ConfirmChoreIntent",
+        "slots": [
+          {
+            "name": "choreDate",
+            "type": "AMAZON.DATE"
+          },
+          {
+            "name": "chore",
+            "type": "CHORES"
+          }
+        ]
+      },
+      {
         "intent": "GetDoneIntent"
       },
       {
@@ -24,4 +37,3 @@
       }
     ]
   }
-

@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.mockito.MockitoAnnotations;
 import static org.hamcrest.CoreMatchers.*;
 import com.amazon.speech.slu.Intent;
+import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.IntentRequest;
 import com.amazon.speech.speechlet.LaunchRequest;
 import com.amazon.speech.speechlet.Session;
@@ -33,6 +34,8 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Mock private SessionStartedRequest mockedSessionStartedRequest;
   @Mock private DynamoDBMapper mockedMapper;
   @Mock private Task mockedTask;
+  @Mock private Slot mockedDateSlot;
+  @Mock private Slot mockedChoreSlot;
 
   @Before
   public void setup() {
@@ -74,6 +77,21 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Your chore for today is. Sweep the chimney. That's right. Sweep the chimney."));
     assertThat(card.getTitle(), equalTo("Chore requested"));
     assertThat(card.getContent(), equalTo("Your child just asked for today's chore"));
+  }
+
+  @Test
+  public void testConfirmChoreResponse(){
+    when(mockedIntent.getName()).thenReturn("ConfirmChoreIntent");
+    when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
+    when(mockedDateSlot.getValue()).thenReturn("12-12-2016");;
+    when(mockedIntent.getSlot("chore")).thenReturn(mockedChoreSlot);
+    when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
+
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+
+    verify(mockedMapper).load(Task.class, "12-12-2016", "Shear the sheep");
+    verify(mockedMapper).delete(any());
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("I've confirmed 12-12-2016 Shear the sheep chore is completed."));
   }
 
   @Test
