@@ -268,4 +268,98 @@ GetDoneIntent I've finished today's problem.
 GetDoneIntent I've finished today's punishment.
 GetDoneIntent I've finished today's task.
 
+AddChoreIntent add a {chore} due for {choreDate}
+AddChoreIntent add a {chore} due on {choreDate}
+AddChoreIntent add a {chore} due to {choreDate}
+AddChoreIntent add a {chore} for {choreDate}
+AddChoreIntent add a {chore} on {choreDate}
+AddChoreIntent add a {chore} to {choreDate}
+AddChoreIntent add the {chore} due for {choreDate}
+AddChoreIntent add the {chore} due on {choreDate}
+AddChoreIntent add the {chore} due to {choreDate}
+AddChoreIntent add the {chore} for {choreDate}
+AddChoreIntent add the {chore} on {choreDate}
+AddChoreIntent add the {chore} to {choreDate}
+AddChoreIntent add this {chore} due for {choreDate}
+AddChoreIntent add this {chore} due on {choreDate}
+AddChoreIntent add this {chore} due to {choreDate}
+AddChoreIntent add this {chore} for {choreDate}
+AddChoreIntent add this {chore} on {choreDate}
+AddChoreIntent add this {chore} to {choreDate}
+AddChoreIntent create a {chore}
+AddChoreIntent create a {chore} due for {choreDate}
+AddChoreIntent create a {chore} due on {choreDate}
+AddChoreIntent create a {chore} due to {choreDate}
+AddChoreIntent create a {chore} for {choreDate}
+AddChoreIntent create a {chore} on {choreDate}
+AddChoreIntent create a {chore} to {choreDate}
+AddChoreIntent create the {chore}
+AddChoreIntent create the {chore} due for {choreDate}
+AddChoreIntent create the {chore} due on {choreDate}
+AddChoreIntent create the {chore} due to {choreDate}
+AddChoreIntent create the {chore} for {choreDate}
+AddChoreIntent create the {chore} on {choreDate}
+AddChoreIntent create the {chore} to {choreDate}
+AddChoreIntent create this {chore}
+AddChoreIntent create this {chore} due for {choreDate}
+AddChoreIntent create this {chore} due on {choreDate}
+AddChoreIntent create this {chore} due to {choreDate}
+AddChoreIntent create this {chore} for {choreDate}
+AddChoreIntent create this {chore} on {choreDate}
+AddChoreIntent create this {chore} to {choreDate}
+AddChoreIntent due {choreDate} add a {chore}
+AddChoreIntent due {choreDate} add the {chore}
+AddChoreIntent due {choreDate} add this {chore}
+AddChoreIntent for {choreDate} add a {chore}
+AddChoreIntent for {choreDate} add the {chore}
+AddChoreIntent for {choreDate} add this {chore}
+AddChoreIntent make a {chore}
+AddChoreIntent make a {chore} due for {choreDate}
+AddChoreIntent make a {chore} due on {choreDate}
+AddChoreIntent make a {chore} due to {choreDate}
+AddChoreIntent make a {chore} for {choreDate}
+AddChoreIntent make a {chore} on {choreDate}
+AddChoreIntent make a {chore} to {choreDate}
+AddChoreIntent make the {chore}
+AddChoreIntent make the {chore} due for {choreDate}
+AddChoreIntent make the {chore} due on {choreDate}
+AddChoreIntent make the {chore} due to {choreDate}
+AddChoreIntent make the {chore} for {choreDate}
+AddChoreIntent make the {chore} on {choreDate}
+AddChoreIntent make the {chore} to {choreDate}
+AddChoreIntent make this {chore}
+AddChoreIntent make this {chore} due for {choreDate}
+AddChoreIntent make this {chore} due on {choreDate}
+AddChoreIntent make this {chore} due to {choreDate}
+AddChoreIntent make this {chore} for {choreDate}
+AddChoreIntent make this {chore} on {choreDate}
+AddChoreIntent make this {chore} to {choreDate}
+AddChoreIntent on {choreDate} add a {chore}
+AddChoreIntent on {choreDate} add the {chore}
+AddChoreIntent on {choreDate} add this {chore}
+AddChoreIntent put a {chore}
+AddChoreIntent put a {chore} due for {choreDate}
+AddChoreIntent put a {chore} due on {choreDate}
+AddChoreIntent put a {chore} due to {choreDate}
+AddChoreIntent put a {chore} for {choreDate}
+AddChoreIntent put a {chore} on {choreDate}
+AddChoreIntent put a {chore} to {choreDate}
+AddChoreIntent put the {chore}
+AddChoreIntent put the {chore} due for {choreDate}
+AddChoreIntent put the {chore} due on {choreDate}
+AddChoreIntent put the {chore} due to {choreDate}
+AddChoreIntent put the {chore} for {choreDate}
+AddChoreIntent put the {chore} on {choreDate}
+AddChoreIntent put the {chore} to {choreDate}
+AddChoreIntent put this {chore}
+AddChoreIntent put this {chore} due for {choreDate}
+AddChoreIntent put this {chore} due on {choreDate}
+AddChoreIntent put this {chore} due to {choreDate}
+AddChoreIntent put this {chore} for {choreDate}
+AddChoreIntent put this {chore} on {choreDate}
+AddChoreIntent put this {chore} to {choreDate}
+AddChoreIntent to {choreDate} add a {chore}
+AddChoreIntent to {choreDate} add the {chore}
+AddChoreIntent to {choreDate} add this {chore}
+
 DateIntent my chore for {choreDate}
