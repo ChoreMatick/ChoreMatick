@@ -77,6 +77,21 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   }
 
   @Test
+  public void testConfirmChoreResponse(){
+    when(mockedIntent.getName()).thenReturn("ConfirmChoreIntent");
+    when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
+    when(mockedDateSlot.getValue()).thenReturn("12-12-2016");
+    when(mockedIntent.getSlot("chore")).thenReturn(mockedChoreSlot);
+    when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
+
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+
+    verify(mockedMapper).load(Task.class, "12-12-2016", "Shear the sheep");
+    verify(mockedMapper).delete(any());
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("I've confirmed 12-12-2016 Shear the sheep chore is completed."));
+  }
+
+  @Test
   public void testAddChoreResponse(){
     when(mockedIntent.getName()).thenReturn("AddChoreIntent");
     when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
@@ -85,11 +100,9 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
-
     verify(mockedMapper).save(any(Task.class));
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have added a Shear the sheep chore for 02-03-2016"));
   }
-
 
   @Test
   public void testDoneResponse() {

@@ -1,19 +1,39 @@
 
-{
-  "intents": [
-    {
-      "intent": "ChorematickIntent"
-    },
-    {
-      "intent": "GetChoreListIntent"
-    },
-    {
-      "intent": "GetDoneIntent"
-    },
-    {
-      "intent": "GetChoreIntent"
-    },
-    {
+
+  {
+    "intents": [
+      {
+        "intent": "ChorematickIntent"
+      },
+      {
+        "intent": "ConfirmChoreIntent",
+        "slots": [
+          {
+            "name": "choreDate",
+            "type": "AMAZON.DATE"
+          },
+          {
+            "name": "chore",
+            "type": "CHORES"
+          }
+        ]
+      },
+      {
+        "intent": "GetDoneIntent"
+      },
+      {
+        "intent": "GetChoreIntent"
+      },
+      {
+        "intent": "DateIntent",
+        "slots": [
+          {
+            "name": "choreDate",
+            "type": "AMAZON.DATE"
+          }
+        ]
+      },
+        {
       "intent": "AddChoreIntent",
       "slots": [
         {
@@ -26,8 +46,8 @@
         }
       ]
     },
-    {
-      "intent": "AMAZON.HelpIntent"
-    }
-  ]
-}
+      {
+        "intent": "AMAZON.HelpIntent"
+      }
+    ]
+  }
