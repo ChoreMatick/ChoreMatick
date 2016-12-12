@@ -140,6 +140,9 @@ public class ChorematickSpeechlet implements Speechlet {
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(result);
+    return SpeechletResponse.newTellResponse(speech);
+
+  }
 
   private SpeechletResponse getAddChoreResponse(Intent intent){
 
