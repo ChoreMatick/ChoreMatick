@@ -22,8 +22,6 @@ public class ChorematickSpeechlet implements Speechlet {
 
   public void onSessionStarted(final SessionStartedRequest request, final Session session) {
     this.client = new AmazonDynamoDBClient();
-    this.client.withRegion(Regions.US_EAST_1);
-    this.client.withEndpoint("http://localhost:3000");
     this.mapper = new DynamoDBMapper(client);
   }
 
