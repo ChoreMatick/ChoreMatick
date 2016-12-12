@@ -114,13 +114,8 @@ public class ChorematickSpeechlet implements Speechlet {
 
     Slot daySlot = intent.getSlot("choreDate");
     String day = daySlot.getValue();
-
-    log.info(day);
     speech.setText(day);
 
-    SimpleCard card = new SimpleCard();
-    card.setTitle(day);
-    card.setContent(day);
-    return SpeechletResponse.newTellResponse(speech, card);
+    return SpeechletResponse.newTellResponse(speech);
   }
 }
