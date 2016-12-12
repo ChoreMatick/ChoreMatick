@@ -1,5 +1,4 @@
 
-
   {
     "intents": [
       {
@@ -24,6 +23,9 @@
       {
         "intent": "GetChoreIntent"
       },
+        {
+      "intent": "GetChoreListIntent"
+    },
       {
         "intent": "DateIntent",
         "slots": [
@@ -46,8 +48,10 @@
         }
       ]
     },
-      {
-        "intent": "AMAZON.HelpIntent"
-      }
-    ]
-  }
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}
+
+

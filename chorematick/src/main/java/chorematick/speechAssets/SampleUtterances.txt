@@ -268,6 +268,19 @@ GetDoneIntent I've finished today's problem.
 GetDoneIntent I've finished today's punishment.
 GetDoneIntent I've finished today's task.
 
+GetChoreListIntent check all list of chores
+GetChoreListIntent check full list of chores
+GetChoreListIntent find all list of chores
+GetChoreListIntent find full list of chores
+GetChoreListIntent get all list of chores
+GetChoreListIntent get full list of chores
+GetChoreListIntent give me a full list of chores
+GetChoreListIntent give us a full list of chores
+GetChoreListIntent read all list of chores
+GetChoreListIntent read full list of chores
+GetChoreListIntent tell me a full list of chores
+GetChoreListIntent tell us a full list of chores
+=======
 ConfirmChoreIntent confirm my {choreDate} {chore} chore as complete
 ConfirmChoreIntent confirm my {choreDate} {chore} chore as done
 ConfirmChoreIntent confirm my {choreDate} {chore} chore as finished
@@ -842,3 +855,4 @@ AddChoreIntent put this {chore} to {choreDate}
 AddChoreIntent to {choreDate} add a {chore}
 AddChoreIntent to {choreDate} add the {chore}
 AddChoreIntent to {choreDate} add this {chore}
+

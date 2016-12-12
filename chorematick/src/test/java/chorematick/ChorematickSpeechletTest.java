@@ -49,7 +49,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
 
-    assertEquals("error error error", ((PlainTextOutputSpeech) response.getOutputSpeech()).getText());
+    assertEquals("error error error. Danger Will Robinson.", ((PlainTextOutputSpeech) response.getOutputSpeech()).getText());
   }
 
   @Test
@@ -122,5 +122,10 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Go stand in the corner and think about what you've done."));
   }
+
+  // @Test
+  // public void testChorelist() {
+  //   speechlet.getChoreList();
+  // }
 
 }

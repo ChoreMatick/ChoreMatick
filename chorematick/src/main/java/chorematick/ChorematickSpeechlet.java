@@ -6,11 +6,24 @@ import com.amazon.speech.slu.Slot;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
+import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 
 import java.util.logging.Logger;
 import java.util.Calendar;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 import java.time.*;
 
 public class ChorematickSpeechlet implements Speechlet {
@@ -20,6 +33,7 @@ public class ChorematickSpeechlet implements Speechlet {
   private  AmazonDynamoDBClient client;
 
   private DynamoDBMapper mapper;
+  private DynamoDB dynamoDB;
 
   public ChorematickSpeechlet(DynamoDBMapper mapper) {
     super();
@@ -39,6 +53,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
     Intent intent = request.getIntent();
     String intentName = (intent != null) ? intent.getName() : null;
+    // log.info(intentName);
 
 
     if ("GetChoreIntent".equals(intentName)) {
@@ -51,6 +66,8 @@ public class ChorematickSpeechlet implements Speechlet {
       return getEasterEggResponse();
     } else if ("AddChoreIntent".equals(intentName)) {
       return getAddChoreResponse(intent);
+    } else if ("GetChoreListIntent".equals(intentName)) {
+      return getChoreList();
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
       return getHelpResponse();
     } else {
@@ -103,6 +120,30 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newTellResponse(speech, card);
   }
 
+
+  public SpeechletResponse getChoreList() {
+
+  //   HashMap<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+  // eav.put(":v1", new AttributeValue().withS("2015"));
+  //
+  DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+
+  List<Task> chores =  mapper.scan(Task.class, scanExpression);
+
+  String result = "";
+
+  for(Task task : chores) {
+        result = result + ", " + task.getChore();
+    }
+
+  log.info(result);
+
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(result);
+    return SpeechletResponse.newTellResponse(speech);
+
+  }
+
   private SpeechletResponse getAddChoreResponse(Intent intent){
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
@@ -134,7 +175,7 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getErrorResponse() {
-    String speechText = "error error error";
+    String speechText = "error error error. Danger Will Robinson.";
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
     return SpeechletResponse.newTellResponse(speech);
