@@ -21,10 +21,10 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 
 import java.util.logging.Logger;
 import java.util.Calendar;
-import java.time.*;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.*;
 
 
 
@@ -37,10 +37,12 @@ public class ChorematickSpeechlet implements Speechlet {
   private DynamoDBMapper mapper;
   private DynamoDB dynamoDB;
 
+  public ChorematickSpeechlet(DynamoDBMapper mapper) {
+    super();
+    this.mapper = mapper;
+  }
+
   public void onSessionStarted(final SessionStartedRequest request, final Session session) {
-    this.client = new AmazonDynamoDBClient();
-    this.mapper = new DynamoDBMapper(client);
-    this.dynamoDB = new DynamoDB(client);
   }
 
   @Override
@@ -60,6 +62,8 @@ public class ChorematickSpeechlet implements Speechlet {
       return getChoreResponse();
     } else if ("GetDoneIntent".equals(intentName)){
       return getDoneResponse();
+    } else if ("AddChoreIntent".equals(intentName)) {
+      return getAddChoreResponse(intent);
     } else if ("ChorematickIntent".equals(intentName)) {
       return getEasterEggResponse();
     } else if ("GetChoreListIntent".equals(intentName)) {
@@ -116,6 +120,7 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newTellResponse(speech, card);
   }
 
+
   public SpeechletResponse getChoreList() {
 
   //   HashMap<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
@@ -135,6 +140,21 @@ public class ChorematickSpeechlet implements Speechlet {
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(result);
+
+  private SpeechletResponse getAddChoreResponse(Intent intent){
+
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+
+    String day = intent.getSlot("choreDate").getValue();
+    String chore = intent.getSlot("chore").getValue();
+
+    Task task = new Task();
+    task.setDate(day);
+    task.setChore(chore);
+    this.mapper.save(task);
+
+    speech.setText("Very well, I have added a " + chore + " chore for " + day);
+
     return SpeechletResponse.newTellResponse(speech);
   }
 
