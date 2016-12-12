@@ -80,6 +80,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have informed your appropriate adult."));
   }
 
+
   @Test
   public void testEasterEggResponse() {
     when(mockedIntent.getName()).thenReturn("ChorematickIntent");
@@ -88,4 +89,5 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Go stand in the corner and think about what you've done."));
   }
+
 }

@@ -2,14 +2,18 @@ package chorematick;
 
 import com.amazon.speech.speechlet.*;
 import com.amazon.speech.slu.Intent;
+import com.amazon.speech.slu.Slot;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+
+import java.util.logging.Logger;
+import java.util.Calendar;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.regions.Regions;
-import java.util.logging.Logger;
 import java.time.*;
+
 
 
 public class ChorematickSpeechlet implements Speechlet {
@@ -35,6 +39,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
     Intent intent = request.getIntent();
     String intentName = (intent != null) ? intent.getName() : null;
+
 
     if ("GetChoreIntent".equals(intentName)) {
       return getChoreResponse();
@@ -65,6 +70,7 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getChoreResponse() {
+
     Task task = new Task();
     task.setChore("Sweep the chimney");
     task.setDate("2016-10-10");
@@ -110,6 +116,17 @@ public class ChorematickSpeechlet implements Speechlet {
     String speechText = "error error error";
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
+    return SpeechletResponse.newTellResponse(speech);
+  }
+
+  public SpeechletResponse getDateResponse(Intent intent) {
+
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+
+    Slot daySlot = intent.getSlot("choreDate");
+    String day = daySlot.getValue();
+    speech.setText(day);
+
     return SpeechletResponse.newTellResponse(speech);
   }
 

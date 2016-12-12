@@ -1,16 +1,27 @@
-{
-  "intents": [
-    {
-      "intent": "ChorematickIntent"
-    },
-    {
-      "intent": "GetChoreIntent"
-    },
-    {
-      "intent": "GetDoneIntent"
-    },
-    {
-      "intent": "AMAZON.HelpIntent"
-    }
-  ]
-}
+
+  {
+    "intents": [
+      {
+        "intent": "ChorematickIntent"
+      },
+      {
+        "intent": "GetDoneIntent"
+      },
+      {
+        "intent": "GetChoreIntent"
+      },
+      {
+        "intent": "DateIntent",
+        "slots": [
+          {
+            "name": "choreDate",
+            "type": "AMAZON.DATE"
+          }
+        ]
+      },
+      {
+        "intent": "AMAZON.HelpIntent"
+      }
+    ]
+  }
+
