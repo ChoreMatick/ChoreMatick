@@ -279,7 +279,7 @@ GetChoreListIntent give me a full list of chores
 GetChoreListIntent give us a full list of chores
 GetChoreListIntent read all list of chores
 GetChoreListIntent read full list of chores
-GetChoreListIntent ell me a full list of chores
-GetChoreListIntent ell us a full list of chores
+GetChoreListIntent tell me a full list of chores
+GetChoreListIntent tell us a full list of chores
 
 DateIntent my chore for {choreDate}

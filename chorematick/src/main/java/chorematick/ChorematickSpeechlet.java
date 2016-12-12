@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import java.util.Calendar;
 import java.time.*;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 
 
@@ -50,6 +51,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
     Intent intent = request.getIntent();
     String intentName = (intent != null) ? intent.getName() : null;
+    // log.info(intentName);
 
 
     if ("GetChoreIntent".equals(intentName)) {
@@ -58,10 +60,10 @@ public class ChorematickSpeechlet implements Speechlet {
       return getDoneResponse();
     } else if ("ChorematickIntent".equals(intentName)) {
       return getEasterEggResponse();
+    } else if ("GetChoreListIntent".equals(intentName)) {
+      return getChoreList();
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
       return getHelpResponse();
-    } else if ("getChoreListIntent".equals(intentName)) {
-      return getChoreList();
     } else {
       return getErrorResponse();
     }
@@ -113,26 +115,34 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getChoreList() {
-    String speechText = "";
+    // String speechText = "When this works you will hear a list of chores";
 
     Table table = this.dynamoDB.getTable("Tasks");
+    // String speechText = "";
+
+    ArrayList<String> choreList = new ArrayList<>();
 
     try {
         ItemCollection<ScanOutcome> items = table.scan();
         Iterator<Item> iter = items.iterator();
         while (iter.hasNext()){
           Item item = iter.next();
-          System.out.println(item.toString());
+          choreList.add(item.getChore());
+
       }
     } catch (Exception e) {
         System.err.println("Unable to scan table:");
         System.err.println(e.getMessage());
     }
 
+    String result = String.join("," , choreList);
+
+
+
+    log.info(result);
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText(speechText);
-
+    speech.setText(result);
     return SpeechletResponse.newTellResponse(speech);
   }
 
@@ -150,7 +160,7 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getErrorResponse() {
-    String speechText = "error error error";
+    String speechText = "error error error. Danger Will Robinson.";
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
     return SpeechletResponse.newTellResponse(speech);

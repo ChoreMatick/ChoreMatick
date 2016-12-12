@@ -44,7 +44,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
 
-    assertEquals("error error error", ((PlainTextOutputSpeech) response.getOutputSpeech()).getText());
+    assertEquals("error error error. Danger Will Robinson.", ((PlainTextOutputSpeech) response.getOutputSpeech()).getText());
   }
 
   @Test
