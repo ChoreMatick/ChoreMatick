@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.mockito.MockitoAnnotations;
 import static org.hamcrest.CoreMatchers.*;
 import com.amazon.speech.slu.Intent;
+import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.IntentRequest;
 import com.amazon.speech.speechlet.LaunchRequest;
 import com.amazon.speech.speechlet.Session;
@@ -19,7 +20,7 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
-import com.amazonaws.partitions.PartitionsLoader;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
 public class ChorematickSpeechletTest extends BaseTestCase {
 
@@ -27,8 +28,13 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
   @Mock private IntentRequest mockedIntentRequest;
   @Mock private Session mockedSession;
-  @Mock Intent mockedIntent;
+  @Mock private Intent mockedIntent;
   @Mock private SessionStartedRequest mockedSessionStartedRequest;
+  @Mock private Slot mockedDateSlot;
+  @Mock private Slot mockedChoreSlot;
+  @Mock private DynamoDBMapper mockedMapper;
+  @Mock private Task mockedTask;
+
 
   @Before
   public void setup() {
@@ -70,6 +76,22 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   //   assertThat(card.getTitle(), equalTo("Chore requested"));
   //   assertThat(card.getContent(), equalTo("Your child just asked for today's chore"));
   // }
+
+  @Test
+  public void testAddChoreResponse(){
+    when(mockedIntent.getName()).thenReturn("AddChoreIntent");
+    when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
+    when(mockedDateSlot.getValue()).thenReturn("02-03-2016");
+    when(mockedIntent.getSlot("chore")).thenReturn(mockedChoreSlot);
+    when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
+
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+
+    // TO DO: once #30, do this in relevant tests.
+    // verify(mockedMapper).save(mockedTask);
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have added a shear the sheep chore for 02-03-2016"));
+  }
+
 
   @Test
   public void testDoneResponse() {
