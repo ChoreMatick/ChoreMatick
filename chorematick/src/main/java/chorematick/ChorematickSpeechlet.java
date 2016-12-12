@@ -48,6 +48,7 @@ public class ChorematickSpeechlet implements Speechlet {
     } else if ("ConfirmChoreIntent".equals(intentName)){
       return getConfirmChoreResponse(intent);
     }else if ("ChorematickIntent".equals(intentName)) {
+      return getEasterEggResponse();
     } else if ("AddChoreIntent".equals(intentName)) {
       return getAddChoreResponse(intent);
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
