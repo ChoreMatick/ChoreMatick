@@ -268,8 +268,6 @@ GetDoneIntent I've finished today's problem.
 GetDoneIntent I've finished today's punishment.
 GetDoneIntent I've finished today's task.
 
-
-
 GetChoreListIntent check all list of chores
 GetChoreListIntent check full list of chores
 GetChoreListIntent find all list of chores
@@ -282,6 +280,487 @@ GetChoreListIntent read all list of chores
 GetChoreListIntent read full list of chores
 GetChoreListIntent tell me a full list of chores
 GetChoreListIntent tell us a full list of chores
+=======
+ConfirmChoreIntent confirm my {choreDate} {chore} chore as complete
+ConfirmChoreIntent confirm my {choreDate} {chore} chore as done
+ConfirmChoreIntent confirm my {choreDate} {chore} chore as finished
+ConfirmChoreIntent confirm my {choreDate} {chore} chore as ready
+ConfirmChoreIntent confirm my {choreDate} {chore} chore as verified
+ConfirmChoreIntent confirm my {choreDate} {chore} chore complete
+ConfirmChoreIntent confirm my {choreDate} {chore} chore done
+ConfirmChoreIntent confirm my {choreDate} {chore} chore finished
+ConfirmChoreIntent confirm my {choreDate} {chore} chore is complete
+ConfirmChoreIntent confirm my {choreDate} {chore} chore is done
+ConfirmChoreIntent confirm my {choreDate} {chore} chore is finished
+ConfirmChoreIntent confirm my {choreDate} {chore} chore is ready
+ConfirmChoreIntent confirm my {choreDate} {chore} chore is verified
+ConfirmChoreIntent confirm my {choreDate} {chore} chore ready
+ConfirmChoreIntent confirm my {choreDate} {chore} chore to be complete
+ConfirmChoreIntent confirm my {choreDate} {chore} chore to be done
+ConfirmChoreIntent confirm my {choreDate} {chore} chore to be finished
+ConfirmChoreIntent confirm my {choreDate} {chore} chore to be ready
+ConfirmChoreIntent confirm my {choreDate} {chore} chore to be verified
+ConfirmChoreIntent confirm my {choreDate} {chore} chore verified
+ConfirmChoreIntent confirm my {choreDate} {chore} task as complete
+ConfirmChoreIntent confirm my {choreDate} {chore} task as done
+ConfirmChoreIntent confirm my {choreDate} {chore} task as finished
+ConfirmChoreIntent confirm my {choreDate} {chore} task as ready
+ConfirmChoreIntent confirm my {choreDate} {chore} task as verified
+ConfirmChoreIntent confirm my {choreDate} {chore} task complete
+ConfirmChoreIntent confirm my {choreDate} {chore} task done
+ConfirmChoreIntent confirm my {choreDate} {chore} task finished
+ConfirmChoreIntent confirm my {choreDate} {chore} task is complete
+ConfirmChoreIntent confirm my {choreDate} {chore} task is done
+ConfirmChoreIntent confirm my {choreDate} {chore} task is finished
+ConfirmChoreIntent confirm my {choreDate} {chore} task is ready
+ConfirmChoreIntent confirm my {choreDate} {chore} task is verified
+ConfirmChoreIntent confirm my {choreDate} {chore} task ready
+ConfirmChoreIntent confirm my {choreDate} {chore} task to be complete
+ConfirmChoreIntent confirm my {choreDate} {chore} task to be done
+ConfirmChoreIntent confirm my {choreDate} {chore} task to be finished
+ConfirmChoreIntent confirm my {choreDate} {chore} task to be ready
+ConfirmChoreIntent confirm my {choreDate} {chore} task to be verified
+ConfirmChoreIntent confirm my {choreDate} {chore} task verified
+ConfirmChoreIntent confirm the {choreDate} {chore} chore as complete
+ConfirmChoreIntent confirm the {choreDate} {chore} chore as done
+ConfirmChoreIntent confirm the {choreDate} {chore} chore as finished
+ConfirmChoreIntent confirm the {choreDate} {chore} chore as ready
+ConfirmChoreIntent confirm the {choreDate} {chore} chore as verified
+ConfirmChoreIntent confirm the {choreDate} {chore} chore complete
+ConfirmChoreIntent confirm the {choreDate} {chore} chore done
+ConfirmChoreIntent confirm the {choreDate} {chore} chore finished
+ConfirmChoreIntent confirm the {choreDate} {chore} chore is complete
+ConfirmChoreIntent confirm the {choreDate} {chore} chore is done
+ConfirmChoreIntent confirm the {choreDate} {chore} chore is finished
+ConfirmChoreIntent confirm the {choreDate} {chore} chore is ready
+ConfirmChoreIntent confirm the {choreDate} {chore} chore is verified
+ConfirmChoreIntent confirm the {choreDate} {chore} chore ready
+ConfirmChoreIntent confirm the {choreDate} {chore} chore to be complete
+ConfirmChoreIntent confirm the {choreDate} {chore} chore to be done
+ConfirmChoreIntent confirm the {choreDate} {chore} chore to be finished
+ConfirmChoreIntent confirm the {choreDate} {chore} chore to be ready
+ConfirmChoreIntent confirm the {choreDate} {chore} chore to be verified
+ConfirmChoreIntent confirm the {choreDate} {chore} chore verified
+ConfirmChoreIntent confirm the {choreDate} {chore} task as complete
+ConfirmChoreIntent confirm the {choreDate} {chore} task as done
+ConfirmChoreIntent confirm the {choreDate} {chore} task as finished
+ConfirmChoreIntent confirm the {choreDate} {chore} task as ready
+ConfirmChoreIntent confirm the {choreDate} {chore} task as verified
+ConfirmChoreIntent confirm the {choreDate} {chore} task complete
+ConfirmChoreIntent confirm the {choreDate} {chore} task done
+ConfirmChoreIntent confirm the {choreDate} {chore} task finished
+ConfirmChoreIntent confirm the {choreDate} {chore} task is complete
+ConfirmChoreIntent confirm the {choreDate} {chore} task is done
+ConfirmChoreIntent confirm the {choreDate} {chore} task is finished
+ConfirmChoreIntent confirm the {choreDate} {chore} task is ready
+ConfirmChoreIntent confirm the {choreDate} {chore} task is verified
+ConfirmChoreIntent confirm the {choreDate} {chore} task ready
+ConfirmChoreIntent confirm the {choreDate} {chore} task to be complete
+ConfirmChoreIntent confirm the {choreDate} {chore} task to be done
+ConfirmChoreIntent confirm the {choreDate} {chore} task to be finished
+ConfirmChoreIntent confirm the {choreDate} {chore} task to be ready
+ConfirmChoreIntent confirm the {choreDate} {chore} task to be verified
+ConfirmChoreIntent confirm the {choreDate} {chore} task verified
+ConfirmChoreIntent confirm {choreDate} {chore} chore as complete
+ConfirmChoreIntent confirm {choreDate} {chore} chore as done
+ConfirmChoreIntent confirm {choreDate} {chore} chore as finished
+ConfirmChoreIntent confirm {choreDate} {chore} chore as ready
+ConfirmChoreIntent confirm {choreDate} {chore} chore as verified
+ConfirmChoreIntent confirm {choreDate} {chore} chore complete
+ConfirmChoreIntent confirm {choreDate} {chore} chore done
+ConfirmChoreIntent confirm {choreDate} {chore} chore finished
+ConfirmChoreIntent confirm {choreDate} {chore} chore is complete
+ConfirmChoreIntent confirm {choreDate} {chore} chore is done
+ConfirmChoreIntent confirm {choreDate} {chore} chore is finished
+ConfirmChoreIntent confirm {choreDate} {chore} chore is ready
+ConfirmChoreIntent confirm {choreDate} {chore} chore is verified
+ConfirmChoreIntent confirm {choreDate} {chore} chore ready
+ConfirmChoreIntent confirm {choreDate} {chore} chore to be complete
+ConfirmChoreIntent confirm {choreDate} {chore} chore to be done
+ConfirmChoreIntent confirm {choreDate} {chore} chore to be finished
+ConfirmChoreIntent confirm {choreDate} {chore} chore to be ready
+ConfirmChoreIntent confirm {choreDate} {chore} chore to be verified
+ConfirmChoreIntent confirm {choreDate} {chore} chore verified
+ConfirmChoreIntent confirm {choreDate} {chore} task as complete
+ConfirmChoreIntent confirm {choreDate} {chore} task as done
+ConfirmChoreIntent confirm {choreDate} {chore} task as finished
+ConfirmChoreIntent confirm {choreDate} {chore} task as ready
+ConfirmChoreIntent confirm {choreDate} {chore} task as verified
+ConfirmChoreIntent confirm {choreDate} {chore} task complete
+ConfirmChoreIntent confirm {choreDate} {chore} task done
+ConfirmChoreIntent confirm {choreDate} {chore} task finished
+ConfirmChoreIntent confirm {choreDate} {chore} task is complete
+ConfirmChoreIntent confirm {choreDate} {chore} task is done
+ConfirmChoreIntent confirm {choreDate} {chore} task is finished
+ConfirmChoreIntent confirm {choreDate} {chore} task is ready
+ConfirmChoreIntent confirm {choreDate} {chore} task is verified
+ConfirmChoreIntent confirm {choreDate} {chore} task ready
+ConfirmChoreIntent confirm {choreDate} {chore} task to be complete
+ConfirmChoreIntent confirm {choreDate} {chore} task to be done
+ConfirmChoreIntent confirm {choreDate} {chore} task to be finished
+ConfirmChoreIntent confirm {choreDate} {chore} task to be ready
+ConfirmChoreIntent confirm {choreDate} {chore} task to be verified
+ConfirmChoreIntent confirm {choreDate} {chore} task verified
+ConfirmChoreIntent mark my {choreDate} {chore} chore as complete
+ConfirmChoreIntent mark my {choreDate} {chore} chore as done
+ConfirmChoreIntent mark my {choreDate} {chore} chore as finished
+ConfirmChoreIntent mark my {choreDate} {chore} chore as ready
+ConfirmChoreIntent mark my {choreDate} {chore} chore as verified
+ConfirmChoreIntent mark my {choreDate} {chore} chore complete
+ConfirmChoreIntent mark my {choreDate} {chore} chore done
+ConfirmChoreIntent mark my {choreDate} {chore} chore finished
+ConfirmChoreIntent mark my {choreDate} {chore} chore is complete
+ConfirmChoreIntent mark my {choreDate} {chore} chore is done
+ConfirmChoreIntent mark my {choreDate} {chore} chore is finished
+ConfirmChoreIntent mark my {choreDate} {chore} chore is ready
+ConfirmChoreIntent mark my {choreDate} {chore} chore is verified
+ConfirmChoreIntent mark my {choreDate} {chore} chore ready
+ConfirmChoreIntent mark my {choreDate} {chore} chore to be complete
+ConfirmChoreIntent mark my {choreDate} {chore} chore to be done
+ConfirmChoreIntent mark my {choreDate} {chore} chore to be finished
+ConfirmChoreIntent mark my {choreDate} {chore} chore to be ready
+ConfirmChoreIntent mark my {choreDate} {chore} chore to be verified
+ConfirmChoreIntent mark my {choreDate} {chore} chore verified
+ConfirmChoreIntent mark my {choreDate} {chore} task as complete
+ConfirmChoreIntent mark my {choreDate} {chore} task as done
+ConfirmChoreIntent mark my {choreDate} {chore} task as finished
+ConfirmChoreIntent mark my {choreDate} {chore} task as ready
+ConfirmChoreIntent mark my {choreDate} {chore} task as verified
+ConfirmChoreIntent mark my {choreDate} {chore} task complete
+ConfirmChoreIntent mark my {choreDate} {chore} task done
+ConfirmChoreIntent mark my {choreDate} {chore} task finished
+ConfirmChoreIntent mark my {choreDate} {chore} task is complete
+ConfirmChoreIntent mark my {choreDate} {chore} task is done
+ConfirmChoreIntent mark my {choreDate} {chore} task is finished
+ConfirmChoreIntent mark my {choreDate} {chore} task is ready
+ConfirmChoreIntent mark my {choreDate} {chore} task is verified
+ConfirmChoreIntent mark my {choreDate} {chore} task ready
+ConfirmChoreIntent mark my {choreDate} {chore} task to be complete
+ConfirmChoreIntent mark my {choreDate} {chore} task to be done
+ConfirmChoreIntent mark my {choreDate} {chore} task to be finished
+ConfirmChoreIntent mark my {choreDate} {chore} task to be ready
+ConfirmChoreIntent mark my {choreDate} {chore} task to be verified
+ConfirmChoreIntent mark my {choreDate} {chore} task verified
+ConfirmChoreIntent mark the {choreDate} {chore} chore as complete
+ConfirmChoreIntent mark the {choreDate} {chore} chore as done
+ConfirmChoreIntent mark the {choreDate} {chore} chore as finished
+ConfirmChoreIntent mark the {choreDate} {chore} chore as ready
+ConfirmChoreIntent mark the {choreDate} {chore} chore as verified
+ConfirmChoreIntent mark the {choreDate} {chore} chore complete
+ConfirmChoreIntent mark the {choreDate} {chore} chore done
+ConfirmChoreIntent mark the {choreDate} {chore} chore finished
+ConfirmChoreIntent mark the {choreDate} {chore} chore is complete
+ConfirmChoreIntent mark the {choreDate} {chore} chore is done
+ConfirmChoreIntent mark the {choreDate} {chore} chore is finished
+ConfirmChoreIntent mark the {choreDate} {chore} chore is ready
+ConfirmChoreIntent mark the {choreDate} {chore} chore is verified
+ConfirmChoreIntent mark the {choreDate} {chore} chore ready
+ConfirmChoreIntent mark the {choreDate} {chore} chore to be complete
+ConfirmChoreIntent mark the {choreDate} {chore} chore to be done
+ConfirmChoreIntent mark the {choreDate} {chore} chore to be finished
+ConfirmChoreIntent mark the {choreDate} {chore} chore to be ready
+ConfirmChoreIntent mark the {choreDate} {chore} chore to be verified
+ConfirmChoreIntent mark the {choreDate} {chore} chore verified
+ConfirmChoreIntent mark the {choreDate} {chore} task as complete
+ConfirmChoreIntent mark the {choreDate} {chore} task as done
+ConfirmChoreIntent mark the {choreDate} {chore} task as finished
+ConfirmChoreIntent mark the {choreDate} {chore} task as ready
+ConfirmChoreIntent mark the {choreDate} {chore} task as verified
+ConfirmChoreIntent mark the {choreDate} {chore} task complete
+ConfirmChoreIntent mark the {choreDate} {chore} task done
+ConfirmChoreIntent mark the {choreDate} {chore} task finished
+ConfirmChoreIntent mark the {choreDate} {chore} task is complete
+ConfirmChoreIntent mark the {choreDate} {chore} task is done
+ConfirmChoreIntent mark the {choreDate} {chore} task is finished
+ConfirmChoreIntent mark the {choreDate} {chore} task is ready
+ConfirmChoreIntent mark the {choreDate} {chore} task is verified
+ConfirmChoreIntent mark the {choreDate} {chore} task ready
+ConfirmChoreIntent mark the {choreDate} {chore} task to be complete
+ConfirmChoreIntent mark the {choreDate} {chore} task to be done
+ConfirmChoreIntent mark the {choreDate} {chore} task to be finished
+ConfirmChoreIntent mark the {choreDate} {chore} task to be ready
+ConfirmChoreIntent mark the {choreDate} {chore} task to be verified
+ConfirmChoreIntent mark the {choreDate} {chore} task verified
+ConfirmChoreIntent mark {choreDate} {chore} chore as complete
+ConfirmChoreIntent mark {choreDate} {chore} chore as done
+ConfirmChoreIntent mark {choreDate} {chore} chore as finished
+ConfirmChoreIntent mark {choreDate} {chore} chore as ready
+ConfirmChoreIntent mark {choreDate} {chore} chore as verified
+ConfirmChoreIntent mark {choreDate} {chore} chore complete
+ConfirmChoreIntent mark {choreDate} {chore} chore done
+ConfirmChoreIntent mark {choreDate} {chore} chore finished
+ConfirmChoreIntent mark {choreDate} {chore} chore is complete
+ConfirmChoreIntent mark {choreDate} {chore} chore is done
+ConfirmChoreIntent mark {choreDate} {chore} chore is finished
+ConfirmChoreIntent mark {choreDate} {chore} chore is ready
+ConfirmChoreIntent mark {choreDate} {chore} chore is verified
+ConfirmChoreIntent mark {choreDate} {chore} chore ready
+ConfirmChoreIntent mark {choreDate} {chore} chore to be complete
+ConfirmChoreIntent mark {choreDate} {chore} chore to be done
+ConfirmChoreIntent mark {choreDate} {chore} chore to be finished
+ConfirmChoreIntent mark {choreDate} {chore} chore to be ready
+ConfirmChoreIntent mark {choreDate} {chore} chore to be verified
+ConfirmChoreIntent mark {choreDate} {chore} chore verified
+ConfirmChoreIntent mark {choreDate} {chore} task as complete
+ConfirmChoreIntent mark {choreDate} {chore} task as done
+ConfirmChoreIntent mark {choreDate} {chore} task as finished
+ConfirmChoreIntent mark {choreDate} {chore} task as ready
+ConfirmChoreIntent mark {choreDate} {chore} task as verified
+ConfirmChoreIntent mark {choreDate} {chore} task complete
+ConfirmChoreIntent mark {choreDate} {chore} task done
+ConfirmChoreIntent mark {choreDate} {chore} task finished
+ConfirmChoreIntent mark {choreDate} {chore} task is complete
+ConfirmChoreIntent mark {choreDate} {chore} task is done
+ConfirmChoreIntent mark {choreDate} {chore} task is finished
+ConfirmChoreIntent mark {choreDate} {chore} task is ready
+ConfirmChoreIntent mark {choreDate} {chore} task is verified
+ConfirmChoreIntent mark {choreDate} {chore} task ready
+ConfirmChoreIntent mark {choreDate} {chore} task to be complete
+ConfirmChoreIntent mark {choreDate} {chore} task to be done
+ConfirmChoreIntent mark {choreDate} {chore} task to be finished
+ConfirmChoreIntent mark {choreDate} {chore} task to be ready
+ConfirmChoreIntent mark {choreDate} {chore} task to be verified
+ConfirmChoreIntent mark {choreDate} {chore} task verified
+ConfirmChoreIntent my {choreDate} {chore} chore as complete
+ConfirmChoreIntent my {choreDate} {chore} chore as done
+ConfirmChoreIntent my {choreDate} {chore} chore as finished
+ConfirmChoreIntent my {choreDate} {chore} chore as ready
+ConfirmChoreIntent my {choreDate} {chore} chore as verified
+ConfirmChoreIntent my {choreDate} {chore} chore complete
+ConfirmChoreIntent my {choreDate} {chore} chore done
+ConfirmChoreIntent my {choreDate} {chore} chore finished
+ConfirmChoreIntent my {choreDate} {chore} chore is complete
+ConfirmChoreIntent my {choreDate} {chore} chore is done
+ConfirmChoreIntent my {choreDate} {chore} chore is finished
+ConfirmChoreIntent my {choreDate} {chore} chore is ready
+ConfirmChoreIntent my {choreDate} {chore} chore is verified
+ConfirmChoreIntent my {choreDate} {chore} chore ready
+ConfirmChoreIntent my {choreDate} {chore} chore to be complete
+ConfirmChoreIntent my {choreDate} {chore} chore to be done
+ConfirmChoreIntent my {choreDate} {chore} chore to be finished
+ConfirmChoreIntent my {choreDate} {chore} chore to be ready
+ConfirmChoreIntent my {choreDate} {chore} chore to be verified
+ConfirmChoreIntent my {choreDate} {chore} chore verified
+ConfirmChoreIntent my {choreDate} {chore} task as complete
+ConfirmChoreIntent my {choreDate} {chore} task as done
+ConfirmChoreIntent my {choreDate} {chore} task as finished
+ConfirmChoreIntent my {choreDate} {chore} task as ready
+ConfirmChoreIntent my {choreDate} {chore} task as verified
+ConfirmChoreIntent my {choreDate} {chore} task complete
+ConfirmChoreIntent my {choreDate} {chore} task done
+ConfirmChoreIntent my {choreDate} {chore} task finished
+ConfirmChoreIntent my {choreDate} {chore} task is complete
+ConfirmChoreIntent my {choreDate} {chore} task is done
+ConfirmChoreIntent my {choreDate} {chore} task is finished
+ConfirmChoreIntent my {choreDate} {chore} task is ready
+ConfirmChoreIntent my {choreDate} {chore} task is verified
+ConfirmChoreIntent my {choreDate} {chore} task ready
+ConfirmChoreIntent my {choreDate} {chore} task to be complete
+ConfirmChoreIntent my {choreDate} {chore} task to be done
+ConfirmChoreIntent my {choreDate} {chore} task to be finished
+ConfirmChoreIntent my {choreDate} {chore} task to be ready
+ConfirmChoreIntent my {choreDate} {chore} task to be verified
+ConfirmChoreIntent my {choreDate} {chore} task verified
+ConfirmChoreIntent set my {choreDate} {chore} chore as complete
+ConfirmChoreIntent set my {choreDate} {chore} chore as done
+ConfirmChoreIntent set my {choreDate} {chore} chore as finished
+ConfirmChoreIntent set my {choreDate} {chore} chore as ready
+ConfirmChoreIntent set my {choreDate} {chore} chore as verified
+ConfirmChoreIntent set my {choreDate} {chore} chore complete
+ConfirmChoreIntent set my {choreDate} {chore} chore done
+ConfirmChoreIntent set my {choreDate} {chore} chore finished
+ConfirmChoreIntent set my {choreDate} {chore} chore is complete
+ConfirmChoreIntent set my {choreDate} {chore} chore is done
+ConfirmChoreIntent set my {choreDate} {chore} chore is finished
+ConfirmChoreIntent set my {choreDate} {chore} chore is ready
+ConfirmChoreIntent set my {choreDate} {chore} chore is verified
+ConfirmChoreIntent set my {choreDate} {chore} chore ready
+ConfirmChoreIntent set my {choreDate} {chore} chore to be complete
+ConfirmChoreIntent set my {choreDate} {chore} chore to be done
+ConfirmChoreIntent set my {choreDate} {chore} chore to be finished
+ConfirmChoreIntent set my {choreDate} {chore} chore to be ready
+ConfirmChoreIntent set my {choreDate} {chore} chore to be verified
+ConfirmChoreIntent set my {choreDate} {chore} chore verified
+ConfirmChoreIntent set my {choreDate} {chore} task as complete
+ConfirmChoreIntent set my {choreDate} {chore} task as done
+ConfirmChoreIntent set my {choreDate} {chore} task as finished
+ConfirmChoreIntent set my {choreDate} {chore} task as ready
+ConfirmChoreIntent set my {choreDate} {chore} task as verified
+ConfirmChoreIntent set my {choreDate} {chore} task complete
+ConfirmChoreIntent set my {choreDate} {chore} task done
+ConfirmChoreIntent set my {choreDate} {chore} task finished
+ConfirmChoreIntent set my {choreDate} {chore} task is complete
+ConfirmChoreIntent set my {choreDate} {chore} task is done
+ConfirmChoreIntent set my {choreDate} {chore} task is finished
+ConfirmChoreIntent set my {choreDate} {chore} task is ready
+ConfirmChoreIntent set my {choreDate} {chore} task is verified
+ConfirmChoreIntent set my {choreDate} {chore} task ready
+ConfirmChoreIntent set my {choreDate} {chore} task to be complete
+ConfirmChoreIntent set my {choreDate} {chore} task to be done
+ConfirmChoreIntent set my {choreDate} {chore} task to be finished
+ConfirmChoreIntent set my {choreDate} {chore} task to be ready
+ConfirmChoreIntent set my {choreDate} {chore} task to be verified
+ConfirmChoreIntent set my {choreDate} {chore} task verified
+ConfirmChoreIntent set the {choreDate} {chore} chore as complete
+ConfirmChoreIntent set the {choreDate} {chore} chore as done
+ConfirmChoreIntent set the {choreDate} {chore} chore as finished
+ConfirmChoreIntent set the {choreDate} {chore} chore as ready
+ConfirmChoreIntent set the {choreDate} {chore} chore as verified
+ConfirmChoreIntent set the {choreDate} {chore} chore complete
+ConfirmChoreIntent set the {choreDate} {chore} chore done
+ConfirmChoreIntent set the {choreDate} {chore} chore finished
+ConfirmChoreIntent set the {choreDate} {chore} chore is complete
+ConfirmChoreIntent set the {choreDate} {chore} chore is done
+ConfirmChoreIntent set the {choreDate} {chore} chore is finished
+ConfirmChoreIntent set the {choreDate} {chore} chore is ready
+ConfirmChoreIntent set the {choreDate} {chore} chore is verified
+ConfirmChoreIntent set the {choreDate} {chore} chore ready
+ConfirmChoreIntent set the {choreDate} {chore} chore to be complete
+ConfirmChoreIntent set the {choreDate} {chore} chore to be done
+ConfirmChoreIntent set the {choreDate} {chore} chore to be finished
+ConfirmChoreIntent set the {choreDate} {chore} chore to be ready
+ConfirmChoreIntent set the {choreDate} {chore} chore to be verified
+ConfirmChoreIntent set the {choreDate} {chore} chore verified
+ConfirmChoreIntent set the {choreDate} {chore} task as complete
+ConfirmChoreIntent set the {choreDate} {chore} task as done
+ConfirmChoreIntent set the {choreDate} {chore} task as finished
+ConfirmChoreIntent set the {choreDate} {chore} task as ready
+ConfirmChoreIntent set the {choreDate} {chore} task as verified
+ConfirmChoreIntent set the {choreDate} {chore} task complete
+ConfirmChoreIntent set the {choreDate} {chore} task done
+ConfirmChoreIntent set the {choreDate} {chore} task finished
+ConfirmChoreIntent set the {choreDate} {chore} task is complete
+ConfirmChoreIntent set the {choreDate} {chore} task is done
+ConfirmChoreIntent set the {choreDate} {chore} task is finished
+ConfirmChoreIntent set the {choreDate} {chore} task is ready
+ConfirmChoreIntent set the {choreDate} {chore} task is verified
+ConfirmChoreIntent set the {choreDate} {chore} task ready
+ConfirmChoreIntent set the {choreDate} {chore} task to be complete
+ConfirmChoreIntent set the {choreDate} {chore} task to be done
+ConfirmChoreIntent set the {choreDate} {chore} task to be finished
+ConfirmChoreIntent set the {choreDate} {chore} task to be ready
+ConfirmChoreIntent set the {choreDate} {chore} task to be verified
+ConfirmChoreIntent set the {choreDate} {chore} task verified
+ConfirmChoreIntent set {choreDate} {chore} chore as complete
+ConfirmChoreIntent set {choreDate} {chore} chore as done
+ConfirmChoreIntent set {choreDate} {chore} chore as finished
+ConfirmChoreIntent set {choreDate} {chore} chore as ready
+ConfirmChoreIntent set {choreDate} {chore} chore as verified
+ConfirmChoreIntent set {choreDate} {chore} chore complete
+ConfirmChoreIntent set {choreDate} {chore} chore done
+ConfirmChoreIntent set {choreDate} {chore} chore finished
+ConfirmChoreIntent set {choreDate} {chore} chore is complete
+ConfirmChoreIntent set {choreDate} {chore} chore is done
+ConfirmChoreIntent set {choreDate} {chore} chore is finished
+ConfirmChoreIntent set {choreDate} {chore} chore is ready
+ConfirmChoreIntent set {choreDate} {chore} chore is verified
+ConfirmChoreIntent set {choreDate} {chore} chore ready
+ConfirmChoreIntent set {choreDate} {chore} chore to be complete
+ConfirmChoreIntent set {choreDate} {chore} chore to be done
+ConfirmChoreIntent set {choreDate} {chore} chore to be finished
+ConfirmChoreIntent set {choreDate} {chore} chore to be ready
+ConfirmChoreIntent set {choreDate} {chore} chore to be verified
+ConfirmChoreIntent set {choreDate} {chore} chore verified
+ConfirmChoreIntent set {choreDate} {chore} task as complete
+ConfirmChoreIntent set {choreDate} {chore} task as done
+ConfirmChoreIntent set {choreDate} {chore} task as finished
+ConfirmChoreIntent set {choreDate} {chore} task as ready
+ConfirmChoreIntent set {choreDate} {chore} task as verified
+ConfirmChoreIntent set {choreDate} {chore} task complete
+ConfirmChoreIntent set {choreDate} {chore} task done
+ConfirmChoreIntent set {choreDate} {chore} task finished
+ConfirmChoreIntent set {choreDate} {chore} task is complete
+ConfirmChoreIntent set {choreDate} {chore} task is done
+ConfirmChoreIntent set {choreDate} {chore} task is finished
+ConfirmChoreIntent set {choreDate} {chore} task is ready
+ConfirmChoreIntent set {choreDate} {chore} task is verified
+ConfirmChoreIntent set {choreDate} {chore} task ready
+ConfirmChoreIntent set {choreDate} {chore} task to be complete
+ConfirmChoreIntent set {choreDate} {chore} task to be done
+ConfirmChoreIntent set {choreDate} {chore} task to be finished
+ConfirmChoreIntent set {choreDate} {chore} task to be ready
+ConfirmChoreIntent set {choreDate} {chore} task to be verified
+ConfirmChoreIntent set {choreDate} {chore} task verified
+ConfirmChoreIntent the {choreDate} {chore} chore as complete
+ConfirmChoreIntent the {choreDate} {chore} chore as done
+ConfirmChoreIntent the {choreDate} {chore} chore as finished
+ConfirmChoreIntent the {choreDate} {chore} chore as ready
+ConfirmChoreIntent the {choreDate} {chore} chore as verified
+ConfirmChoreIntent the {choreDate} {chore} chore complete
+ConfirmChoreIntent the {choreDate} {chore} chore done
+ConfirmChoreIntent the {choreDate} {chore} chore finished
+ConfirmChoreIntent the {choreDate} {chore} chore is complete
+ConfirmChoreIntent the {choreDate} {chore} chore is done
+ConfirmChoreIntent the {choreDate} {chore} chore is finished
+ConfirmChoreIntent the {choreDate} {chore} chore is ready
+ConfirmChoreIntent the {choreDate} {chore} chore is verified
+ConfirmChoreIntent the {choreDate} {chore} chore ready
+ConfirmChoreIntent the {choreDate} {chore} chore to be complete
+ConfirmChoreIntent the {choreDate} {chore} chore to be done
+ConfirmChoreIntent the {choreDate} {chore} chore to be finished
+ConfirmChoreIntent the {choreDate} {chore} chore to be ready
+ConfirmChoreIntent the {choreDate} {chore} chore to be verified
+ConfirmChoreIntent the {choreDate} {chore} chore verified
+ConfirmChoreIntent the {choreDate} {chore} task as complete
+ConfirmChoreIntent the {choreDate} {chore} task as done
+ConfirmChoreIntent the {choreDate} {chore} task as finished
+ConfirmChoreIntent the {choreDate} {chore} task as ready
+ConfirmChoreIntent the {choreDate} {chore} task as verified
+ConfirmChoreIntent the {choreDate} {chore} task complete
+ConfirmChoreIntent the {choreDate} {chore} task done
+ConfirmChoreIntent the {choreDate} {chore} task finished
+ConfirmChoreIntent the {choreDate} {chore} task is complete
+ConfirmChoreIntent the {choreDate} {chore} task is done
+ConfirmChoreIntent the {choreDate} {chore} task is finished
+ConfirmChoreIntent the {choreDate} {chore} task is ready
+ConfirmChoreIntent the {choreDate} {chore} task is verified
+ConfirmChoreIntent the {choreDate} {chore} task ready
+ConfirmChoreIntent the {choreDate} {chore} task to be complete
+ConfirmChoreIntent the {choreDate} {chore} task to be done
+ConfirmChoreIntent the {choreDate} {chore} task to be finished
+ConfirmChoreIntent the {choreDate} {chore} task to be ready
+ConfirmChoreIntent the {choreDate} {chore} task to be verified
+ConfirmChoreIntent the {choreDate} {chore} task verified
+ConfirmChoreIntent {choreDate} {chore} chore as complete
+ConfirmChoreIntent {choreDate} {chore} chore as done
+ConfirmChoreIntent {choreDate} {chore} chore as finished
+ConfirmChoreIntent {choreDate} {chore} chore as ready
+ConfirmChoreIntent {choreDate} {chore} chore as verified
+ConfirmChoreIntent {choreDate} {chore} chore complete
+ConfirmChoreIntent {choreDate} {chore} chore done
+ConfirmChoreIntent {choreDate} {chore} chore finished
+ConfirmChoreIntent {choreDate} {chore} chore is complete
+ConfirmChoreIntent {choreDate} {chore} chore is done
+ConfirmChoreIntent {choreDate} {chore} chore is finished
+ConfirmChoreIntent {choreDate} {chore} chore is ready
+ConfirmChoreIntent {choreDate} {chore} chore is verified
+ConfirmChoreIntent {choreDate} {chore} chore ready
+ConfirmChoreIntent {choreDate} {chore} chore to be complete
+ConfirmChoreIntent {choreDate} {chore} chore to be done
+ConfirmChoreIntent {choreDate} {chore} chore to be finished
+ConfirmChoreIntent {choreDate} {chore} chore to be ready
+ConfirmChoreIntent {choreDate} {chore} chore to be verified
+ConfirmChoreIntent {choreDate} {chore} chore verified
+ConfirmChoreIntent {choreDate} {chore} task as complete
+ConfirmChoreIntent {choreDate} {chore} task as done
+ConfirmChoreIntent {choreDate} {chore} task as finished
+ConfirmChoreIntent {choreDate} {chore} task as ready
+ConfirmChoreIntent {choreDate} {chore} task as verified
+ConfirmChoreIntent {choreDate} {chore} task complete
+ConfirmChoreIntent {choreDate} {chore} task done
+ConfirmChoreIntent {choreDate} {chore} task finished
+ConfirmChoreIntent {choreDate} {chore} task is complete
+ConfirmChoreIntent {choreDate} {chore} task is done
+ConfirmChoreIntent {choreDate} {chore} task is finished
+ConfirmChoreIntent {choreDate} {chore} task is ready
+ConfirmChoreIntent {choreDate} {chore} task is verified
+ConfirmChoreIntent {choreDate} {chore} task ready
+ConfirmChoreIntent {choreDate} {chore} task to be complete
+ConfirmChoreIntent {choreDate} {chore} task to be done
+ConfirmChoreIntent {choreDate} {chore} task to be finished
+ConfirmChoreIntent {choreDate} {chore} task to be ready
+ConfirmChoreIntent {choreDate} {chore} task to be verified
+ConfirmChoreIntent {choreDate} {chore} task verified
 
 AddChoreIntent add a {chore} due for {choreDate}
 AddChoreIntent add a {chore} due on {choreDate}
@@ -377,5 +856,3 @@ AddChoreIntent to {choreDate} add a {chore}
 AddChoreIntent to {choreDate} add the {chore}
 AddChoreIntent to {choreDate} add this {chore}
 
-
-DateIntent my chore for {choreDate}

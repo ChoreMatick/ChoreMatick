@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.*;
 
-
-
 public class ChorematickSpeechlet implements Speechlet {
 
   private final static Logger log = Logger.getLogger(ChorematickSpeechlet.class.getName());
@@ -62,10 +60,12 @@ public class ChorematickSpeechlet implements Speechlet {
       return getChoreResponse();
     } else if ("GetDoneIntent".equals(intentName)){
       return getDoneResponse();
+    } else if ("ConfirmChoreIntent".equals(intentName)){
+      return getConfirmChoreResponse(intent);
+    }else if ("ChorematickIntent".equals(intentName)) {
+      return getEasterEggResponse();
     } else if ("AddChoreIntent".equals(intentName)) {
       return getAddChoreResponse(intent);
-    } else if ("ChorematickIntent".equals(intentName)) {
-      return getEasterEggResponse();
     } else if ("GetChoreListIntent".equals(intentName)) {
       return getChoreList();
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
@@ -178,14 +178,18 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newTellResponse(speech);
   }
 
-  public SpeechletResponse getDateResponse(Intent intent) {
+  public SpeechletResponse getConfirmChoreResponse(Intent intent) {
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 
-    Slot daySlot = intent.getSlot("choreDate");
-    String day = daySlot.getValue();
-    speech.setText(day);
+    String day = intent.getSlot("choreDate").getValue();
+    String chore = intent.getSlot("chore").getValue();
 
+    Task task = this.mapper.load(Task.class, day, chore);
+
+    this.mapper.delete(task);
+
+    speech.setText("I've confirmed "+ day + " " + chore +" chore is completed.");
     return SpeechletResponse.newTellResponse(speech);
   }
 
