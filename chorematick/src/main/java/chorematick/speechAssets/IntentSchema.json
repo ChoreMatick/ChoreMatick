@@ -1,4 +1,5 @@
 
+
   {
     "intents": [
       {
@@ -32,6 +33,19 @@
           }
         ]
       },
+        {
+      "intent": "AddChoreIntent",
+      "slots": [
+        {
+          "name": "choreDate",
+          "type": "AMAZON.DATE"
+        },
+        {
+          "name": "chore",
+          "type": "CHORES"
+        }
+      ]
+    },
       {
         "intent": "AMAZON.HelpIntent"
       }
