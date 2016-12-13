@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -62,7 +63,7 @@ public class ChorematickSpeechlet implements Speechlet {
     if ("GetChoreIntent".equals(intentName)) {
       return getChoreResponse();
     } else if ("GetDoneIntent".equals(intentName)){
-      return getDoneResponse();
+      return getDoneResponse(intent);
     } else if ("ConfirmChoreIntent".equals(intentName)){
       return getConfirmChoreResponse(intent);
     }else if ("ChorematickIntent".equals(intentName)) {
@@ -112,12 +113,17 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newTellResponse(speech, card);
   }
 
-  private SpeechletResponse getDoneResponse() {
+  private SpeechletResponse getDoneResponse(Intent intent) {
     String speechText = "Very well, I have informed your appropriate adult.";
+
+    String day = intent.getSlot("choreDate").getValue();
+    String chore = intent.getSlot("chore").getValue();
+
+    Task task = this.mapper.load(Task.class, day, chore);
 
     SimpleCard card = new SimpleCard();
     card.setTitle("Chore Verification");
-    card.setContent("Your child claims to have completed their chore, please check and verify");
+    card.setContent("Your child claims to have completed their chore. Here is the password: " + task.getPassword());
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
@@ -125,17 +131,16 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newTellResponse(speech, card);
   }
 
-
   public SpeechletResponse getChoreList() {
 
   DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
 
-  List<Task> chores =  mapper.scan(Task.class, scanExpression);
+    List<Task> chores =  mapper.scan(Task.class, scanExpression);
 
-  String result = "";
+    String result = "";
 
-  for(Task task : chores) {
-        result = result + ", " + task.getChore();
+    for(Task task : chores) {
+      result = result + task.getChore() + ", ";
     }
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
@@ -146,19 +151,27 @@ public class ChorematickSpeechlet implements Speechlet {
 
   private SpeechletResponse getAddChoreResponse(Intent intent){
 
+    Random random = new Random();
+
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 
     String day = intent.getSlot("choreDate").getValue();
     String chore = intent.getSlot("chore").getValue();
+    String password = String.format("%04d", random.nextInt(10000));
 
     Task task = new Task();
     task.setDate(day);
     task.setChore(chore);
+    task.setPassword(password);
     this.mapper.save(task);
 
     speech.setText("Very well, I have added a " + chore + " chore for " + day);
 
-    return SpeechletResponse.newTellResponse(speech);
+    SimpleCard card = new SimpleCard();
+    card.setTitle(day + " " + chore);
+    card.setContent("Password: " + password);
+
+    return SpeechletResponse.newTellResponse(speech, card);
   }
 
   private SpeechletResponse getHelpResponse() {

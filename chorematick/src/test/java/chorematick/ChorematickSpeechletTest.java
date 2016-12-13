@@ -21,6 +21,8 @@ import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+
 import static org.mockito.Matchers.any;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
@@ -35,11 +37,11 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Mock private SessionStartedRequest mockedSessionStartedRequest;
   @Mock private Slot mockedDateSlot;
   @Mock private Slot mockedChoreSlot;
+  @Mock private Slot mockedPasswordSlot;
   @Mock private DynamoDBMapper mockedMapper;
   @Mock private Task mockedTask;
-  @Mock private DynamoDBScanExpression mockedScanExpression;
   @Mock private PaginatedScanList<Task> mockedPaginatedScanList;
-
+  @Mock private DynamoDBScanExpression mockedExpression;
 
   @Before
   public void setup() {
@@ -108,28 +110,46 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+    SimpleCard card = (SimpleCard) response.getCard();
     verify(mockedMapper).save(any(Task.class));
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have added a Shear the sheep chore for 02-03-2016"));
+    assertThat(card.getTitle(), equalTo("02-03-2016 " + "Shear the sheep"));
   }
 
-  @Test
-  public void testDoneResponse() {
-    when(mockedIntent.getName()).thenReturn("GetDoneIntent");
+  // @Test
+  // public void testDoneResponse() {
+  //   when(mockedIntent.getName()).thenReturn("GetDoneIntent");
+  //
+  //   SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+  //
+  //   assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have informed your appropriate adult."));
+  // }
 
-    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
-
-    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have informed your appropriate adult."));
-  }
+  // @Test
+  // public void testGetChoreList(){
+  //   when(mockedIntent.getName()).thenReturn("GetChoreListIntent");
+  //   when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
+  //   when(mockedDateSlot.getValue()).thenReturn("02-03-2016");
+  //   when(mockedIntent.getSlot("chore")).thenReturn(mockedChoreSlot);
+  //   when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
+  //
+  //   SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+  //
+  //   verify(mockedMapper).scan(Task.class, mockedExpression);
+  //   assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Clean the gutters"));
+  // }
 
 
   @Test
   public void testEasterEggResponse() {
     when(mockedIntent.getName()).thenReturn("ChorematickIntent");
 
+
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
 
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Go stand in the corner and think about what you've done."));
   }
+
 
   @Test
   public void testGetNumberOfCompletedChoresResponse() {
@@ -144,5 +164,4 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("There are 5 completed chores."));
   }
-
 }

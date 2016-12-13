@@ -1,4 +1,3 @@
-
   {
     "intents": [
       {
@@ -18,8 +17,18 @@
         ]
       },
       {
-        "intent": "GetDoneIntent"
-      },
+       "intent": "GetDoneIntent",
+       "slots": [
+         {
+           "name": "choreDate",
+           "type": "AMAZON.DATE"
+         },
+         {
+           "name": "chore",
+           "type": "CHORES"
+         }
+       ]
+     },
       {
         "intent": "NumberOfCompletedChoresIntent"
       },
