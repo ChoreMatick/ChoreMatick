@@ -53,7 +53,7 @@ GetChoreIntent what's the today's chore please
 
 ChorematickIntent i hate you
 
-GetDoneIntent I am done.
+GetDoneIntent I am done with {chore} {choreDate}.
 GetDoneIntent I am finished.
 GetDoneIntent I have completed my chore for the day.
 GetDoneIntent I have completed my chore for today.
@@ -855,4 +855,3 @@ AddChoreIntent put this {chore} to {choreDate}
 AddChoreIntent to {choreDate} add a {chore}
 AddChoreIntent to {choreDate} add the {chore}
 AddChoreIntent to {choreDate} add this {chore}
-
