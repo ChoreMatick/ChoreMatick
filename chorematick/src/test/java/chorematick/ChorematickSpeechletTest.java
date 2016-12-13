@@ -34,6 +34,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Mock private Slot mockedDateSlot;
   @Mock private Slot mockedChoreSlot;
   @Mock private DynamoDBMapper mockedMapper;
+  @Mock private Task mockedTask;
 
   @Before
   public void setup() {
@@ -83,11 +84,13 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedDateSlot.getValue()).thenReturn("12-12-2016");
     when(mockedIntent.getSlot("chore")).thenReturn(mockedChoreSlot);
     when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
+    when(mockedMapper.load(Task.class, "12-12-2016", "Shear the sheep")).thenReturn(mockedTask);
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
 
     verify(mockedMapper).load(Task.class, "12-12-2016", "Shear the sheep");
-    verify(mockedMapper).delete(any());
+    verify(mockedMapper).save(any(Task.class));
+    verify(mockedTask).setIsComplete(true);
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("I've confirmed 12-12-2016 Shear the sheep chore is completed."));
   }
 

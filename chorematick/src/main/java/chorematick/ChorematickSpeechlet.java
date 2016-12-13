@@ -189,8 +189,8 @@ public class ChorematickSpeechlet implements Speechlet {
     String chore = intent.getSlot("chore").getValue();
 
     Task task = this.mapper.load(Task.class, day, chore);
-
-    this.mapper.delete(task);
+    task.setIsComplete(true);
+    this.mapper.save(task);
 
     speech.setText("I've confirmed "+ day + " " + chore +" chore is completed.");
     return SpeechletResponse.newTellResponse(speech);
