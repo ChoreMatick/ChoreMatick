@@ -102,12 +102,12 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedDateSlot.getValue()).thenReturn("02-03-2016");
     when(mockedIntent.getSlot("chore")).thenReturn(mockedChoreSlot);
     when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
-    when(mockedIntent.getSlot("password")).thenReturn(mockedPasswordSlot);
-    when(mockedPasswordSlot.getValue()).thenReturn("Tree");
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+    SimpleCard card = (SimpleCard) response.getCard();
     verify(mockedMapper).save(any(Task.class));
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have added a Shear the sheep chore for 02-03-2016"));
+    assertThat(card.getTitle(), equalTo("02-03-2016 " + "Shear the sheep"));
   }
 
   @Test

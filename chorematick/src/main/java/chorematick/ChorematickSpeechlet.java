@@ -124,17 +124,17 @@ public class ChorematickSpeechlet implements Speechlet {
 
   public SpeechletResponse getChoreList() {
 
-  DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
 
-  List<Task> chores =  mapper.scan(Task.class, scanExpression);
+    List<Task> chores =  mapper.scan(Task.class, scanExpression);
+    
+    String result = "";
 
-  String result = "";
-
-  for(Task task : chores) {
-        result = result + task.getChore() + ", ";
+    for(Task task : chores) {
+      result = result + task.getChore() + ", ";
     }
 
-  log.info(result);
+    log.info(result);
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(result);
@@ -151,8 +151,6 @@ public class ChorematickSpeechlet implements Speechlet {
     String day = intent.getSlot("choreDate").getValue();
     String chore = intent.getSlot("chore").getValue();
     String password = String.format("%04d", random.nextInt(10000));
-
-    log.info(password);
 
     Task task = new Task();
     task.setDate(day);
