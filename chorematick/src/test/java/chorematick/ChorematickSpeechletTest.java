@@ -91,11 +91,14 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedDateSlot.getValue()).thenReturn("12-12-2016");
     when(mockedIntent.getSlot("chore")).thenReturn(mockedChoreSlot);
     when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
+    when(mockedIntent.getSlot("password")).thenReturn(mockedPasswordSlot);
+    when(mockedPasswordSlot.getValue()).thenReturn("1234");
     when(mockedMapper.load(Task.class, "12-12-2016", "Shear the sheep")).thenReturn(mockedTask);
+    when(mockedTask.getPassword()).thenReturn("1234");
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
-
     verify(mockedMapper).load(Task.class, "12-12-2016", "Shear the sheep");
+    verify(mockedTask).getPassword();
     verify(mockedMapper).save(any(Task.class));
     verify(mockedTask).setIsComplete(true);
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("I've confirmed 12-12-2016 Shear the sheep chore is completed."));

@@ -194,20 +194,32 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newTellResponse(speech);
   }
 
+
+
+
   private SpeechletResponse getConfirmChoreResponse(Intent intent) {
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 
     String day = intent.getSlot("choreDate").getValue();
     String chore = intent.getSlot("chore").getValue();
+    String password = intent.getSlot("password").getValue();
 
     Task task = this.mapper.load(Task.class, day, chore);
-    task.setIsComplete(true);
-    this.mapper.save(task);
+    String passwordCheck = task.getPassword();
 
-    speech.setText("I've confirmed "+ day + " " + chore +" chore is completed.");
+      if (password == passwordCheck) {
+        task.setIsComplete(true);
+        this.mapper.save(task);
+        speech.setText("I've confirmed "+ day + " " + chore +" chore is completed.");
+    } else {
+        speech.setText("Unable to confirm password, please try again.");
+    }
+
     return SpeechletResponse.newTellResponse(speech);
   }
+
+
 
   private SpeechletResponse getNumberOfCompletedChoresResponse(){
 
