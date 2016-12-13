@@ -22,6 +22,8 @@ import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import static org.mockito.Matchers.any;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 
 public class ChorematickSpeechletTest extends BaseTestCase {
 
@@ -35,6 +37,9 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Mock private Slot mockedChoreSlot;
   @Mock private DynamoDBMapper mockedMapper;
   @Mock private Task mockedTask;
+  @Mock private DynamoDBScanExpression mockedScanExpression;
+  @Mock private PaginatedScanList<Task> mockedPaginatedScanList;
+
 
   @Before
   public void setup() {
@@ -126,9 +131,18 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Go stand in the corner and think about what you've done."));
   }
 
-  // @Test
-  // public void testChorelist() {
-  //   speechlet.getChoreList();
-  // }
+  @Test
+  public void testGetNumberOfCompletedChoresResponse() {
+    when(mockedIntent.getName()).thenReturn("NumberOfCompletedChoresIntent");
+    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedPaginatedScanList.size()).thenReturn(5);
+
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+
+    verify(mockedMapper).scan(eq(Task.class),any(DynamoDBScanExpression.class));
+    verify(mockedPaginatedScanList).size();
+
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("There are 5 completed chores."));
+  }
 
 }
