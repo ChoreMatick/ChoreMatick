@@ -123,9 +123,6 @@ public class ChorematickSpeechlet implements Speechlet {
 
   public SpeechletResponse getChoreList() {
 
-  //   HashMap<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
-  // eav.put(":v1", new AttributeValue().withS("2015"));
-  //
   DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
 
   List<Task> chores =  mapper.scan(Task.class, scanExpression);
@@ -133,7 +130,7 @@ public class ChorematickSpeechlet implements Speechlet {
   String result = "";
 
   for(Task task : chores) {
-        result = result + ", " + task.getChore();
+        result = result + task.getChore() + ", ";
     }
 
   log.info(result);
@@ -150,15 +147,21 @@ public class ChorematickSpeechlet implements Speechlet {
 
     String day = intent.getSlot("choreDate").getValue();
     String chore = intent.getSlot("chore").getValue();
+    // String password = intent.getSlot("password").getValue();
 
     Task task = new Task();
     task.setDate(day);
     task.setChore(chore);
+    task.setPassword("tree");
     this.mapper.save(task);
 
     speech.setText("Very well, I have added a " + chore + " chore for " + day);
 
-    return SpeechletResponse.newTellResponse(speech);
+    SimpleCard card = new SimpleCard();
+    card.setTitle(day + chore);
+    card.setContent("tree");
+
+    return SpeechletResponse.newTellResponse(speech, card);
   }
 
   private SpeechletResponse getHelpResponse() {

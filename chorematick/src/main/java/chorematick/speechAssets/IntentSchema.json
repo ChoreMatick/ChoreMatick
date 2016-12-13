@@ -45,6 +45,10 @@
         {
           "name": "chore",
           "type": "CHORES"
+        },
+        {
+          "name": "password",
+          "type": "PASSWORD"
         }
       ]
     },
@@ -53,5 +57,3 @@
     }
   ]
 }
-
-
