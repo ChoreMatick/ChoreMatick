@@ -38,6 +38,7 @@ public class Task {
 
   public void setIsComplete(boolean bool) {
     this.complete = bool;
+  }
 
   @DynamoDBAttribute(attributeName="password")
   public String getPassword(){
