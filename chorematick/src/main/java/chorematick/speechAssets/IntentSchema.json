@@ -1,22 +1,22 @@
-{
-   "intents": [
-     {
-       "intent": "ChorematickIntent"
-     },
-     {
-       "intent": "ConfirmChoreIntent",
-       "slots": [
-         {
-           "name": "choreDate",
-           "type": "AMAZON.DATE"
-         },
-         {
-           "name": "chore",
-           "type": "CHORES"
-         }
-       ]
-     },
-     {
+  {
+    "intents": [
+      {
+        "intent": "ChorematickIntent"
+      },
+      {
+        "intent": "ConfirmChoreIntent",
+        "slots": [
+          {
+            "name": "choreDate",
+            "type": "AMAZON.DATE"
+          },
+          {
+            "name": "chore",
+            "type": "CHORES"
+          }
+        ]
+      },
+      {
        "intent": "GetDoneIntent",
        "slots": [
          {
@@ -29,40 +29,39 @@
          }
        ]
      },
-     {
-       "intent": "GetChoreIntent"
-     },
-       {
-     "intent": "GetChoreListIntent"
-   },
-     {
-       "intent": "DateIntent",
-       "slots": [
-         {
-           "name": "choreDate",
-           "type": "AMAZON.DATE"
-         }
-       ]
-     },
-       {
-     "intent": "AddChoreIntent",
-     "slots": [
-       {
-         "name": "choreDate",
-         "type": "AMAZON.DATE"
-       },
-       {
-         "name": "chore",
-         "type": "CHORES"
-       },
-       {
-         "name": "password",
-         "type": "AMAZON.NUMBER"
-       }
-     ]
-   },
-   {
-     "intent": "AMAZON.HelpIntent"
-   }
- ]
+      {
+        "intent": "NumberOfCompletedChoresIntent"
+      },
+      {
+        "intent": "GetChoreIntent"
+      },
+        {
+      "intent": "GetChoreListIntent"
+    },
+      {
+        "intent": "DateIntent",
+        "slots": [
+          {
+            "name": "choreDate",
+            "type": "AMAZON.DATE"
+          }
+        ]
+      },
+        {
+      "intent": "AddChoreIntent",
+      "slots": [
+        {
+          "name": "choreDate",
+          "type": "AMAZON.DATE"
+        },
+        {
+          "name": "chore",
+          "type": "CHORES"
+        }
+      ]
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
 }

@@ -24,6 +24,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 
 import static org.mockito.Matchers.any;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 
 public class ChorematickSpeechletTest extends BaseTestCase {
 
@@ -37,6 +39,8 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Mock private Slot mockedChoreSlot;
   @Mock private Slot mockedPasswordSlot;
   @Mock private DynamoDBMapper mockedMapper;
+  @Mock private Task mockedTask;
+  @Mock private PaginatedScanList<Task> mockedPaginatedScanList;
   @Mock private DynamoDBScanExpression mockedExpression;
 
   @Before
@@ -87,11 +91,13 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedDateSlot.getValue()).thenReturn("12-12-2016");
     when(mockedIntent.getSlot("chore")).thenReturn(mockedChoreSlot);
     when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
+    when(mockedMapper.load(Task.class, "12-12-2016", "Shear the sheep")).thenReturn(mockedTask);
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
 
     verify(mockedMapper).load(Task.class, "12-12-2016", "Shear the sheep");
-    verify(mockedMapper).delete(any());
+    verify(mockedMapper).save(any(Task.class));
+    verify(mockedTask).setIsComplete(true);
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("I've confirmed 12-12-2016 Shear the sheep chore is completed."));
   }
 
@@ -144,4 +150,18 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Go stand in the corner and think about what you've done."));
   }
 
+
+  @Test
+  public void testGetNumberOfCompletedChoresResponse() {
+    when(mockedIntent.getName()).thenReturn("NumberOfCompletedChoresIntent");
+    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedPaginatedScanList.size()).thenReturn(5);
+
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+
+    verify(mockedMapper).scan(eq(Task.class),any(DynamoDBScanExpression.class));
+    verify(mockedPaginatedScanList).size();
+
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("There are 5 completed chores."));
+  }
 }

@@ -11,6 +11,7 @@ public class Task {
 
   private String chore;
   private String day;
+  private boolean complete = false;
   private String password;
 
   @DynamoDBHashKey(attributeName="Due")
@@ -30,6 +31,15 @@ public class Task {
     this.chore = chore;
   }
 
+  @DynamoDBAttribute(attributeName="Complete")
+  public boolean getIsComplete(){
+    return complete;
+  }
+
+  public void setIsComplete(boolean bool) {
+    this.complete = bool;
+  }
+
   @DynamoDBAttribute(attributeName="password")
   public String getPassword(){
     return password;
@@ -37,5 +47,6 @@ public class Task {
 
   public void setPassword(String password) {
     this.password = password;
+
   }
 }

@@ -18,6 +18,8 @@ import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedList;
 
 import java.util.logging.Logger;
 import java.util.Calendar;
@@ -25,6 +27,8 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.time.*;
 
 public class ChorematickSpeechlet implements Speechlet {
@@ -68,6 +72,8 @@ public class ChorematickSpeechlet implements Speechlet {
       return getAddChoreResponse(intent);
     } else if ("GetChoreListIntent".equals(intentName)) {
       return getChoreList();
+    } else if ("NumberOfCompletedChoresIntent".equals(intentName)) {
+      return getNumberOfCompletedChoresResponse();
     } else if ("AMAZON.HelpIntent".equals(intentName)) {
       return getHelpResponse();
     } else {
@@ -127,7 +133,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
   public SpeechletResponse getChoreList() {
 
-    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+  DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
 
     List<Task> chores =  mapper.scan(Task.class, scanExpression);
 
@@ -136,8 +142,6 @@ public class ChorematickSpeechlet implements Speechlet {
     for(Task task : chores) {
       result = result + task.getChore() + ", ";
     }
-
-    log.info(result);
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(result);
@@ -190,7 +194,7 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newTellResponse(speech);
   }
 
-  public SpeechletResponse getConfirmChoreResponse(Intent intent) {
+  private SpeechletResponse getConfirmChoreResponse(Intent intent) {
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 
@@ -198,10 +202,32 @@ public class ChorematickSpeechlet implements Speechlet {
     String chore = intent.getSlot("chore").getValue();
 
     Task task = this.mapper.load(Task.class, day, chore);
-
-    this.mapper.delete(task);
+    task.setIsComplete(true);
+    this.mapper.save(task);
 
     speech.setText("I've confirmed "+ day + " " + chore +" chore is completed.");
+    return SpeechletResponse.newTellResponse(speech);
+  }
+
+  private SpeechletResponse getNumberOfCompletedChoresResponse(){
+
+    Map<String, String> attributeNames = new HashMap<String, String>();
+    attributeNames.put("#complete", "Complete");
+
+    Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+    attributeValues.put(":yes", new AttributeValue().withN("1"));
+
+    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+            .withFilterExpression("#complete = :yes")
+            .withExpressionAttributeNames(attributeNames)
+            .withExpressionAttributeValues(attributeValues);
+
+    PaginatedList<Task> completedChores =  mapper.scan(Task.class, scanExpression);
+
+    int number = completedChores.size();
+
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText("There are " + number + " completed chores.");
     return SpeechletResponse.newTellResponse(speech);
   }
 
