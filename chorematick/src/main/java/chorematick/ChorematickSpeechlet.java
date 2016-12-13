@@ -205,20 +205,43 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newTellResponse(speech);
   }
 
+
+
+
   private SpeechletResponse getConfirmChoreResponse(Intent intent) {
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 
-    String day = intent.getSlot("choreDate").getValue();
-    String chore = intent.getSlot("chore").getValue();
+    // String day = intent.getSlot("choreDate").getValue();
+    // String chore = intent.getSlot("chore").getValue();
+    String password = intent.getSlot("password").getValue();
 
-    Task task = this.mapper.load(Task.class, day, chore);
-    task.setIsComplete(true);
-    this.mapper.save(task);
+    Map<String, String> attributeNames = new HashMap<String, String>();
+    attributeNames.put("#password", "password");
 
-    speech.setText("I've confirmed "+ day + " " + chore +" chore is completed.");
+    Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+    attributeValues.put(":pass", new AttributeValue().withS(password));
+
+    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+            .withFilterExpression("#password = :pass")
+            .withExpressionAttributeNames(attributeNames)
+            .withExpressionAttributeValues(attributeValues);
+
+    PaginatedList<Task> chores =  mapper.scan(Task.class, scanExpression);
+
+    if (chores.size() != 0) {
+        Task task = chores.get(0);
+        task.setIsComplete(true);
+        this.mapper.save(task);
+        speech.setText("I've confirmed "+ task.getDate() + " " + task.getChore() +" chore is completed.");
+    } else {
+        speech.setText("Unable to confirm password, please try again.");
+    }
+
     return SpeechletResponse.newTellResponse(speech);
   }
+
+
 
   private SpeechletResponse getNumberOfCompletedChoresResponse(){
 
