@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.List;
 import java.time.*;
 
@@ -143,23 +144,27 @@ public class ChorematickSpeechlet implements Speechlet {
 
   private SpeechletResponse getAddChoreResponse(Intent intent){
 
+    Random random = new Random();
+
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 
     String day = intent.getSlot("choreDate").getValue();
     String chore = intent.getSlot("chore").getValue();
-    // String password = intent.getSlot("password").getValue();
+    String password = String.format("%04d", random.nextInt(10000));
+
+    log.info(password);
 
     Task task = new Task();
     task.setDate(day);
     task.setChore(chore);
-    task.setPassword("tree");
+    task.setPassword(password);
     this.mapper.save(task);
 
     speech.setText("Very well, I have added a " + chore + " chore for " + day);
 
     SimpleCard card = new SimpleCard();
-    card.setTitle(day + chore);
-    card.setContent("tree");
+    card.setTitle(day + " " + chore);
+    card.setContent("Password: " + password);
 
     return SpeechletResponse.newTellResponse(speech, card);
   }
