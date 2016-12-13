@@ -29,4 +29,15 @@ public class TaskTest extends BaseTestCase {
   public void getChoreTest() {
     assertEquals("Sweep the chimney", task.getChore());
   }
+
+  @Test
+  public void getIsCompleteTest() {
+    assertEquals(false, task.getIsComplete());
+  }
+
+  @Test
+  public void setIsCompleteTest() {
+    task.setIsComplete(true);
+    assertEquals(true, task.getIsComplete());
+  }
 }
