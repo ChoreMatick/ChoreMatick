@@ -6,6 +6,8 @@ import com.amazon.speech.slu.Slot;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+import com.amazon.speech.ui.StandardCard;
+import com.amazon.speech.ui.Image;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -59,7 +61,6 @@ public class ChorematickSpeechlet implements Speechlet {
     Intent intent = request.getIntent();
     String intentName = (intent != null) ? intent.getName() : null;
 
-
     if ("GetChoreIntent".equals(intentName)) {
       return getChoreResponse();
     } else if ("GetDoneIntent".equals(intentName)){
@@ -93,7 +94,17 @@ public class ChorematickSpeechlet implements Speechlet {
     Reprompt reprompt = new Reprompt();
     reprompt.setOutputSpeech(speech);
 
-    return SpeechletResponse.newAskResponse(speech, reprompt);
+    if(this.countChoresCompleted() >= 10){
+      StandardCard card = new StandardCard();
+      Image image = new Image();
+      image.setSmallImageUrl("https://images-na.ssl-images-amazon.com/images/I/61miKEYpgSL._SL1000_.jpg");
+      card.setTitle("10 chores complete!! \n Suggested gift:");
+      card.setText("Hasbro NERF Rebelle Diamondista Blaster £4.99");
+      card.setImage(image);
+      return SpeechletResponse.newAskResponse(speech, reprompt, card);
+    } else {
+      return SpeechletResponse.newAskResponse(speech, reprompt);
+    }
   }
 
   private SpeechletResponse getChoreResponse() {
@@ -211,6 +222,20 @@ public class ChorematickSpeechlet implements Speechlet {
 
   private SpeechletResponse getNumberOfCompletedChoresResponse(){
 
+    int number = countChoresCompleted();
+
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText("There are " + number + " completed chores.");
+    return SpeechletResponse.newTellResponse(speech);
+  }
+
+  private SpeechletResponse getEasterEggResponse() {
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText("Go stand in the corner and think about what you've done.");
+    return SpeechletResponse.newTellResponse(speech);
+  }
+
+  private int countChoresCompleted(){
     Map<String, String> attributeNames = new HashMap<String, String>();
     attributeNames.put("#complete", "Complete");
 
@@ -224,17 +249,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
     PaginatedList<Task> completedChores =  mapper.scan(Task.class, scanExpression);
 
-    int number = completedChores.size();
-
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText("There are " + number + " completed chores.");
-    return SpeechletResponse.newTellResponse(speech);
-  }
-
-  private SpeechletResponse getEasterEggResponse() {
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText("Go stand in the corner and think about what you've done.");
-    return SpeechletResponse.newTellResponse(speech);
+    return completedChores.size();
   }
 
 }
