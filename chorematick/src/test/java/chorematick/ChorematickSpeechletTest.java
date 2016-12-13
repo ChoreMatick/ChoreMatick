@@ -1,12 +1,5 @@
 package chorematick;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import org.mockito.Mock;
-import org.junit.Before;
-import org.mockito.MockitoAnnotations;
-import static org.hamcrest.CoreMatchers.*;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.IntentRequest;
@@ -20,18 +13,26 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+import com.amazon.speech.ui.StandardCard;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-
-import static org.mockito.Matchers.any;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 public class ChorematickSpeechletTest extends BaseTestCase {
 
   private ChorematickSpeechlet speechlet;
 
   @Mock private IntentRequest mockedIntentRequest;
+  @Mock private LaunchRequest mockedLaunchRequest;
   @Mock private Session mockedSession;
   @Mock private Intent mockedIntent;
   @Mock private SessionStartedRequest mockedSessionStartedRequest;
@@ -48,6 +49,32 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedIntentRequest.getIntent()).thenReturn(mockedIntent);
     speechlet = new ChorematickSpeechlet(mockedMapper);
     speechlet.onSessionStarted(mockedSessionStartedRequest, mockedSession);
+  }
+
+  @Test
+  public void WelcomeResponseTest() {
+    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedPaginatedScanList.size()).thenReturn(5);
+
+    SpeechletResponse response = speechlet.onLaunch(mockedLaunchRequest, mockedSession);
+
+    assertEquals("Hello child, Would you like to hear your chore for today, or tell me you have completed your chore", ((PlainTextOutputSpeech) response.getOutputSpeech()).getText());
+  }
+
+  @Test
+  public void testGiftSuggestion(){
+    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedPaginatedScanList.size()).thenReturn(11);
+
+    SpeechletResponse response = speechlet.onLaunch(mockedLaunchRequest, mockedSession);
+
+    assertEquals("Hello child, Would you like to hear your chore for today, or tell me you have completed your chore", ((PlainTextOutputSpeech) response.getOutputSpeech()).getText());
+
+    StandardCard card = (StandardCard) response.getCard();
+
+    assertThat(card.getTitle(), equalTo("10 chores complete!! \n Suggested gift:"));
+    assertThat(card.getText(), equalTo("Hasbro NERF Rebelle Diamondista Blaster £4.99"));
+    assertThat(card.getImage().getSmallImageUrl(), equalTo("https://images-na.ssl-images-amazon.com/images/I/61miKEYpgSL._SL1000_.jpg"));
   }
 
   @Test
