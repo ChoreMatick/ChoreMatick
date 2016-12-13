@@ -856,4 +856,102 @@ AddChoreIntent to {choreDate} add a {chore}
 AddChoreIntent to {choreDate} add the {chore}
 AddChoreIntent to {choreDate} add this {chore}
 
-NumberOfCompletedChoresIntent
+NumberOfCompletedChoresIntent give me number of completed chores
+NumberOfCompletedChoresIntent give me number of completed jobs
+NumberOfCompletedChoresIntent give me number of completed tasks
+NumberOfCompletedChoresIntent give me number of done chores
+NumberOfCompletedChoresIntent give me number of done jobs
+NumberOfCompletedChoresIntent give me number of done tasks
+NumberOfCompletedChoresIntent give me number of finished chores
+NumberOfCompletedChoresIntent give me number of finished jobs
+NumberOfCompletedChoresIntent give me number of finished tasks
+NumberOfCompletedChoresIntent give the number of completed chores
+NumberOfCompletedChoresIntent give the number of completed jobs
+NumberOfCompletedChoresIntent give the number of completed tasks
+NumberOfCompletedChoresIntent give the number of done chores
+NumberOfCompletedChoresIntent give the number of done jobs
+NumberOfCompletedChoresIntent give the number of done tasks
+NumberOfCompletedChoresIntent give the number of finished chores
+NumberOfCompletedChoresIntent give the number of finished jobs
+NumberOfCompletedChoresIntent give the number of finished tasks
+NumberOfCompletedChoresIntent how many chores are completed
+NumberOfCompletedChoresIntent how many chores are done
+NumberOfCompletedChoresIntent how many chores are finished
+NumberOfCompletedChoresIntent how many chores have been completed
+NumberOfCompletedChoresIntent how many chores have been done
+NumberOfCompletedChoresIntent how many chores have been finished
+NumberOfCompletedChoresIntent how many chores were completed
+NumberOfCompletedChoresIntent how many chores were done
+NumberOfCompletedChoresIntent how many chores were finished
+NumberOfCompletedChoresIntent how many completed chores are there
+NumberOfCompletedChoresIntent how many completed chores have there been
+NumberOfCompletedChoresIntent how many completed chores were there
+NumberOfCompletedChoresIntent how many completed jobs are there
+NumberOfCompletedChoresIntent how many completed jobs have there been
+NumberOfCompletedChoresIntent how many completed jobs were there
+NumberOfCompletedChoresIntent how many completed tasks are there
+NumberOfCompletedChoresIntent how many completed tasks have there been
+NumberOfCompletedChoresIntent how many completed tasks were there
+NumberOfCompletedChoresIntent how many done chores are there
+NumberOfCompletedChoresIntent how many done chores have there been
+NumberOfCompletedChoresIntent how many done chores were there
+NumberOfCompletedChoresIntent how many done jobs are there
+NumberOfCompletedChoresIntent how many done jobs have there been
+NumberOfCompletedChoresIntent how many done jobs were there
+NumberOfCompletedChoresIntent how many done tasks are there
+NumberOfCompletedChoresIntent how many done tasks have there been
+NumberOfCompletedChoresIntent how many done tasks were there
+NumberOfCompletedChoresIntent how many finished chores are there
+NumberOfCompletedChoresIntent how many finished chores have there been
+NumberOfCompletedChoresIntent how many finished chores were there
+NumberOfCompletedChoresIntent how many finished jobs are there
+NumberOfCompletedChoresIntent how many finished jobs have there been
+NumberOfCompletedChoresIntent how many finished jobs were there
+NumberOfCompletedChoresIntent how many finished tasks are there
+NumberOfCompletedChoresIntent how many finished tasks have there been
+NumberOfCompletedChoresIntent how many finished tasks were there
+NumberOfCompletedChoresIntent how many jobs are completed
+NumberOfCompletedChoresIntent how many jobs are done
+NumberOfCompletedChoresIntent how many jobs are finished
+NumberOfCompletedChoresIntent how many jobs have been completed
+NumberOfCompletedChoresIntent how many jobs have been done
+NumberOfCompletedChoresIntent how many jobs have been finished
+NumberOfCompletedChoresIntent how many jobs were completed
+NumberOfCompletedChoresIntent how many jobs were done
+NumberOfCompletedChoresIntent how many jobs were finished
+NumberOfCompletedChoresIntent how many tasks are completed
+NumberOfCompletedChoresIntent how many tasks are done
+NumberOfCompletedChoresIntent how many tasks are finished
+NumberOfCompletedChoresIntent how many tasks have been completed
+NumberOfCompletedChoresIntent how many tasks have been done
+NumberOfCompletedChoresIntent how many tasks have been finished
+NumberOfCompletedChoresIntent how many tasks were completed
+NumberOfCompletedChoresIntent how many tasks were done
+NumberOfCompletedChoresIntent how many tasks were finished
+NumberOfCompletedChoresIntent tell me number of completed chores
+NumberOfCompletedChoresIntent tell me number of completed jobs
+NumberOfCompletedChoresIntent tell me number of completed tasks
+NumberOfCompletedChoresIntent tell me number of done chores
+NumberOfCompletedChoresIntent tell me number of done jobs
+NumberOfCompletedChoresIntent tell me number of done tasks
+NumberOfCompletedChoresIntent tell me number of finished chores
+NumberOfCompletedChoresIntent tell me number of finished jobs
+NumberOfCompletedChoresIntent tell me number of finished tasks
+NumberOfCompletedChoresIntent tell the number of completed chores
+NumberOfCompletedChoresIntent tell the number of completed jobs
+NumberOfCompletedChoresIntent tell the number of completed tasks
+NumberOfCompletedChoresIntent tell the number of done chores
+NumberOfCompletedChoresIntent tell the number of done jobs
+NumberOfCompletedChoresIntent tell the number of done tasks
+NumberOfCompletedChoresIntent tell the number of finished chores
+NumberOfCompletedChoresIntent tell the number of finished jobs
+NumberOfCompletedChoresIntent tell the number of finished tasks
+NumberOfCompletedChoresIntent what's the number of completed chores
+NumberOfCompletedChoresIntent what's the number of completed jobs
+NumberOfCompletedChoresIntent what's the number of completed tasks
+NumberOfCompletedChoresIntent what's the number of done chores
+NumberOfCompletedChoresIntent what's the number of done jobs
+NumberOfCompletedChoresIntent what's the number of done tasks
+NumberOfCompletedChoresIntent what's the number of finished chores
+NumberOfCompletedChoresIntent what's the number of finished jobs
+NumberOfCompletedChoresIntent what's the number of finished tasks
