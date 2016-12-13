@@ -856,3 +856,4 @@ AddChoreIntent to {choreDate} add a {chore}
 AddChoreIntent to {choreDate} add the {chore}
 AddChoreIntent to {choreDate} add this {chore}
 
+NumberOfCompletedChoresIntent

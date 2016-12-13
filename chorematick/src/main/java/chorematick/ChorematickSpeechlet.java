@@ -209,11 +209,6 @@ public class ChorematickSpeechlet implements Speechlet {
             .withExpressionAttributeNames(attributeNames)
             .withExpressionAttributeValues(attributeValues);
 
-    //////
-
-    // DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-    //     .addExpressionAttributeValuesEntry("Complete", new AttributeValue("true"));
-
     PaginatedList<Task> completedChores =  mapper.scan(Task.class, scanExpression);
 
     int number = completedChores.size();

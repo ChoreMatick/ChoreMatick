@@ -21,6 +21,9 @@
         "intent": "GetDoneIntent"
       },
       {
+        "intent": "NumberOfCompletedChoresIntent"
+      },
+      {
         "intent": "GetChoreIntent"
       },
         {
@@ -53,5 +56,3 @@
     }
   ]
 }
-
-
