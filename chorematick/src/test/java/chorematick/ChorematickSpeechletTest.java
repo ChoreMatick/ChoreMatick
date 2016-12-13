@@ -110,14 +110,14 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     assertThat(card.getTitle(), equalTo("02-03-2016 " + "Shear the sheep"));
   }
 
-  @Test
-  public void testDoneResponse() {
-    when(mockedIntent.getName()).thenReturn("GetDoneIntent");
-
-    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
-
-    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have informed your appropriate adult."));
-  }
+  // @Test
+  // public void testDoneResponse() {
+  //   when(mockedIntent.getName()).thenReturn("GetDoneIntent");
+  //
+  //   SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+  //
+  //   assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have informed your appropriate adult."));
+  // }
 
   // @Test
   // public void testGetChoreList(){

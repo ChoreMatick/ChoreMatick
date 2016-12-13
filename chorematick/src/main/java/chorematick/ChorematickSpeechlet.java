@@ -54,13 +54,12 @@ public class ChorematickSpeechlet implements Speechlet {
 
     Intent intent = request.getIntent();
     String intentName = (intent != null) ? intent.getName() : null;
-    // log.info(intentName);
 
 
     if ("GetChoreIntent".equals(intentName)) {
       return getChoreResponse();
     } else if ("GetDoneIntent".equals(intentName)){
-      return getDoneResponse();
+      return getDoneResponse(intent);
     } else if ("ConfirmChoreIntent".equals(intentName)){
       return getConfirmChoreResponse(intent);
     }else if ("ChorematickIntent".equals(intentName)) {
@@ -108,12 +107,17 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newTellResponse(speech, card);
   }
 
-  private SpeechletResponse getDoneResponse() {
+  private SpeechletResponse getDoneResponse(Intent intent) {
     String speechText = "Very well, I have informed your appropriate adult.";
+
+    String day = intent.getSlot("choreDate").getValue();
+    String chore = intent.getSlot("chore").getValue();
+
+    Task task = this.mapper.load(Task.class, day, chore);
 
     SimpleCard card = new SimpleCard();
     card.setTitle("Chore Verification");
-    card.setContent("Your child claims to have completed their chore, please check and verify");
+    card.setContent("Your child claims to have completed their chore. Here is the password: " + task.getPassword());
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
@@ -121,13 +125,12 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newTellResponse(speech, card);
   }
 
-
   public SpeechletResponse getChoreList() {
 
     DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
 
     List<Task> chores =  mapper.scan(Task.class, scanExpression);
-    
+
     String result = "";
 
     for(Task task : chores) {
