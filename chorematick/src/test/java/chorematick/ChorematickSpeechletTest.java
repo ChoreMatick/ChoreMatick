@@ -142,21 +142,34 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     assertThat(card.getContent(), equalTo("Your child just asked for today's chore"));
   }
 
-  // @Test
-  // public void testConfirmChoreResponse(){
-  //
-  //   when(mockedIntent.getSlot("password")).thenReturn(mockedPasswordSlot);
-  //   when(mockedPasswordSlot.getValue()).thenReturn("1234");
-  //   when(mockedMapper.load(Task.class, "12-12-2016", "Shear the sheep")).thenReturn(mockedTask);
-  //   when(mockedTask.getPassword()).thenReturn("1234");
-  //
-  //   SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
-  //   verify(mockedMapper).load(Task.class, "12-12-2016", "Shear the sheep");
-  //   verify(mockedTask).getPassword();
-  //   verify(mockedMapper).save(any(Task.class));
-  //   verify(mockedTask).setIsComplete(true);
-  //   assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("I've confirmed 12-12-2016 Shear the sheep chore is completed."));
-  // }
+  @Test
+  public void testConfirmChoreResponse(){
+    when(mockedIntent.getName()).thenReturn("ConfirmChoreIntent");
+    when(mockedIntent.getSlot("password")).thenReturn(mockedPasswordSlot);
+    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedPaginatedScanList.size()).thenReturn(1);
+    when(mockedPaginatedScanList.get(0)).thenReturn(mockedTask);
+    when(mockedTask.getDate()).thenReturn("12-12-2016");
+    when(mockedTask.getChore()).thenReturn("Shear the sheep");
+
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+    verify(mockedMapper).scan(eq(Task.class), any(DynamoDBScanExpression.class));
+    verify(mockedTask).setIsComplete(true);
+    verify(mockedMapper).save(any(Task.class));
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("I've confirmed 12-12-2016 Shear the sheep chore is completed."));
+  }
+
+  @Test
+  public void testUnableToConfirmChoreResponse(){
+    when(mockedIntent.getName()).thenReturn("ConfirmChoreIntent");
+    when(mockedIntent.getSlot("password")).thenReturn(mockedPasswordSlot);
+    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedPaginatedScanList.size()).thenReturn(0);
+
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+    verify(mockedMapper).scan(eq(Task.class), any(DynamoDBScanExpression.class));
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Unable to confirm password, please try again."));
+  }
 
   @Test
   public void testAddChoreResponse(){
