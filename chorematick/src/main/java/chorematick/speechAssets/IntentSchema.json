@@ -1,53 +1,60 @@
-  {
-    "intents": [
-      {
-        "intent": "ChorematickIntent"
-      },
-      {
-        "intent": "ConfirmChoreIntent",
-        "slots": [
-          {
-            "name": "choreDate",
-            "type": "AMAZON.DATE"
-          },
-          {
-            "name": "chore",
-            "type": "CHORES"
-          }
-        ]
-      },
-      {
-       "intent": "GetDoneIntent",
-       "slots": [
-         {
-           "name": "choreDate",
-           "type": "AMAZON.DATE"
-         },
-         {
-           "name": "chore",
-           "type": "CHORES"
-         }
-       ]
-     },
-      {
-        "intent": "NumberOfCompletedChoresIntent"
-      },
-      {
-        "intent": "GetChoreIntent"
-      },
+
+{
+  "intents": [
+    {
+      "intent": "ChorematickIntent"
+    },
+    {
+      "intent": "ConfirmChoreIntent",
+      "slots": [
         {
+          "name": "password",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    },
+    {
+      "intent": "GetDoneIntent",
+      "slots": [
+        {
+          "name": "choreDate",
+          "type": "AMAZON.DATE"
+        },
+        {
+          "name": "chore",
+          "type": "CHORES"
+        }
+      ]
+    },
+    {
+      "intent": "NumberOfCompletedChoresIntent"
+    },
+    {
+      "intent": "GetChoreIntent",
+      "slots": [
+        {
+          "name": "choreDate",
+          "type": "AMAZON.DATE"
+        },
+        {
+          "name": "chore",
+          "type": "CHORES"
+        }
+      ]
+    },
+    {
       "intent": "GetChoreListIntent"
     },
-      {
-        "intent": "DateIntent",
-        "slots": [
-          {
-            "name": "choreDate",
-            "type": "AMAZON.DATE"
-          }
-        ]
-      },
+    {
+      "intent": "DateIntent",
+      "slots": [
         {
+          "name": "choreDate",
+          "type": "AMAZON.DATE"
+        }
+      ]
+    },
+    {
       "intent": "AddChoreIntent",
       "slots": [
         {
