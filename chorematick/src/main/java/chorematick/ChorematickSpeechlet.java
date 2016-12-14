@@ -24,15 +24,17 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedList;
 
-import java.util.logging.Logger;
-import java.util.Calendar;
-import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Random;
+import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.Map;
+import java.util.Random;
+import java.util.TimeZone;
 import java.time.*;
+import java.text.SimpleDateFormat;
 
 public class ChorematickSpeechlet implements Speechlet {
 
@@ -63,7 +65,7 @@ public class ChorematickSpeechlet implements Speechlet {
     String intentName = (intent != null) ? intent.getName() : null;
 
     if ("GetChoreIntent".equals(intentName)) {
-      return getChoreResponse();
+      return getChoreResponse(intent);
     } else if ("GetDoneIntent".equals(intentName)){
       return getDoneResponse(intent);
     } else if ("ConfirmChoreIntent".equals(intentName)){
@@ -110,20 +112,47 @@ public class ChorematickSpeechlet implements Speechlet {
     }
   }
 
-  private SpeechletResponse getChoreResponse() {
+  private SpeechletResponse getChoreResponse(Intent intent) {
 
-    Task task = new Task();
-    task.setChore("Sweep the chimney");
-    task.setDate("2016-10-10");
-    this.mapper.save(task);
+    String day;
 
-    String speechText = "Your chore for today is. Sweep the chimney. That's right. Sweep the chimney.";
+    if (intent.getSlot("choreDate").getValue() == null) {
+      Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("EST"));
+      SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+      day = format1.format(cal.getTime()).toString();
+
+    } else {
+      day = intent.getSlot("choreDate").getValue();
+    }
+
+    Map<String, String> attributeNames = new HashMap<String, String>();
+    attributeNames.put("#due", "Due");
+
+    Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+    attributeValues.put(":Due", new AttributeValue().withS(day));
+
+    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+            .withFilterExpression("#due = :Due")
+            .withExpressionAttributeNames(attributeNames)
+            .withExpressionAttributeValues(attributeValues);
+
+    PaginatedList<Task> chores =  mapper.scan(Task.class, scanExpression);
+
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText(speechText);
+
+    if (chores.size() != 0) {
+        Task task = chores.get(0);
+        speech.setText("Your chore is. " + task.getChore());
+    } else {
+        speech.setText("It's your lucky day! you have no assigned chores.");
+    }
+
 
     SimpleCard card = new SimpleCard();
     card.setTitle("Chore requested");
     card.setContent("Your child just asked for today's chore");
+
     return SpeechletResponse.newTellResponse(speech, card);
   }
 

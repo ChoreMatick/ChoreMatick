@@ -108,11 +108,36 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Test
   public void testgetChoreResponse() {
     when(mockedIntent.getName()).thenReturn("GetChoreIntent");
+    when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
+    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedPaginatedScanList.size()).thenReturn(1);
+    when(mockedPaginatedScanList.get(0)).thenReturn(mockedTask);
+    when(mockedTask.getChore()).thenReturn("Sweep the chimney. That's right. Sweep the chimney.");
+
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
     SimpleCard card = (SimpleCard) response.getCard();
 
-    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Your chore for today is. Sweep the chimney. That's right. Sweep the chimney."));
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Your chore is. Sweep the chimney. That's right. Sweep the chimney."));
+    assertThat(card.getTitle(), equalTo("Chore requested"));
+    assertThat(card.getContent(), equalTo("Your child just asked for today's chore"));
+  }
+
+  @Test
+  public void testgetChoreResponseOnNullDate() {
+    when(mockedIntent.getName()).thenReturn("GetChoreIntent");
+    when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
+    when(mockedDateSlot.getValue()).thenReturn(null);
+    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedPaginatedScanList.size()).thenReturn(1);
+    when(mockedPaginatedScanList.get(0)).thenReturn(mockedTask);
+    when(mockedTask.getChore()).thenReturn("Sweep the chimney. That's right. Sweep the chimney.");
+
+
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+    SimpleCard card = (SimpleCard) response.getCard();
+
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Your chore is. Sweep the chimney. That's right. Sweep the chimney."));
     assertThat(card.getTitle(), equalTo("Chore requested"));
     assertThat(card.getContent(), equalTo("Your child just asked for today's chore"));
   }
