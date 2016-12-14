@@ -11,6 +11,7 @@ import com.amazon.speech.speechlet.Speechlet;
 import com.amazon.speech.speechlet.SpeechletException;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
+import com.amazon.speech.ui.SsmlOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import com.amazon.speech.ui.StandardCard;
@@ -56,9 +57,11 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
     when(mockedPaginatedScanList.size()).thenReturn(5);
 
+    SsmlOutputSpeech speech = new SsmlOutputSpeech();
+
     SpeechletResponse response = speechlet.onLaunch(mockedLaunchRequest, mockedSession);
 
-    assertEquals("Hello child, Would you like to hear your chore for today, or tell me you have completed your chore", ((PlainTextOutputSpeech) response.getOutputSpeech()).getText());
+    assertEquals("<speak> Welcome to, <phoneme alphabet=\"ipa\" ph=\"tʃɔːrmætɪk\">Chorematic</phoneme>! What would you like to do today? </speak>", ((SsmlOutputSpeech) response.getOutputSpeech()).getSsml());
   }
 
   @Test
@@ -66,9 +69,11 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
     when(mockedPaginatedScanList.size()).thenReturn(11);
 
+    SsmlOutputSpeech speech = new SsmlOutputSpeech();
+
     SpeechletResponse response = speechlet.onLaunch(mockedLaunchRequest, mockedSession);
 
-    assertEquals("Hello child, Would you like to hear your chore for today, or tell me you have completed your chore", ((PlainTextOutputSpeech) response.getOutputSpeech()).getText());
+    assertEquals("<speak> Welcome to, <phoneme alphabet=\"ipa\" ph=\"tʃɔːrmætɪk\">Chorematic</phoneme>! What would you like to do today? </speak>", ((SsmlOutputSpeech) response.getOutputSpeech()).getSsml());
 
     StandardCard card = (StandardCard) response.getCard();
 
@@ -95,7 +100,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
 
     assertThat(response.getCard(), nullValue());
-    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("You can ask me for a chore, by saying, what is my chore?"));
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("You can tell me to add a chore; you can ask me for today's chore; tell me that you've finished your chore; confirm a password; ask me for a list of chores; or ask me for the number of completed chores"));
 
   }
 
