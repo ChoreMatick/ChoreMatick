@@ -148,7 +148,6 @@ public class ChorematickSpeechlet implements Speechlet {
         speech.setText("It's your lucky day! you have no assigned chores.");
     }
 
-
     SimpleCard card = new SimpleCard();
     card.setTitle("Chore requested");
     card.setContent("Your child just asked for today's chore");
@@ -269,7 +268,16 @@ public class ChorematickSpeechlet implements Speechlet {
       speech.setText("Unable to confirm password, please try again.");
     }
 
-    return SpeechletResponse.newTellResponse(speech);
+    Reprompt reprompt = new Reprompt();
+    PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
+    repromptSpeech.setText("Please try confirming the password again");
+    reprompt.setOutputSpeech(repromptSpeech);
+
+    SimpleCard card = new SimpleCard();
+    card.setTitle("Chore Completed!");
+    card.setContent("Thank you for confiming your child has completed their chore; the list has been updated");
+
+    return SpeechletResponse.newAskResponse(speech, reprompt, card);
   }
 
   private SpeechletResponse getNumberOfCompletedChoresResponse(){
