@@ -186,14 +186,23 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     assertThat(card.getTitle(), equalTo("02-03-2016 " + "Shear the sheep"));
   }
 
-  // @Test
-  // public void testDoneResponse() {
-  //   when(mockedIntent.getName()).thenReturn("GetDoneIntent");
-  //
-  //   SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
-  //
-  //   assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have informed your appropriate adult."));
-  // }
+  @Test
+  public void testDoneResponse() {
+    when(mockedIntent.getName()).thenReturn("GetDoneIntent");
+    when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
+    when(mockedDateSlot.getValue()).thenReturn("02-03-2016");
+    when(mockedIntent.getSlot("chore")).thenReturn(mockedChoreSlot);
+    when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
+    when(mockedMapper.load(eq(Task.class),eq("02-03-2016"),eq("Shear the sheep"))).thenReturn(mockedTask);
+    when(mockedTask.getPassword()).thenReturn("1234");
+
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+    SimpleCard card = (SimpleCard) response.getCard();
+
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have informed your appropriate adult."));
+    assertThat(card.getTitle(), equalTo("Chore Verification"));
+    assertThat(card.getContent(), equalTo("Your child claims to have completed their chore. Here is the password: 1234"));
+  }
 
   // @Test
   // public void testGetChoreList(){
