@@ -98,8 +98,9 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedIntent.getName()).thenReturn("AMAZON.HelpIntent");
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+    SimpleCard card = (SimpleCard) response.getCard();
 
-    assertThat(response.getCard(), nullValue());
+    assertThat(card.getTitle(), equalTo("ChoreMatick Tips!"));
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("You can tell me to add a chore; you can ask me for today's chore; tell me that you've finished your chore; confirm a password; ask me for a list of chores; or ask me for the number of completed chores"));
 
   }
