@@ -23,15 +23,17 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedList;
 
-import java.util.logging.Logger;
-import java.util.Calendar;
-import java.util.Iterator;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.List;
-import java.util.Map;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.Map;
+import java.util.Random;
+import java.util.TimeZone;
 import java.time.*;
+import java.text.SimpleDateFormat;
 
 public class ChorematickSpeechlet implements Speechlet {
 
@@ -108,7 +110,18 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getChoreResponse(Intent intent) {
-    String day = intent.getSlot("choreDate").getValue();
+
+    String day;
+
+    if (intent.getSlot("choreDate").getValue() == null) {
+      Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("EST"));
+      SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+      day = format1.format(cal.getTime()).toString();
+
+    } else {
+      day = intent.getSlot("choreDate").getValue();
+    }
 
     Map<String, String> attributeNames = new HashMap<String, String>();
     attributeNames.put("#due", "Due");
@@ -127,7 +140,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
     if (chores.size() != 0) {
         Task task = chores.get(0);
-        speech.setText("Your chore for today is. " + task.getChore());
+        speech.setText("Your chore is. " + task.getChore());
     } else {
         speech.setText("It's your lucky day! you have no assigned chores.");
     }
