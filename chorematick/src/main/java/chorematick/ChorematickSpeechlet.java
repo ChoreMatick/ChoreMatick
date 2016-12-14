@@ -62,7 +62,7 @@ public class ChorematickSpeechlet implements Speechlet {
     String intentName = (intent != null) ? intent.getName() : null;
 
     if ("GetChoreIntent".equals(intentName)) {
-      return getChoreResponse();
+      return getChoreResponse(intent);
     } else if ("GetDoneIntent".equals(intentName)){
       return getDoneResponse(intent);
     } else if ("ConfirmChoreIntent".equals(intentName)){
@@ -107,20 +107,36 @@ public class ChorematickSpeechlet implements Speechlet {
     }
   }
 
-  private SpeechletResponse getChoreResponse() {
+  private SpeechletResponse getChoreResponse(Intent intent) {
+    String day = intent.getSlot("choreDate").getValue();
 
-    Task task = new Task();
-    task.setChore("Sweep the chimney");
-    task.setDate("2016-10-10");
-    this.mapper.save(task);
+    Map<String, String> attributeNames = new HashMap<String, String>();
+    attributeNames.put("#due", "Due");
 
-    String speechText = "Your chore for today is. Sweep the chimney. That's right. Sweep the chimney.";
+    Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+    attributeValues.put(":Due", new AttributeValue().withS(day));
+
+    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+            .withFilterExpression("#due = :Due")
+            .withExpressionAttributeNames(attributeNames)
+            .withExpressionAttributeValues(attributeValues);
+
+    PaginatedList<Task> chores =  mapper.scan(Task.class, scanExpression);
+
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText(speechText);
+
+    if (chores.size() != 0) {
+        Task task = chores.get(0);
+        speech.setText("Your chore for today is. " + task.getChore());
+    } else {
+        speech.setText("It's your lucky day! you have no assigned chores.");
+    }
+
 
     SimpleCard card = new SimpleCard();
     card.setTitle("Chore requested");
     card.setContent("Your child just asked for today's chore");
+
     return SpeechletResponse.newTellResponse(speech, card);
   }
 

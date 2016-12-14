@@ -102,6 +102,12 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Test
   public void testgetChoreResponse() {
     when(mockedIntent.getName()).thenReturn("GetChoreIntent");
+    when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
+    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedPaginatedScanList.size()).thenReturn(1);
+    when(mockedPaginatedScanList.get(0)).thenReturn(mockedTask);
+    when(mockedTask.getChore()).thenReturn("Sweep the chimney. That's right. Sweep the chimney.");
+
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
     SimpleCard card = (SimpleCard) response.getCard();
