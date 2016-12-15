@@ -170,7 +170,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
     verify(mockedMapper).scan(eq(Task.class), any(DynamoDBScanExpression.class));
-    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Is there anything else I can help you with today?"));
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Couldn't find a chore with this password. Please try again."));
   }
 
   @Test
