@@ -46,4 +46,10 @@ public class DaoTest extends BaseTestCase {
     dao.saveToDB(mockedTask);
     verify(mockedMapper).save(any(Task.class));
   }
+
+  @Test
+  public void allChoresTest(){
+    dao.getAllChores();
+    verify(mockedMapper).scan(eq(Task.class),any(DynamoDBScanExpression.class));
+  }
 }

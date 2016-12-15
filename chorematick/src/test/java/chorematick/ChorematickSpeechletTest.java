@@ -15,7 +15,6 @@ import com.amazon.speech.ui.SsmlOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import com.amazon.speech.ui.StandardCard;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import org.junit.Before;
@@ -27,6 +26,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import java.util.Iterator;
+import java.util.List;
 
 public class ChorematickSpeechletTest extends BaseTestCase {
 
@@ -40,7 +40,6 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Mock private Slot mockedDateSlot;
   @Mock private Slot mockedChoreSlot;
   @Mock private Slot mockedPasswordSlot;
-  @Mock private DynamoDBMapper mockedMapper;
   @Mock private Task mockedTask;
   @Mock private PaginatedScanList<Task> mockedPaginatedScanList;
   @Mock private DynamoDBScanExpression mockedExpression;
@@ -50,7 +49,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Before
   public void setup() {
     when(mockedIntentRequest.getIntent()).thenReturn(mockedIntent);
-    speechlet = new ChorematickSpeechlet(mockedMapper, mockedDao);
+    speechlet = new ChorematickSpeechlet(mockedDao);
     speechlet.onSessionStarted(mockedSessionStartedRequest, mockedSession);
   }
 
@@ -209,7 +208,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Test
   public void testGetChoreList(){
     when(mockedIntent.getName()).thenReturn("GetChoreListIntent");
-    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedDao.getAllChores()).thenReturn(mockedPaginatedScanList);
     when(mockedPaginatedScanList.iterator()).thenReturn(mockedIterator);
     when(mockedIterator.hasNext()).thenReturn(true).thenReturn(false);
     when(mockedIterator.next()).thenReturn(mockedTask);

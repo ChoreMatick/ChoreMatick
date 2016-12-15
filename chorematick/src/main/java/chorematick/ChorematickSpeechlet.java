@@ -21,9 +21,7 @@ import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedList;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,14 +39,10 @@ public class ChorematickSpeechlet implements Speechlet {
 
   private  AmazonDynamoDBClient client;
 
- //needs to be deleted
-  private DynamoDBMapper mapper;
-
   private Dao dao;
 
-  public ChorematickSpeechlet(DynamoDBMapper mapper, Dao dao) {
+  public ChorematickSpeechlet(Dao dao) {
     super();
-    this.mapper = mapper;
     this.dao = dao;
   }
 
@@ -128,7 +122,7 @@ public class ChorematickSpeechlet implements Speechlet {
       day = intent.getSlot("choreDate").getValue();
     }
 
-    PaginatedList<Task> chores = dao.scanDB("Due", day);
+    List<Task> chores = dao.scanDB("Due", day);
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 
@@ -167,9 +161,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
   public SpeechletResponse getChoreList() {
 
-    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-
-    List<Task> chores =  mapper.scan(Task.class, scanExpression);
+    List<Task> chores =  this.dao.getAllChores();
 
     String result = "";
 
@@ -237,7 +229,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
     String password = intent.getSlot("password").getValue();
 
-    PaginatedList<Task> chores = this.dao.scanDB("password", password);
+    List<Task> chores = this.dao.scanDB("password", password);
 
     if (chores.size() > 0) {
       Task task = chores.get(0);
@@ -277,7 +269,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
   private int countChoresCompleted(){
 
-    PaginatedList<Task> completedChores =  dao.scanDB("Complete", "1");
+    List<Task> completedChores =  dao.scanDB("Complete", "1");
 
     return completedChores.size();
   }

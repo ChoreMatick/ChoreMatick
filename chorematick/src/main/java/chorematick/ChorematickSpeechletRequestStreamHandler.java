@@ -18,7 +18,7 @@ public final class ChorematickSpeechletRequestStreamHandler extends SpeechletReq
     private static final Dao dao = new Dao(mapper);
 
     public ChorematickSpeechletRequestStreamHandler() {
-        super(new ChorematickSpeechlet(mapper, dao), supportedApplicationIds);
+        super(new ChorematickSpeechlet(dao), supportedApplicationIds);
 
     }
 }
