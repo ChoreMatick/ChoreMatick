@@ -157,7 +157,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
     verify(mockedTask).setIsComplete(true);
-    verify(mockedMapper).save(any(Task.class));
+    verify(mockedDao).saveToDB(any(Task.class));
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("I've confirmed 12-12-2016 Shear the sheep chore is completed."));
   }
 
@@ -183,7 +183,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
     SimpleCard card = (SimpleCard) response.getCard();
-    verify(mockedMapper).save(any(Task.class));
+    verify(mockedDao).saveToDB(any(Task.class));
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have added a Shear the sheep chore for 02-03-2016"));
     assertThat(card.getTitle(), equalTo("02-03-2016 " + "Shear the sheep"));
   }
@@ -195,7 +195,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedDateSlot.getValue()).thenReturn("02-03-2016");
     when(mockedIntent.getSlot("chore")).thenReturn(mockedChoreSlot);
     when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
-    when(mockedMapper.load(eq(Task.class),eq("02-03-2016"),eq("Shear the sheep"))).thenReturn(mockedTask);
+    when(mockedDao.loadFromDB("02-03-2016","Shear the sheep")).thenReturn(mockedTask);
     when(mockedTask.getPassword()).thenReturn("1234");
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);

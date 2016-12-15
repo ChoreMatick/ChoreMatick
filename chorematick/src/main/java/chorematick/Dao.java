@@ -33,4 +33,12 @@ public class Dao {
 
     return mapper.scan(Task.class, scanExpression);
   }
+
+  public Task loadFromDB(String choreDate, String chore){
+    return this.mapper.load(Task.class, choreDate, chore);
+  }
+
+  public void saveToDB(Task task){
+    this.mapper.save(task);
+  }
 }

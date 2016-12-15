@@ -153,7 +153,7 @@ public class ChorematickSpeechlet implements Speechlet {
     String day = intent.getSlot("choreDate").getValue();
     String chore = intent.getSlot("chore").getValue();
 
-    Task task = this.mapper.load(Task.class, day, chore);
+    Task task = this.dao.loadFromDB(day, chore);
 
     SimpleCard card = new SimpleCard();
     card.setTitle("Chore Verification");
@@ -196,7 +196,7 @@ public class ChorematickSpeechlet implements Speechlet {
     task.setDate(day);
     task.setChore(chore);
     task.setPassword(password);
-    this.mapper.save(task);
+    this.dao.saveToDB(task);
 
     speech.setText("Very well, I have added a " + chore + " chore for " + day);
 
@@ -242,7 +242,7 @@ public class ChorematickSpeechlet implements Speechlet {
     if (chores.size() > 0) {
       Task task = chores.get(0);
       task.setIsComplete(true);
-      this.mapper.save(task);
+      this.dao.saveToDB(task);
       speech.setText("I've confirmed "+ task.getDate() + " " + task.getChore() +" chore is completed.");
     } else {
       speech.setText("Unable to confirm password, please try again.");
