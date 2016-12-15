@@ -158,6 +158,7 @@ public class ChorematickSpeechlet implements Speechlet {
   private SpeechletResponse getDoneResponse(Intent intent) {
     String speechText = "Very well, I have informed your appropriate adult.";
 
+    // Should we refactor this to have default values and so forth?
     String day = intent.getSlot("choreDate").getValue();
     String chore = intent.getSlot("chore").getValue();
 
@@ -186,9 +187,9 @@ public class ChorematickSpeechlet implements Speechlet {
     }
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    System.out.println("result " + result);
     speech.setText(result);
     return SpeechletResponse.newTellResponse(speech);
-
   }
 
   private SpeechletResponse getAddChoreResponse(Intent intent){
@@ -259,7 +260,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
     PaginatedList<Task> chores =  mapper.scan(Task.class, scanExpression);
 
-    if (chores.size() != 0) {
+    if (chores.size() > 0) {
       Task task = chores.get(0);
       task.setIsComplete(true);
       this.mapper.save(task);
