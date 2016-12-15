@@ -10,24 +10,27 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
 public class Dao {
 
-private DynamoDBMapper mapper;
+  private DynamoDBMapper mapper;
 
-public Dao(DynamoDBMapper mapper) {
-this.mapper = mapper;
-}
+  public Dao(DynamoDBMapper mapper) {
+    this.mapper = mapper;
+  }
 
-public PaginatedScanList<Task> scanDB(String columnName, String value) {
-  Map<String, String> attributeNames = new HashMap<String, String>();
-  attributeNames.put("#columnName", columnName);
+  public PaginatedScanList<Task> scanDB(String columnName, String value) {
+    Map<String, String> attributeNames = new HashMap<String, String>();
+    attributeNames.put("#columnName", columnName);
 
-  Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
-  attributeValues.put(":Value", new AttributeValue().withS(value));
+    Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+    if(value.equals("1")) {
+      attributeValues.put(":Value", new AttributeValue().withN(value));
+    } else {
+      attributeValues.put(":Value", new AttributeValue().withS(value));
+    }
+    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+    .withFilterExpression("#columnName = :Value")
+    .withExpressionAttributeNames(attributeNames)
+    .withExpressionAttributeValues(attributeValues);
 
-  DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-          .withFilterExpression("#columnName = :Value")
-          .withExpressionAttributeNames(attributeNames)
-          .withExpressionAttributeValues(attributeValues);
-
-  return mapper.scan(Task.class, scanExpression);
-}
+    return mapper.scan(Task.class, scanExpression);
+  }
 }

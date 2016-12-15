@@ -67,7 +67,7 @@ public class ChorematickSpeechlet implements Speechlet {
     String intentName = (intent != null) ? intent.getName() : null;
 
     if ("GetChoreIntent".equals(intentName)) {
-      return getChoreResponse2(intent);
+      return getChoreResponse(intent);
     } else if ("GetDoneIntent".equals(intentName)){
       return getDoneResponse(intent);
     } else if ("ConfirmChoreIntent".equals(intentName)){
@@ -128,51 +128,7 @@ public class ChorematickSpeechlet implements Speechlet {
       day = intent.getSlot("choreDate").getValue();
     }
 
-    Map<String, String> attributeNames = new HashMap<String, String>();
-    attributeNames.put("#due", "Due");
-
-    Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
-    attributeValues.put(":Due", new AttributeValue().withS(day));
-
-    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-            .withFilterExpression("#due = :Due")
-            .withExpressionAttributeNames(attributeNames)
-            .withExpressionAttributeValues(attributeValues);
-
-    PaginatedList<Task> chores =  mapper.scan(Task.class, scanExpression);
-
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-
-    if (chores.size() != 0) {
-        Task task = chores.get(0);
-        speech.setText("Your chore is. " + task.getChore());
-    } else {
-        speech.setText("It's your lucky day! you have no assigned chores.");
-    }
-
-    SimpleCard card = new SimpleCard();
-    card.setTitle("Chore requested");
-    card.setContent("Your child just asked for today's chore");
-
-    return SpeechletResponse.newTellResponse(speech, card);
-  }
-
-  private SpeechletResponse getChoreResponse2(Intent intent) {
-
-    String day;
-
-    if (intent.getSlot("choreDate").getValue() == null) {
-      Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("EST"));
-      SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-
-      day = format1.format(cal.getTime()).toString();
-
-    } else {
-      day = intent.getSlot("choreDate").getValue();
-    }
-
     PaginatedList<Task> chores = dao.scanDB("Due", day);
-    System.out.println(chores);
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 
@@ -189,7 +145,6 @@ public class ChorematickSpeechlet implements Speechlet {
 
     return SpeechletResponse.newTellResponse(speech, card);
   }
-
 
   private SpeechletResponse getDoneResponse(Intent intent) {
     String speechText = "Very well, I have informed your appropriate adult.";
@@ -282,18 +237,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
     String password = intent.getSlot("password").getValue();
 
-    Map<String, String> attributeNames = new HashMap<String, String>();
-    attributeNames.put("#password", "password");
-
-    Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
-    attributeValues.put(":pass", new AttributeValue().withS(password));
-
-    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-    .withFilterExpression("#password = :pass")
-    .withExpressionAttributeNames(attributeNames)
-    .withExpressionAttributeValues(attributeValues);
-
-    PaginatedList<Task> chores =  mapper.scan(Task.class, scanExpression);
+    PaginatedList<Task> chores = this.dao.scanDB("password", password);
 
     if (chores.size() > 0) {
       Task task = chores.get(0);
@@ -332,18 +276,18 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private int countChoresCompleted(){
-    Map<String, String> attributeNames = new HashMap<String, String>();
-    attributeNames.put("#complete", "Complete");
+    // Map<String, String> attributeNames = new HashMap<String, String>();
+    // attributeNames.put("#complete", "Complete");
+    //
+    // Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+    // attributeValues.put(":yes", new AttributeValue().withN("1"));
+    //
+    // DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+    // .withFilterExpression("#complete = :yes")
+    // .withExpressionAttributeNames(attributeNames)
+    // .withExpressionAttributeValues(attributeValues);
 
-    Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
-    attributeValues.put(":yes", new AttributeValue().withN("1"));
-
-    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-    .withFilterExpression("#complete = :yes")
-    .withExpressionAttributeNames(attributeNames)
-    .withExpressionAttributeValues(attributeValues);
-
-    PaginatedList<Task> completedChores =  mapper.scan(Task.class, scanExpression);
+    PaginatedList<Task> completedChores =  dao.scanDB("Complete", "1");
 
     return completedChores.size();
   }
