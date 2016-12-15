@@ -135,14 +135,15 @@ public class ChorematickSpeechlet implements Speechlet {
 
     PaginatedList<Task> chores =  mapper.scan(Task.class, scanExpression);
 
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-
+    String s;
     if (chores.size() != 0) {
         Task task = chores.get(0);
-        speech.setText("Your chore is. " + task.getChore());
+        s = "Your chore is. " + task.getChore();
     } else {
-        speech.setText("It's your lucky day! you have no assigned chores.");
+        s = "It's your lucky day! you have no assigned chores.";
     }
+
+    PlainTextOutputSpeech speech = speechHandler.getPlainSpeech(s);
 
     SimpleCard card = cardHandler.getSimpleCard("Chore requested", "Your child just asked for today's chore");
 
