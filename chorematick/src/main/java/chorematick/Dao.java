@@ -2,8 +2,8 @@ package chorematick;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
@@ -16,7 +16,7 @@ public class Dao {
     this.mapper = mapper;
   }
 
-  public PaginatedScanList<Task> scanDB(String columnName, String value) {
+  public List<Task> scanDB(String columnName, String value) {
     Map<String, String> attributeNames = new HashMap<String, String>();
     attributeNames.put("#columnName", columnName);
 
@@ -42,7 +42,7 @@ public class Dao {
     mapper.save(task);
   }
 
-  public PaginatedScanList<Task> getAllChores(){
+  public List<Task> getAllChores(){
     DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
     return  mapper.scan(Task.class, scanExpression);
   }

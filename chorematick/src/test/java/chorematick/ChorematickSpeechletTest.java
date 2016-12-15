@@ -16,7 +16,6 @@ import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import com.amazon.speech.ui.StandardCard;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -41,7 +40,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Mock private Slot mockedChoreSlot;
   @Mock private Slot mockedPasswordSlot;
   @Mock private Task mockedTask;
-  @Mock private PaginatedScanList<Task> mockedPaginatedScanList;
+  @Mock private List<Task> mockedList;
   @Mock private DynamoDBScanExpression mockedExpression;
   @Mock private Iterator mockedIterator;
   @Mock private Dao mockedDao;
@@ -55,8 +54,8 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
   @Test
   public void WelcomeResponseTest() {
-    when(mockedDao.scanDB(eq("Complete"), any(String.class))).thenReturn(mockedPaginatedScanList);
-    when(mockedPaginatedScanList.size()).thenReturn(5);
+    when(mockedDao.scanDB(eq("Complete"), any(String.class))).thenReturn(mockedList);
+    when(mockedList.size()).thenReturn(5);
 
     SsmlOutputSpeech speech = new SsmlOutputSpeech();
 
@@ -67,8 +66,8 @@ public class ChorematickSpeechletTest extends BaseTestCase {
 
   @Test
   public void testGiftSuggestion(){
-    when(mockedDao.scanDB(eq("Complete"), any(String.class))).thenReturn(mockedPaginatedScanList);
-    when(mockedPaginatedScanList.size()).thenReturn(11);
+    when(mockedDao.scanDB(eq("Complete"), any(String.class))).thenReturn(mockedList);
+    when(mockedList.size()).thenReturn(11);
 
     SsmlOutputSpeech speech = new SsmlOutputSpeech();
 
@@ -110,9 +109,9 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   public void testgetChoreResponse() {
     when(mockedIntent.getName()).thenReturn("GetChoreIntent");
     when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
-    when(mockedDao.scanDB(eq("Due"), any(String.class))).thenReturn(mockedPaginatedScanList);
-    when(mockedPaginatedScanList.size()).thenReturn(1);
-    when(mockedPaginatedScanList.get(0)).thenReturn(mockedTask);
+    when(mockedDao.scanDB(eq("Due"), any(String.class))).thenReturn(mockedList);
+    when(mockedList.size()).thenReturn(1);
+    when(mockedList.get(0)).thenReturn(mockedTask);
     when(mockedTask.getChore()).thenReturn("Sweep the chimney. That's right. Sweep the chimney.");
 
 
@@ -129,9 +128,9 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedIntent.getName()).thenReturn("GetChoreIntent");
     when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
     when(mockedDateSlot.getValue()).thenReturn(null);
-    when(mockedDao.scanDB(eq("Due"), any(String.class))).thenReturn(mockedPaginatedScanList);
-    when(mockedPaginatedScanList.size()).thenReturn(1);
-    when(mockedPaginatedScanList.get(0)).thenReturn(mockedTask);
+    when(mockedDao.scanDB(eq("Due"), any(String.class))).thenReturn(mockedList);
+    when(mockedList.size()).thenReturn(1);
+    when(mockedList.get(0)).thenReturn(mockedTask);
     when(mockedTask.getChore()).thenReturn("Sweep the chimney. That's right. Sweep the chimney.");
 
 
@@ -148,9 +147,9 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedIntent.getName()).thenReturn("ConfirmChoreIntent");
     when(mockedIntent.getSlot("password")).thenReturn(mockedPasswordSlot);
     when(mockedPasswordSlot.getValue()).thenReturn("1234");
-    when(mockedDao.scanDB(eq("password"), any(String.class))).thenReturn(mockedPaginatedScanList);
-    when(mockedPaginatedScanList.size()).thenReturn(1);
-    when(mockedPaginatedScanList.get(0)).thenReturn(mockedTask);
+    when(mockedDao.scanDB(eq("password"), any(String.class))).thenReturn(mockedList);
+    when(mockedList.size()).thenReturn(1);
+    when(mockedList.get(0)).thenReturn(mockedTask);
     when(mockedTask.getDate()).thenReturn("12-12-2016");
     when(mockedTask.getChore()).thenReturn("Shear the sheep");
 
@@ -165,8 +164,8 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedIntent.getName()).thenReturn("ConfirmChoreIntent");
     when(mockedIntent.getSlot("password")).thenReturn(mockedPasswordSlot);
     when(mockedPasswordSlot.getValue()).thenReturn("1234");
-    when(mockedDao.scanDB(eq("password"), any(String.class))).thenReturn(mockedPaginatedScanList);
-    when(mockedPaginatedScanList.size()).thenReturn(0);
+    when(mockedDao.scanDB(eq("password"), any(String.class))).thenReturn(mockedList);
+    when(mockedList.size()).thenReturn(0);
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Unable to confirm password, please try again."));
@@ -208,8 +207,8 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Test
   public void testGetChoreList(){
     when(mockedIntent.getName()).thenReturn("GetChoreListIntent");
-    when(mockedDao.getAllChores()).thenReturn(mockedPaginatedScanList);
-    when(mockedPaginatedScanList.iterator()).thenReturn(mockedIterator);
+    when(mockedDao.getAllChores()).thenReturn(mockedList);
+    when(mockedList.iterator()).thenReturn(mockedIterator);
     when(mockedIterator.hasNext()).thenReturn(true).thenReturn(false);
     when(mockedIterator.next()).thenReturn(mockedTask);
     when(mockedTask.getChore()).thenReturn("Clean the gutters");
@@ -231,12 +230,12 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Test
   public void testGetNumberOfCompletedChoresResponse() {
     when(mockedIntent.getName()).thenReturn("NumberOfCompletedChoresIntent");
-    when(mockedDao.scanDB(eq("Complete"), any(String.class))).thenReturn(mockedPaginatedScanList);
-    when(mockedPaginatedScanList.size()).thenReturn(5);
+    when(mockedDao.scanDB(eq("Complete"), any(String.class))).thenReturn(mockedList);
+    when(mockedList.size()).thenReturn(5);
 
     SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
 
-    verify(mockedPaginatedScanList).size();
+    verify(mockedList).size();
 
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("There are 5 completed chores."));
   }
