@@ -8,7 +8,6 @@ import com.amazon.speech.ui.SsmlOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import com.amazon.speech.ui.StandardCard;
-import com.amazon.speech.ui.Image;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -45,9 +44,12 @@ public class ChorematickSpeechlet implements Speechlet {
   private DynamoDBMapper mapper;
   private DynamoDB dynamoDB;
 
+  private CardHandler cardHandler;
+
   public ChorematickSpeechlet(DynamoDBMapper mapper) {
     super();
     this.mapper = mapper;
+    this.cardHandler = new CardHandler();
   }
 
   public void onSessionStarted(final SessionStartedRequest request, final Session session) {
@@ -100,12 +102,7 @@ public class ChorematickSpeechlet implements Speechlet {
     reprompt.setOutputSpeech(repromptSpeech);
 
     if(this.countChoresCompleted() >= 10){
-      StandardCard card = new StandardCard();
-      Image image = new Image();
-      image.setSmallImageUrl("https://images-na.ssl-images-amazon.com/images/I/61miKEYpgSL._SL1000_.jpg");
-      card.setTitle("10 chores complete!! \n Suggested gift:");
-      card.setText("Hasbro NERF Rebelle Diamondista Blaster £4.99");
-      card.setImage(image);
+      StandardCard card = cardHandler.getStandardCard("10 chores complete!! \n Suggested gift:","Hasbro NERF Rebelle Diamondista Blaster £4.99","https://images-na.ssl-images-amazon.com/images/I/61miKEYpgSL._SL1000_.jpg");
       return SpeechletResponse.newAskResponse(speech, reprompt, card);
     } else {
       return SpeechletResponse.newAskResponse(speech, reprompt);
@@ -148,9 +145,7 @@ public class ChorematickSpeechlet implements Speechlet {
         speech.setText("It's your lucky day! you have no assigned chores.");
     }
 
-    SimpleCard card = new SimpleCard();
-    card.setTitle("Chore requested");
-    card.setContent("Your child just asked for today's chore");
+    SimpleCard card = cardHandler.getSimpleCard("Chore requested", "Your child just asked for today's chore");
 
     return SpeechletResponse.newTellResponse(speech, card);
   }
@@ -164,9 +159,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
     Task task = this.mapper.load(Task.class, day, chore);
 
-    SimpleCard card = new SimpleCard();
-    card.setTitle("Chore Verification");
-    card.setContent("Your child claims to have completed their chore. Here is the password: " + task.getPassword());
+    SimpleCard card = cardHandler.getSimpleCard("Chore Verification",("Your child claims to have completed their chore. Here is the password: " + task.getPassword()));
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
     speech.setText(speechText);
@@ -210,9 +203,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
     speech.setText("Very well, I have added a " + chore + " chore for " + day);
 
-    SimpleCard card = new SimpleCard();
-    card.setTitle(day + " " + chore);
-    card.setContent("Password: " + password);
+    SimpleCard card = cardHandler.getSimpleCard("New chore added",(day + " " + chore + "\nPassword: " + password));
 
     return SpeechletResponse.newTellResponse(speech, card);
   }
@@ -227,9 +218,7 @@ public class ChorematickSpeechlet implements Speechlet {
     repromptSpeech.setText("Tell me what you would like to do!");
     reprompt.setOutputSpeech(repromptSpeech);
 
-    ChorematickSimpleCard card = new ChorematickSimpleCard();
-    card.getSimpleCard("ChoreMatick Tips!", "You can tell me to add a chore by saying, for example, 'Add mow the lawn for Tuesday'. \n  You can ask me 'What is my chore for today?'. \n You can tell me that you have finished the chore by saying 'I am done with mow the lawn for today'. \n You can confirm that your child has completed their chore by providing the given password e.g 'Confirm 1234'. \n  You can also ask me for a 'Full list of chores', and 'The total number of chores that are completed'." );
-
+    SimpleCard card = cardHandler.getSimpleCard("ChoreMatick Tips!", "You can tell me to add a chore by saying, for example, 'Add mow the lawn for Tuesday'. \n  You can ask me 'What is my chore for today?'. \n You can tell me that you have finished the chore by saying 'I am done with mow the lawn for today'. \n You can confirm that your child has completed their chore by providing the given password e.g 'Confirm 1234'. \n  You can also ask me for a 'Full list of chores', and 'The total number of chores that are completed'." );
 
     return SpeechletResponse.newAskResponse(speech, reprompt, card);
   }
@@ -274,9 +263,7 @@ public class ChorematickSpeechlet implements Speechlet {
     repromptSpeech.setText("Please try confirming the password again");
     reprompt.setOutputSpeech(repromptSpeech);
 
-    SimpleCard card = new SimpleCard();
-    card.setTitle("Chore Completed!");
-    card.setContent("Thank you for confiming your child has completed their chore; the list has been updated");
+    SimpleCard card = cardHandler.getSimpleCard("Chore Completed!","Thank you for confiming your child has completed their chore; the list has been updated");
 
     return SpeechletResponse.newAskResponse(speech, reprompt, card);
   }

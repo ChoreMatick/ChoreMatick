@@ -185,7 +185,8 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     SimpleCard card = (SimpleCard) response.getCard();
     verify(mockedMapper).save(any(Task.class));
     assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Very well, I have added a Shear the sheep chore for 02-03-2016"));
-    assertThat(card.getTitle(), equalTo("02-03-2016 " + "Shear the sheep"));
+    assertThat(card.getTitle(), equalTo("New chore added"));
+    assertThat(card.getContent(), containsString("02-03-2016 Shear the sheep\nPassword: "));
   }
 
   @Test
