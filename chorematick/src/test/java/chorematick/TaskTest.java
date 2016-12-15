@@ -18,6 +18,7 @@ public class TaskTest extends BaseTestCase {
     task = new Task();
     task.setDate(day);
     task.setChore("Sweep the chimney");
+    task.setPassword("1234");
   }
 
   @Test
@@ -39,5 +40,10 @@ public class TaskTest extends BaseTestCase {
   public void setIsCompleteTest() {
     task.setIsComplete(true);
     assertEquals(true, task.getIsComplete());
+  }
+
+  @Test
+  public void getPasswordTest() {
+    assertEquals("1234", task.getPassword());
   }
 }
