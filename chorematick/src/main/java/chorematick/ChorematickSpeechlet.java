@@ -227,9 +227,9 @@ public class ChorematickSpeechlet implements Speechlet {
     repromptSpeech.setText("Tell me what you would like to do!");
     reprompt.setOutputSpeech(repromptSpeech);
 
-    SimpleCard card = new SimpleCard();
-    card.setTitle("ChoreMatick Tips!");
-    card.setContent("You can tell me to add a chore by saying, for example, 'Add mow the lawn for Tuesday'. \n  You can ask me 'What is my chore for today?'. \n You can tell me that you have finished the chore by saying 'I am done with mow the lawn for today'. \n You can confirm that your child has completed their chore by providing the given password e.g 'Confirm 1234'. \n  You can also ask me for a 'Full list of chores', and 'The total number of chores that are completed'.");
+    ChorematickSimpleCard card = new ChorematickSimpleCard();
+    card.getSimpleCard("ChoreMatick Tips!", "You can tell me to add a chore by saying, for example, 'Add mow the lawn for Tuesday'. \n  You can ask me 'What is my chore for today?'. \n You can tell me that you have finished the chore by saying 'I am done with mow the lawn for today'. \n You can confirm that your child has completed their chore by providing the given password e.g 'Confirm 1234'. \n  You can also ask me for a 'Full list of chores', and 'The total number of chores that are completed'." );
+
 
     return SpeechletResponse.newAskResponse(speech, reprompt, card);
   }
@@ -312,6 +312,4 @@ public class ChorematickSpeechlet implements Speechlet {
 
     return completedChores.size();
   }
-
-  
 }
