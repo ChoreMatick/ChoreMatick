@@ -276,16 +276,6 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private int countChoresCompleted(){
-    // Map<String, String> attributeNames = new HashMap<String, String>();
-    // attributeNames.put("#complete", "Complete");
-    //
-    // Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
-    // attributeValues.put(":yes", new AttributeValue().withN("1"));
-    //
-    // DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-    // .withFilterExpression("#complete = :yes")
-    // .withExpressionAttributeNames(attributeNames)
-    // .withExpressionAttributeValues(attributeValues);
 
     PaginatedList<Task> completedChores =  dao.scanDB("Complete", "1");
 
