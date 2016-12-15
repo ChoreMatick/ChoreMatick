@@ -27,6 +27,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
+import java.util.Iterator;
 
 public class ChorematickSpeechletTest extends BaseTestCase {
 
@@ -44,6 +45,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Mock private Task mockedTask;
   @Mock private PaginatedScanList<Task> mockedPaginatedScanList;
   @Mock private DynamoDBScanExpression mockedExpression;
+  @Mock private Iterator mockedIterator;
 
   @Before
   public void setup() {
@@ -204,19 +206,20 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     assertThat(card.getContent(), equalTo("Your child claims to have completed their chore. Here is the password: 1234"));
   }
 
-  // @Test
-  // public void testGetChoreList(){
-  //   when(mockedIntent.getName()).thenReturn("GetChoreListIntent");
-  //   when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
-  //   when(mockedDateSlot.getValue()).thenReturn("02-03-2016");
-  //   when(mockedIntent.getSlot("chore")).thenReturn(mockedChoreSlot);
-  //   when(mockedChoreSlot.getValue()).thenReturn("Shear the sheep");
-  //
-  //   SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
-  //
-  //   verify(mockedMapper).scan(Task.class, mockedExpression);
-  //   assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Clean the gutters"));
-  // }
+  @Test
+  public void testGetChoreList(){
+    when(mockedIntent.getName()).thenReturn("GetChoreListIntent");
+    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedPaginatedScanList.iterator()).thenReturn(mockedIterator);
+    when(mockedIterator.hasNext()).thenReturn(true).thenReturn(false);
+    when(mockedIterator.next()).thenReturn(mockedTask);
+    when(mockedTask.getChore()).thenReturn("Clean the gutters");
+
+    SpeechletResponse response = speechlet.onIntent(mockedIntentRequest, mockedSession);
+
+    verify(mockedMapper).scan(eq(Task.class), any(DynamoDBScanExpression.class));
+    assertThat(((PlainTextOutputSpeech) response.getOutputSpeech()).getText(), equalTo("Clean the gutters, "));
+  }
 
 
   @Test
