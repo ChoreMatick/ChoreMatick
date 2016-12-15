@@ -45,11 +45,13 @@ public class ChorematickSpeechlet implements Speechlet {
   private DynamoDB dynamoDB;
 
   private CardHandler cardHandler;
+  private SpeechHandler speechHandler;
 
   public ChorematickSpeechlet(DynamoDBMapper mapper) {
     super();
     this.mapper = mapper;
     this.cardHandler = new CardHandler();
+    this.speechHandler = new SpeechHandler();
   }
 
   public void onSessionStarted(final SessionStartedRequest request, final Session session) {
@@ -91,10 +93,7 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getWelcomeResponse() {
-    String speechText = "<speak> Welcome to, <phoneme alphabet=\"ipa\" ph=\"tʃɔːrmætɪk\">Chorematic</phoneme>! What would you like to do today? </speak>";
-
-    SsmlOutputSpeech speech = new SsmlOutputSpeech();
-    speech.setSsml(speechText);
+    SsmlOutputSpeech speech = speechHandler.getSsmlSpeech("<speak> Welcome to, <phoneme alphabet=\"ipa\" ph=\"tʃɔːrmætɪk\">Chorematic</phoneme>! What would you like to do today? </speak>");
 
     Reprompt reprompt = new Reprompt();
     PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
