@@ -12,7 +12,6 @@ import com.amazon.speech.ui.Image;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
@@ -42,12 +41,15 @@ public class ChorematickSpeechlet implements Speechlet {
 
   private  AmazonDynamoDBClient client;
 
+ //needs to be deleted
   private DynamoDBMapper mapper;
-  private DynamoDB dynamoDB;
 
-  public ChorematickSpeechlet(DynamoDBMapper mapper) {
+  private Dao dao;
+
+  public ChorematickSpeechlet(DynamoDBMapper mapper, Dao dao) {
     super();
     this.mapper = mapper;
+    this.dao = dao;
   }
 
   public void onSessionStarted(final SessionStartedRequest request, final Session session) {
@@ -65,7 +67,7 @@ public class ChorematickSpeechlet implements Speechlet {
     String intentName = (intent != null) ? intent.getName() : null;
 
     if ("GetChoreIntent".equals(intentName)) {
-      return getChoreResponse(intent);
+      return getChoreResponse2(intent);
     } else if ("GetDoneIntent".equals(intentName)){
       return getDoneResponse(intent);
     } else if ("ConfirmChoreIntent".equals(intentName)){
@@ -155,6 +157,40 @@ public class ChorematickSpeechlet implements Speechlet {
     return SpeechletResponse.newTellResponse(speech, card);
   }
 
+  private SpeechletResponse getChoreResponse2(Intent intent) {
+
+    String day;
+
+    if (intent.getSlot("choreDate").getValue() == null) {
+      Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("EST"));
+      SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+      day = format1.format(cal.getTime()).toString();
+
+    } else {
+      day = intent.getSlot("choreDate").getValue();
+    }
+
+    PaginatedList<Task> chores = dao.scanDB("Due", day);
+    System.out.println(chores);
+
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+
+    if (chores.size() != 0) {
+        Task task = chores.get(0);
+        speech.setText("Your chore is. " + task.getChore());
+    } else {
+        speech.setText("It's your lucky day! you have no assigned chores.");
+    }
+
+    SimpleCard card = new SimpleCard();
+    card.setTitle("Chore requested");
+    card.setContent("Your child just asked for today's chore");
+
+    return SpeechletResponse.newTellResponse(speech, card);
+  }
+
+
   private SpeechletResponse getDoneResponse(Intent intent) {
     String speechText = "Very well, I have informed your appropriate adult.";
 
@@ -187,7 +223,6 @@ public class ChorematickSpeechlet implements Speechlet {
     }
 
     PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    System.out.println("result " + result);
     speech.setText(result);
     return SpeechletResponse.newTellResponse(speech);
   }
@@ -266,7 +301,7 @@ public class ChorematickSpeechlet implements Speechlet {
       this.mapper.save(task);
       speech.setText("I've confirmed "+ task.getDate() + " " + task.getChore() +" chore is completed.");
     } else {
-      speech.setText("Is there anything else I can help you with today?");
+      speech.setText("Unable to confirm password, please try again.");
     }
 
     Reprompt reprompt = new Reprompt();

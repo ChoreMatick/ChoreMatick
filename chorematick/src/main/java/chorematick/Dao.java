@@ -1,0 +1,33 @@
+package chorematick;
+
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
+import java.util.Map;
+import java.util.HashMap;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+
+
+public class Dao {
+
+private DynamoDBMapper mapper;
+
+public Dao(DynamoDBMapper mapper) {
+this.mapper = mapper;
+}
+
+public PaginatedScanList<Task> scanDB(String columnName, String value) {
+  Map<String, String> attributeNames = new HashMap<String, String>();
+  attributeNames.put("#columnName", columnName);
+
+  Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+  attributeValues.put(":Value", new AttributeValue().withS(value));
+
+  DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+          .withFilterExpression("#columnName = :Value")
+          .withExpressionAttributeNames(attributeNames)
+          .withExpressionAttributeValues(attributeValues);
+
+  return mapper.scan(Task.class, scanExpression);
+}
+}

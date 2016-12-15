@@ -17,7 +17,6 @@ import com.amazon.speech.ui.SimpleCard;
 import com.amazon.speech.ui.StandardCard;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,11 +45,12 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   @Mock private PaginatedScanList<Task> mockedPaginatedScanList;
   @Mock private DynamoDBScanExpression mockedExpression;
   @Mock private Iterator mockedIterator;
+  @Mock private Dao mockedDao;
 
   @Before
   public void setup() {
     when(mockedIntentRequest.getIntent()).thenReturn(mockedIntent);
-    speechlet = new ChorematickSpeechlet(mockedMapper);
+    speechlet = new ChorematickSpeechlet(mockedMapper, mockedDao);
     speechlet.onSessionStarted(mockedSessionStartedRequest, mockedSession);
   }
 
@@ -111,7 +111,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
   public void testgetChoreResponse() {
     when(mockedIntent.getName()).thenReturn("GetChoreIntent");
     when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
-    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedDao.scanDB(eq("Due"), any(String.class))).thenReturn(mockedPaginatedScanList);
     when(mockedPaginatedScanList.size()).thenReturn(1);
     when(mockedPaginatedScanList.get(0)).thenReturn(mockedTask);
     when(mockedTask.getChore()).thenReturn("Sweep the chimney. That's right. Sweep the chimney.");
@@ -130,7 +130,7 @@ public class ChorematickSpeechletTest extends BaseTestCase {
     when(mockedIntent.getName()).thenReturn("GetChoreIntent");
     when(mockedIntent.getSlot("choreDate")).thenReturn(mockedDateSlot);
     when(mockedDateSlot.getValue()).thenReturn(null);
-    when(mockedMapper.scan(eq(Task.class), any(DynamoDBScanExpression.class))).thenReturn(mockedPaginatedScanList);
+    when(mockedDao.scanDB(eq("Due"), any(String.class))).thenReturn(mockedPaginatedScanList);
     when(mockedPaginatedScanList.size()).thenReturn(1);
     when(mockedPaginatedScanList.get(0)).thenReturn(mockedTask);
     when(mockedTask.getChore()).thenReturn("Sweep the chimney. That's right. Sweep the chimney.");
