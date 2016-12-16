@@ -266,7 +266,7 @@ public class ChorematickSpeechlet implements Speechlet {
       this.mapper.save(task);
       speech.setText("I've confirmed "+ task.getDate() + " " + task.getChore() +" chore is completed.");
     } else {
-      speech.setText("Is there anything else I can help you with today?");
+      speech.setText("Unable to confirm password, please try again.");
     }
 
     Reprompt reprompt = new Reprompt();
