@@ -212,10 +212,12 @@ public class ChorematickSpeechlet implements Speechlet {
       Task task = chores.get(0);
       task.setIsComplete(true);
       this.dao.saveToDB(task);
-      speech.setText("I've confirmed "+ task.getDate() + " " + task.getChore() +" chore is completed.");
+      s = "I've confirmed "+ task.getDate() + " " + task.getChore() +" chore is completed.";
     } else {
-      speech.setText("Unable to confirm password, please try again.");
+      s = "Unable to confirm password, please try again.";
     }
+
+    PlainTextOutputSpeech speech = speechHandler.getPlainSpeech(s);
 
     Reprompt reprompt = repromptHandler.getReprompt("Please state the password for the chore you wish to confirm");
 
