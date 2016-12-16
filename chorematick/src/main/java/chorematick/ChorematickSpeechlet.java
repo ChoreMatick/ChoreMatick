@@ -41,12 +41,15 @@ public class ChorematickSpeechlet implements Speechlet {
   private Dao dao;
 
   private CardHandler cardHandler;
+
+  private SpeechHandler speechHandler;
   private RepromptHandler repromptHandler;
 
   public ChorematickSpeechlet(Dao dao) {
     super();
     this.dao = dao;
     this.cardHandler = new CardHandler();
+    this.speechHandler = new SpeechHandler();
     this.repromptHandler = new RepromptHandler();
   }
 
@@ -89,10 +92,7 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getWelcomeResponse() {
-    String speechText = "<speak> Welcome to, <phoneme alphabet=\"ipa\" ph=\"tʃɔːrmætɪk\">Chorematic</phoneme>! What would you like to do today? </speak>";
-
-    SsmlOutputSpeech speech = new SsmlOutputSpeech();
-    speech.setSsml(speechText);
+    SsmlOutputSpeech speech = speechHandler.getSsmlSpeech("<speak> Welcome to, <phoneme alphabet=\"ipa\" ph=\"tʃɔːrmætɪk\">Chorematic</phoneme>! What would you like to do today? </speak>");
 
     Reprompt reprompt = repromptHandler.getReprompt("You can say Help for a full list of options");
 
@@ -120,14 +120,15 @@ public class ChorematickSpeechlet implements Speechlet {
 
     List<Task> chores = dao.scanDB("Due", day);
 
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-
+    String s;
     if (chores.size() != 0) {
         Task task = chores.get(0);
-        speech.setText("Your chore is. " + task.getChore());
+        s = "Your chore is. " + task.getChore();
     } else {
-        speech.setText("It's your lucky day! you have no assigned chores.");
+        s = "It's your lucky day! you have no assigned chores.";
     }
+
+    PlainTextOutputSpeech speech = speechHandler.getPlainSpeech(s);
 
     SimpleCard card = cardHandler.getSimpleCard("Chore requested", "Your child just asked for today's chore");
 
@@ -135,8 +136,6 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getDoneResponse(Intent intent) {
-    String speechText = "Very well, I have informed your appropriate adult.";
-
     // Should we refactor this to have default values and so forth?
     String day = intent.getSlot("choreDate").getValue();
     String chore = intent.getSlot("chore").getValue();
@@ -145,8 +144,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
     SimpleCard card = cardHandler.getSimpleCard("Chore Verification",("Your child claims to have completed their chore. Here is the password: " + task.getPassword()));
 
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText(speechText);
+    PlainTextOutputSpeech speech = speechHandler.getPlainSpeech("Very well, I have informed your appropriate adult.");
 
     return SpeechletResponse.newTellResponse(speech, card);
   }
@@ -160,17 +158,13 @@ public class ChorematickSpeechlet implements Speechlet {
     for(Task task : chores) {
       result = result + task.getChore() + ", ";
     }
-
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText(result);
-    return SpeechletResponse.newTellResponse(speech);
+    return SpeechletResponse.newTellResponse(speechHandler.getPlainSpeech(result));
   }
 
   private SpeechletResponse getAddChoreResponse(Intent intent){
 
     Random random = new Random();
 
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 
     String day = intent.getSlot("choreDate").getValue();
     String chore = intent.getSlot("chore").getValue();
@@ -182,7 +176,7 @@ public class ChorematickSpeechlet implements Speechlet {
     task.setPassword(password);
     this.dao.saveToDB(task);
 
-    speech.setText("Very well, I have added a " + chore + " chore for " + day);
+    PlainTextOutputSpeech speech = speechHandler.getPlainSpeech(("Very well, I have added a " + chore + " chore for " + day));
 
     SimpleCard card = cardHandler.getSimpleCard("New chore added",(day + " " + chore + "\nPassword: " + password));
 
@@ -191,8 +185,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
   private SpeechletResponse getHelpResponse() {
 
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText("You can tell me to add a chore; you can ask me for today's chore; tell me that you've finished your chore; confirm a password; ask me for a list of chores; or ask me for the number of completed chores");
+    PlainTextOutputSpeech speech = speechHandler.getPlainSpeech("You can tell me to add a chore; you can ask me for today's chore; tell me that you've finished your chore; confirm a password; ask me for a list of chores; or ask me for the number of completed chores");
 
     Reprompt reprompt = repromptHandler.getReprompt("Tell me what you would like to do!");
 
@@ -202,28 +195,29 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private SpeechletResponse getErrorResponse() {
-    String speechText = "error error error. Danger Will Robinson.";
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText(speechText);
+    PlainTextOutputSpeech speech = speechHandler.getPlainSpeech("error error error. Danger Will Robinson.");
     return SpeechletResponse.newTellResponse(speech);
   }
 
   private SpeechletResponse getConfirmChoreResponse(Intent intent) {
 
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 
     String password = intent.getSlot("password").getValue();
 
     List<Task> chores = this.dao.scanDB("password", password);
 
+
+    String s;
     if (chores.size() > 0) {
       Task task = chores.get(0);
       task.setIsComplete(true);
       this.dao.saveToDB(task);
-      speech.setText("I've confirmed "+ task.getDate() + " " + task.getChore() +" chore is completed.");
+      s = "I've confirmed "+ task.getDate() + " " + task.getChore() +" chore is completed.";
     } else {
-      speech.setText("Unable to confirm password, please try again.");
+      s = "Unable to confirm password, please try again.";
     }
+
+    PlainTextOutputSpeech speech = speechHandler.getPlainSpeech(s);
 
     Reprompt reprompt = repromptHandler.getReprompt("Please state the password for the chore you wish to confirm");
 
@@ -236,14 +230,12 @@ public class ChorematickSpeechlet implements Speechlet {
 
     int number = countChoresCompleted();
 
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText("There are " + number + " completed chores.");
+    PlainTextOutputSpeech speech = speechHandler.getPlainSpeech(("There are " + number + " completed chores."));
     return SpeechletResponse.newTellResponse(speech);
   }
 
   private SpeechletResponse getEasterEggResponse() {
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText("Go stand in the corner and think about what you've done.");
+    PlainTextOutputSpeech speech = speechHandler.getPlainSpeech(("Go stand in the corner and think about what you've done."));
     return SpeechletResponse.newTellResponse(speech);
   }
 
