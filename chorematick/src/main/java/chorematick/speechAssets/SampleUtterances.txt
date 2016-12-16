@@ -9,21 +9,16 @@ GetChoreIntent What's my task
 
 ChorematickIntent I hate you
 
-GetDoneIntent I am done with {chore} {choreDate}
 GetDoneIntent I am done with {chore} for {choreDate}
 GetDoneIntent I am done with {chore} {choreDate}
 GetDoneIntent I am finished with {chore} for {choreDate}
 GetDoneIntent I am finished with {chore} {choreDate}
-GetDoneIntent I have done with {chore} for {choreDate}
-GetDoneIntent I have done with {chore} {choreDate}
 GetDoneIntent I have finished with {chore} for {choreDate}
 GetDoneIntent I have finished with {chore} {choreDate}
 GetDoneIntent I'm done with {chore} for {choreDate}
 GetDoneIntent I'm done with {chore} {choreDate}
 GetDoneIntent I'm finished with {chore} for {choreDate}
 GetDoneIntent I'm finished with {chore} {choreDate}
-GetDoneIntent I've done with {chore} for {choreDate}
-GetDoneIntent I've done with {chore} {choreDate}
 GetDoneIntent I've finished with {chore} for {choreDate}
 GetDoneIntent I've finished with {chore} {choreDate}
 
@@ -34,10 +29,10 @@ GetChoreListIntent Tell me the list of chores
 
 ConfirmChoreIntent Confirm {password}
 
-AddChoreIntent Add a chore {chore} for {choreDate}
-AddChoreIntent Create a chore {chore} for {choreDate}
-AddChoreIntent Add the chore {chore} for {choreDate}
-AddChoreIntent Create the chore {chore} for {choreDate}
+AddChoreIntent Add {chore} for {choreDate}
+AddChoreIntent Create {chore} for {choreDate}
+AddChoreIntent Add a {chore} chore for {choreDate}
+AddChoreIntent Create a {chore} chore for {choreDate}
 
 NumberOfCompletedChoresIntent How many chores are completed
 NumberOfCompletedChoresIntent How many chores are done
