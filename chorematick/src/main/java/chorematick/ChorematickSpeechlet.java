@@ -11,7 +11,6 @@ import com.amazon.speech.ui.StandardCard;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
@@ -21,9 +20,7 @@ import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedList;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,17 +38,19 @@ public class ChorematickSpeechlet implements Speechlet {
 
   private  AmazonDynamoDBClient client;
 
-  private DynamoDBMapper mapper;
-  private DynamoDB dynamoDB;
+  private Dao dao;
 
   private CardHandler cardHandler;
-  private SpeechHandler speechHandler;
 
-  public ChorematickSpeechlet(DynamoDBMapper mapper) {
+  private SpeechHandler speechHandler;
+  private RepromptHandler repromptHandler;
+
+  public ChorematickSpeechlet(Dao dao) {
     super();
-    this.mapper = mapper;
+    this.dao = dao;
     this.cardHandler = new CardHandler();
     this.speechHandler = new SpeechHandler();
+    this.repromptHandler = new RepromptHandler();
   }
 
   public void onSessionStarted(final SessionStartedRequest request, final Session session) {
@@ -74,7 +73,7 @@ public class ChorematickSpeechlet implements Speechlet {
       return getDoneResponse(intent);
     } else if ("ConfirmChoreIntent".equals(intentName)){
       return getConfirmChoreResponse(intent);
-    }else if ("ChorematickIntent".equals(intentName)) {
+    } else if ("ChorematickIntent".equals(intentName)) {
       return getEasterEggResponse();
     } else if ("AddChoreIntent".equals(intentName)) {
       return getAddChoreResponse(intent);
@@ -95,10 +94,7 @@ public class ChorematickSpeechlet implements Speechlet {
   private SpeechletResponse getWelcomeResponse() {
     SsmlOutputSpeech speech = speechHandler.getSsmlSpeech("<speak> Welcome to, <phoneme alphabet=\"ipa\" ph=\"tʃɔːrmætɪk\">Chorematic</phoneme>! What would you like to do today? </speak>");
 
-    Reprompt reprompt = new Reprompt();
-    PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
-    repromptSpeech.setText("You can ask Help for a full list of options");
-    reprompt.setOutputSpeech(repromptSpeech);
+    Reprompt reprompt = repromptHandler.getReprompt("You can say Help for a full list of options");
 
     if(this.countChoresCompleted() >= 10){
       StandardCard card = cardHandler.getStandardCard("10 chores complete!! \n Suggested gift:","Hasbro NERF Rebelle Diamondista Blaster £4.99","https://images-na.ssl-images-amazon.com/images/I/61miKEYpgSL._SL1000_.jpg");
@@ -122,18 +118,7 @@ public class ChorematickSpeechlet implements Speechlet {
       day = intent.getSlot("choreDate").getValue();
     }
 
-    Map<String, String> attributeNames = new HashMap<String, String>();
-    attributeNames.put("#due", "Due");
-
-    Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
-    attributeValues.put(":Due", new AttributeValue().withS(day));
-
-    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-            .withFilterExpression("#due = :Due")
-            .withExpressionAttributeNames(attributeNames)
-            .withExpressionAttributeValues(attributeValues);
-
-    PaginatedList<Task> chores =  mapper.scan(Task.class, scanExpression);
+    List<Task> chores = dao.scanDB("Due", day);
 
     String s;
     if (chores.size() != 0) {
@@ -155,7 +140,7 @@ public class ChorematickSpeechlet implements Speechlet {
     String day = intent.getSlot("choreDate").getValue();
     String chore = intent.getSlot("chore").getValue();
 
-    Task task = this.mapper.load(Task.class, day, chore);
+    Task task = this.dao.loadFromDB(day, chore);
 
     SimpleCard card = cardHandler.getSimpleCard("Chore Verification",("Your child claims to have completed their chore. Here is the password: " + task.getPassword()));
 
@@ -166,16 +151,13 @@ public class ChorematickSpeechlet implements Speechlet {
 
   public SpeechletResponse getChoreList() {
 
-    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-
-    List<Task> chores =  mapper.scan(Task.class, scanExpression);
+    List<Task> chores =  this.dao.getAllChores();
 
     String result = "";
 
     for(Task task : chores) {
       result = result + task.getChore() + ", ";
     }
-
     return SpeechletResponse.newTellResponse(speechHandler.getPlainSpeech(result));
   }
 
@@ -192,7 +174,7 @@ public class ChorematickSpeechlet implements Speechlet {
     task.setDate(day);
     task.setChore(chore);
     task.setPassword(password);
-    this.mapper.save(task);
+    this.dao.saveToDB(task);
 
     PlainTextOutputSpeech speech = speechHandler.getPlainSpeech(("Very well, I have added a " + chore + " chore for " + day));
 
@@ -205,10 +187,7 @@ public class ChorematickSpeechlet implements Speechlet {
 
     PlainTextOutputSpeech speech = speechHandler.getPlainSpeech("You can tell me to add a chore; you can ask me for today's chore; tell me that you've finished your chore; confirm a password; ask me for a list of chores; or ask me for the number of completed chores");
 
-    Reprompt reprompt = new Reprompt();
-    PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
-    repromptSpeech.setText("Tell me what you would like to do!");
-    reprompt.setOutputSpeech(repromptSpeech);
+    Reprompt reprompt = repromptHandler.getReprompt("Tell me what you would like to do!");
 
     SimpleCard card = cardHandler.getSimpleCard("ChoreMatick Tips!", "You can tell me to add a chore by saying, for example, 'Add mow the lawn for Tuesday'. \n  You can ask me 'What is my chore for today?'. \n You can tell me that you have finished the chore by saying 'I am done with mow the lawn for today'. \n You can confirm that your child has completed their chore by providing the given password e.g 'Confirm 1234'. \n  You can also ask me for a 'Full list of chores', and 'The total number of chores that are completed'." );
 
@@ -225,36 +204,20 @@ public class ChorematickSpeechlet implements Speechlet {
 
     String password = intent.getSlot("password").getValue();
 
-    Map<String, String> attributeNames = new HashMap<String, String>();
-    attributeNames.put("#password", "password");
-
-    Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
-    attributeValues.put(":pass", new AttributeValue().withS(password));
-
-    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-    .withFilterExpression("#password = :pass")
-    .withExpressionAttributeNames(attributeNames)
-    .withExpressionAttributeValues(attributeValues);
-
-    PaginatedList<Task> chores =  mapper.scan(Task.class, scanExpression);
+    List<Task> chores = this.dao.scanDB("password", password);
 
 
     String s;
     if (chores.size() > 0) {
       Task task = chores.get(0);
       task.setIsComplete(true);
-      this.mapper.save(task);
-      s = "I've confirmed "+ task.getDate() + " " + task.getChore() +" chore is completed.";
+      this.dao.saveToDB(task);
+      speech.setText("I've confirmed "+ task.getDate() + " " + task.getChore() +" chore is completed.");
     } else {
-      s = "Couldn't find a chore with this password. Please try again.";
+      speech.setText("Unable to confirm password, please try again.");
     }
 
-    PlainTextOutputSpeech speech = speechHandler.getPlainSpeech(s);
-
-    Reprompt reprompt = new Reprompt();
-    PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
-    repromptSpeech.setText("Please try confirming the password again");
-    reprompt.setOutputSpeech(repromptSpeech);
+    Reprompt reprompt = repromptHandler.getReprompt("Please state the password for the chore you wish to confirm");
 
     SimpleCard card = cardHandler.getSimpleCard("Chore Completed!","Thank you for confiming your child has completed their chore; the list has been updated");
 
@@ -275,18 +238,8 @@ public class ChorematickSpeechlet implements Speechlet {
   }
 
   private int countChoresCompleted(){
-    Map<String, String> attributeNames = new HashMap<String, String>();
-    attributeNames.put("#complete", "Complete");
 
-    Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
-    attributeValues.put(":yes", new AttributeValue().withN("1"));
-
-    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-    .withFilterExpression("#complete = :yes")
-    .withExpressionAttributeNames(attributeNames)
-    .withExpressionAttributeValues(attributeValues);
-
-    PaginatedList<Task> completedChores =  mapper.scan(Task.class, scanExpression);
+    List<Task> completedChores =  dao.scanDB("Complete", "1");
 
     return completedChores.size();
   }
